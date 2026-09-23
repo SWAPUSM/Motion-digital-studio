@@ -1,0 +1,84 @@
+import { startTransition, useEffect, useMemo, useState } from 'react'
+import { LazyMotion, MotionConfig, domAnimation, useReducedMotion } from 'motion/react'
+import { useFinePointer } from './hooks/useMediaQuery.js'
+import { useSmoothScroll } from './hooks/useSmoothScroll.js'
+import Splash from './components/Splash.jsx'
+import Nav from './components/Nav.jsx'
+import ScrollProgress from './components/ScrollProgress.jsx'
+import FloatingCta from './components/FloatingCta.jsx'
+import Hero from './sections/Hero.jsx'
+import Intro from './sections/Intro.jsx'
+import Services from './sections/Services.jsx'
+import Work from './sections/Work.jsx'
+import Why from './sections/Why.jsx'
+import Process from './sections/Process.jsx'
+import Global from './sections/Global.jsx'
+import FinalCta from './sections/FinalCta.jsx'
+import Footer from './sections/Footer.jsx'
+
+export default function App() {
+  const reduce = useReducedMotion()
+  const fine = useFinePointer()
+  const [ready, setReady] = useState(false)
+  const [rest, setRest] = useState(false)
+
+  useSmoothScroll(fine && !reduce)
+
+  // Paint the hero first, then render the rest of the page as an interruptible
+  // transition so the main thread never blocks on one long task.
+  useEffect(() => {
+    startTransition(() => setRest(true))
+  }, [])
+
+  // Deep links (e.g. /#work) can only resolve once those sections exist
+  useEffect(() => {
+    if (rest && location.hash.length > 1) document.getElementById(location.hash.slice(1))?.scrollIntoView()
+  }, [rest])
+
+  // Everything below the hero is static: build it once so the intro hand-off
+  // (ready → true) only re-renders the hero and nav.
+  const sections = useMemo(
+    () => (
+      <>
+        <Intro />
+        <Services />
+        <Work />
+        <Why />
+        <Process />
+        <Global />
+        <FinalCta />
+      </>
+    ),
+    [],
+  )
+  const footer = useMemo(
+    () => (
+      <>
+        <Footer />
+        <FloatingCta />
+      </>
+    ),
+    [],
+  )
+
+  return (
+    <LazyMotion features={domAnimation} strict>
+      <MotionConfig reducedMotion="user">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-navy"
+        >
+          Skip to content
+        </a>
+        <Splash onDone={() => setReady(true)} />
+        <ScrollProgress />
+        <Nav ready={ready} />
+        <main id="main">
+          <Hero ready={ready} />
+          {rest && sections}
+        </main>
+        {rest && footer}
+      </MotionConfig>
+    </LazyMotion>
+  )
+}

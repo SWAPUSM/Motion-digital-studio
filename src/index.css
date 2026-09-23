@@ -1,0 +1,202 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-navy: #061424;
+  --color-navy-deep: #030c18;
+  --color-navy-soft: #0b2038;
+  --color-electric: #007bff;
+  --color-cyan: #00d1ff;
+  --color-mist: #e2e8f0;
+
+  --font-sans: 'Montserrat Variable', 'Montserrat', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-navy);
+    color: var(--color-mist);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: var(--color-navy);
+    overflow-x: clip;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--color-cyan) 35%, transparent);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  /* Lenis handles smooth scrolling on desktop */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  html.lenis {
+    scroll-behavior: auto;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+  @media (min-width: 768px) {
+    .container-x {
+      padding-inline: 40px;
+    }
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--color-cyan);
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, #ffffff 0%, #8fe9ff 38%, var(--color-cyan) 60%, var(--color-electric) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-soft {
+    background: linear-gradient(180deg, #d9f6ff 10%, var(--color-cyan) 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .glass {
+    background: linear-gradient(160deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.015));
+    border: 1px solid rgb(255 255 255 / 0.08);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  /* Gradient hairline border using a mask — crisp on retina */
+  .ring-gradient {
+    position: relative;
+  }
+  .ring-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(140deg, rgb(0 209 255 / 0.55), rgb(0 123 255 / 0.1) 40%, rgb(255 255 255 / 0.04) 60%, rgb(0 209 255 / 0.35));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* Pointer-following spotlight, driven by --mx / --my custom properties */
+  .spotlight {
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, -20%),
+      rgb(0 209 255 / 0.13),
+      transparent 60%
+    );
+  }
+
+  .grid-bg {
+    background-image: linear-gradient(rgb(226 232 240 / 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(226 232 240 / 0.045) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+  }
+}
+
+/* ── Keyframes ─────────────────────────────────────────────── */
+@keyframes float-a {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+@keyframes float-b {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 8px; }
+}
+@keyframes sway {
+  0%, 100% { transform: rotateX(8deg) rotateY(-16deg); }
+  50% { transform: rotateX(4deg) rotateY(-8deg); }
+}
+@keyframes travel {
+  from { stroke-dashoffset: 1.2; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@keyframes meridian {
+  0% { transform: scaleX(1); }
+  50% { transform: scaleX(-1); }
+  100% { transform: scaleX(1); }
+}
+@keyframes dash {
+  to { stroke-dashoffset: -40; }
+}
+@keyframes scroll-cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+.animate-float-a { animation: float-a 7s ease-in-out infinite; }
+.animate-float-b { animation: float-b 8s ease-in-out infinite; }
+.animate-sway { animation: sway 10s ease-in-out infinite; }
+.animate-marquee { animation: marquee 38s linear infinite; }
+.animate-scroll-cue { animation: scroll-cue 2.4s var(--ease-expo) infinite; }
+
+/* Device mock pages scroll to their end on hover (desktop) or tap (touch).
+   --frame-h is the visible height of the device viewport, set on the frame. */
+.mock-page {
+  transition: transform 3.5s cubic-bezier(0.45, 0, 0.2, 1);
+  will-change: transform;
+}
+.mock-trigger:hover .mock-page,
+.mock-trigger[data-open='true'] .mock-page {
+  transform: translateY(min(0px, calc(-100% + var(--frame-h, 100%))));
+  transition-duration: 4.5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .mock-trigger:hover .mock-page {
+    transform: none;
+  }
+}
