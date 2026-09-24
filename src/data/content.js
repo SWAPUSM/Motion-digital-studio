@@ -24,6 +24,7 @@ export const PACKAGES = [
     name: 'One Page Website',
     price: '8,000',
     summary: 'Perfect for businesses that need a powerful, focused online presence.',
+    bestFor: ['Landing pages', 'Small businesses', 'Simple online presence'],
     features: [
       '1 complete page',
       'Responsive design',
@@ -38,6 +39,7 @@ export const PACKAGES = [
     name: 'Multi Page Website',
     price: '15,000',
     summary: 'For businesses that need a complete professional website.',
+    bestFor: ['Restaurants', 'Villas', 'Service businesses', 'Growing companies'],
     features: [
       'Up to 5 pages',
       'Custom responsive design',
@@ -52,6 +54,7 @@ export const PACKAGES = [
     name: 'Premium Website',
     price: '25,000',
     summary: 'For brands that want a more advanced and immersive digital experience.',
+    bestFor: ['Hotels', 'Real estate', 'Established brands', 'Advanced projects'],
     featured: true,
     features: [
       'Up to approximately 8 pages',
@@ -79,7 +82,7 @@ export const PROJECTS = [
     domain: 'teddybikesamui.com',
     url: 'https://teddybikesamui.com',
     description: 'A bright, mobile-first rental experience that makes choosing a ride on the island effortless.',
-    tags: ['Web design', 'Mobile first', 'WhatsApp booking'],
+    services: ['Website Design', 'Mobile Optimization', 'WhatsApp Booking'],
     accent: '#FFC928',
   },
   {
@@ -90,7 +93,7 @@ export const PROJECTS = [
     domain: 'samuiproperty360.com',
     url: 'https://samuiproperty360.com',
     description: 'An immersive gateway to 360° property tours — step inside a villa before you ever set foot on the island.',
-    tags: ['Immersive UI', '360° tours', 'Real estate'],
+    services: ['Website Design', '360° Tour Integration', 'Development'],
     accent: '#C89B5A',
   },
   {
@@ -101,7 +104,7 @@ export const PROJECTS = [
     domain: 'valeriedartdon.com',
     url: 'https://valeriedartdon.com',
     description: 'A soft, refined showcase for permanent makeup artistry — elegant, calm and made to convert bookings.',
-    tags: ['Brand elegance', 'Service showcase', 'Bookings'],
+    services: ['Website Design', 'Mobile Optimization', 'Development'],
     accent: '#D9A08E',
   },
 ]
@@ -130,10 +133,10 @@ export const REASONS = [
 ]
 
 export const STEPS = [
-  { n: '01', title: 'Discover', text: 'Understand the business, goals and visual direction.' },
-  { n: '02', title: 'Design', text: 'Build the visual experience and website structure.' },
-  { n: '03', title: 'Develop', text: 'Turn the concept into a responsive, high-performance website.' },
-  { n: '04', title: 'Launch', text: 'Final testing, optimization and publication.' },
+  { n: '01', title: 'Discover', text: 'We understand your business, goals and visual direction.' },
+  { n: '02', title: 'Design', text: 'We create the structure and visual experience.' },
+  { n: '03', title: 'Develop', text: 'We turn the concept into a fast, responsive website.' },
+  { n: '04', title: 'Launch', text: 'We test, optimize and publish your website.' },
 ]
 
 export const INDUSTRIES = [
@@ -144,4 +147,44 @@ export const INDUSTRIES = [
   'Beauty',
   'Local Businesses',
   'Brands',
+]
+
+export const CUSTOM_WORK = ['E-commerce', 'Advanced booking systems', 'Memberships', 'Custom web applications']
+
+// Shown under the process timeline.
+export const TERMS = [
+  { label: 'Payment', value: '50% to start', detail: '50% before launch' },
+  { label: 'Revisions', value: '2 rounds', detail: 'included in every package' },
+  { label: 'Typical delivery', value: '3–14 business days', detail: 'depending on the project' },
+]
+
+// Verified client testimonials only — the proof section shows them when this list
+// is not empty. Example: { quote: '…', name: 'Client name', role: 'Owner', project: 'teddy-bike' }
+export const TESTIMONIALS = []
+
+export const FAQS = [
+  {
+    q: 'How long does a website take?',
+    a: 'Most projects take approximately 3–14 business days once all required content has been received. Timing depends on the size and complexity of the project.',
+  },
+  {
+    q: 'Do I own my website?',
+    a: 'Yes. Once the project has been fully paid, the final website deliverables are yours, subject to any third-party services, tools or licenses used by the website.',
+  },
+  {
+    q: 'Who pays for the domain?',
+    a: 'The domain is purchased and owned by the client. We can guide you through the setup and connect it to your website.',
+  },
+  {
+    q: 'Can you update my website after launch?',
+    a: 'Yes. Optional Website Care is available from 1,500 THB/month for ongoing support and small updates.',
+  },
+  {
+    q: 'Can you build a bilingual website?',
+    a: 'Yes. Multilingual websites can be included depending on the project and package.',
+  },
+  {
+    q: 'Do you work with businesses outside Thailand?',
+    a: 'Yes. Motion Digital Studio is based in Thailand and works with businesses worldwide.',
+  },
 ]

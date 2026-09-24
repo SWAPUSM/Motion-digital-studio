@@ -10,9 +10,11 @@ import Hero from './sections/Hero.jsx'
 import Intro from './sections/Intro.jsx'
 import Services from './sections/Services.jsx'
 import Work from './sections/Work.jsx'
+import Proof from './sections/Proof.jsx'
 import Why from './sections/Why.jsx'
 import Process from './sections/Process.jsx'
 import Global from './sections/Global.jsx'
+import Faq from './sections/Faq.jsx'
 import FinalCta from './sections/FinalCta.jsx'
 import Footer from './sections/Footer.jsx'
 
@@ -43,9 +45,11 @@ export default function App() {
         <Intro />
         <Services />
         <Work />
+        <Proof />
         <Why />
         <Process />
         <Global />
+        <Faq />
         <FinalCta />
       </>
     ),

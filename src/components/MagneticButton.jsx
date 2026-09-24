@@ -11,7 +11,8 @@ const variants = {
 const sizes = {
   md: 'h-12 px-6 text-[12px] gap-2.5',
   lg: 'h-14 px-8 text-[13px] gap-3',
-  xl: 'h-16 md:h-[72px] px-9 md:px-12 text-[13px] md:text-[15px] gap-3',
+  // narrow phones (<360px) get tighter padding/tracking so the label never wraps
+  xl: 'h-16 md:h-[72px] px-6 sm:px-9 md:px-12 text-[12px] sm:text-[13px] md:text-[15px] gap-3 max-[359px]:gap-2 max-[359px]:px-5 max-[359px]:tracking-[0.12em]',
 }
 
 /** CTA with a subtle magnetic pull on desktop pointers. Renders an <a>. */
@@ -43,7 +44,7 @@ export default function MagneticButton({ children, variant = 'primary', size = '
       onPointerLeave={reset}
       style={{ x: sx, y: sy }}
       whileTap={{ scale: 0.97 }}
-      className={`group relative inline-flex select-none items-center justify-center overflow-hidden rounded-full font-semibold uppercase tracking-[0.18em] transition-[box-shadow,background-color,border-color] duration-500 ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`group relative inline-flex select-none items-center whitespace-nowrap justify-center overflow-hidden rounded-full font-semibold uppercase tracking-[0.18em] transition-[box-shadow,background-color,border-color] duration-500 ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}
     >
       {variant === 'primary' && (

@@ -9,8 +9,8 @@ const RIBBON = 'M-100 560 C 200 600, 340 180, 620 240 S 900 620, 1120 420 S 1360
 
 export default function FinalCta() {
   return (
-    <section id="contact" className="relative px-3 py-20 md:px-6 md:py-28" aria-labelledby="contact-title">
-      <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-[32px] border border-white/[.08] bg-[radial-gradient(120%_90%_at_50%_0%,#0d3a78_0%,#08203f_40%,#040f1d_100%)] px-5 py-24 text-center md:rounded-[48px] md:py-36">
+    <section id="contact" className="relative px-3 py-12 md:px-6 md:py-28" aria-labelledby="contact-title">
+      <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-[32px] border border-white/[.08] bg-[radial-gradient(120%_90%_at_50%_0%,#0d3a78_0%,#08203f_40%,#040f1d_100%)] px-5 py-16 text-center md:rounded-[48px] md:py-36">
         <div aria-hidden="true" className="absolute inset-0">
           <Ribbon d={RIBBON} className="absolute inset-0 h-full w-full opacity-60" animateIn={false} />
           <div className="absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan to-transparent" />
@@ -26,7 +26,7 @@ export default function FinalCta() {
             Let’s build a website your customers will remember.
           </Reveal>
 
-          <Reveal delay={0.35} className="mt-12 flex flex-col items-center gap-5">
+          <Reveal delay={0.35} className="mt-9 flex flex-col items-center gap-4 md:mt-12 md:gap-5">
             <MagneticButton href={whatsappLink()} target="_blank" rel="noopener" size="xl" strength={0.35} className="w-full max-w-[380px] sm:w-auto sm:max-w-none">
               <WhatsApp width="22" height="22" /> Start your project
             </MagneticButton>

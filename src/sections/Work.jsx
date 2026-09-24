@@ -10,9 +10,9 @@ export default function Work() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
 
   return (
-    <section id="work" className="relative pt-24 md:pt-36" aria-labelledby="work-title">
+    <section id="work" className="relative pt-16 md:pt-36" aria-labelledby="work-title">
       <div className="container-x">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
           <SectionHeading id="work-title" index="03" label="Portfolio" lines={['Selected', 'work']} />
           <p className="max-w-sm text-[15px] leading-relaxed text-mist/65">
             Real businesses, real momentum — designed and built by Motion.
@@ -21,7 +21,7 @@ export default function Work() {
       </div>
 
       {/* Stacked, sticky project stage — each project slides over the last */}
-      <div ref={ref} className="relative mt-10 md:mt-16">
+      <div ref={ref} className="relative mt-2 md:mt-16">
         {PROJECTS.map((p, i) => (
           <ProjectPanel key={p.id} project={p} index={i} total={PROJECTS.length} progress={scrollYProgress} />
         ))}
@@ -72,14 +72,11 @@ function ProjectPanel({ project, index, total, progress }) {
               >
                 {project.name}
               </h3>
-              <p className="mt-4 max-w-md text-[14px] leading-relaxed text-mist/70 md:text-[15px]">{project.description}</p>
-              <ul className="mt-5 hidden flex-wrap gap-2 sm:flex" aria-label="Project highlights">
-                {project.tags.map((t) => (
-                  <li key={t} className="rounded-full border border-white/10 bg-white/[.03] px-3 py-1.5 text-[11px] font-medium text-mist/70">
-                    {t}
-                  </li>
-                ))}
-              </ul>
+              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-mist/70 md:mt-4 md:text-[15px]">{project.description}</p>
+              <p className="mt-4 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.16em] text-mist/75 md:mt-5 md:text-[12px]">
+                <span className="sr-only">Services: </span>
+                {project.services.join(' • ')}
+              </p>
               <a
                 href={project.url}
                 target="_blank"
@@ -165,7 +162,7 @@ function PhoneStage({ project }) {
       <div className="relative w-[min(40%,150px,17svh)] sm:w-[40%] sm:max-w-[210px] lg:w-[250px] lg:max-w-none">
         <div className="animate-float-a">
           <PhoneFrame className="rotate-[-3deg] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:rotate-0 group-hover:scale-[1.03]">
-            <img src={project.mobileImage} alt="" loading="lazy" decoding="async" className="absolute inset-0 block h-full w-full object-cover object-top" />
+            <img src={project.mobileImage} alt={`${project.name} website on a phone`} width="780" height="1691" loading="lazy" decoding="async" className="absolute inset-0 block h-full w-full object-cover object-top" />
           </PhoneFrame>
         </div>
       </div>

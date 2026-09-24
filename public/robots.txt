@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://motiondigitalstudio.com/sitemap.xml
+Sitemap: https://motiondigitalstudio.netlify.app/sitemap.xml

@@ -82,11 +82,11 @@ function Globe() {
 export default function Global() {
   const row = [...INDUSTRIES, ...INDUSTRIES]
   return (
-    <section id="global" className="relative overflow-hidden py-24 md:py-36" aria-labelledby="global-title">
-      <div className="container-x grid items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
+    <section id="global" className="relative overflow-hidden py-16 md:py-36" aria-labelledby="global-title">
+      <div className="container-x grid items-center gap-6 md:gap-12 lg:grid-cols-[1.2fr_1fr]">
         <div>
           <p className="eyebrow flex items-center gap-3">
-            <span className="text-white/55">06</span>
+            <span className="text-white/55">07</span>
             <span className="h-px w-8 bg-gradient-to-r from-cyan to-transparent" aria-hidden="true" />
             Global reach
           </p>
@@ -96,7 +96,7 @@ export default function Global() {
             reach.
           </Reveal>
         </div>
-        <Reveal delay={0.1} className="relative mx-auto aspect-square w-full max-w-[460px]">
+        <Reveal delay={0.1} className="relative mx-auto aspect-square w-full max-w-[340px] md:max-w-[460px]">
           <div aria-hidden="true" className="absolute inset-[10%] rounded-full bg-electric/25 blur-3xl" />
           <Globe />
           <span className="absolute left-[47%] top-[58%] rounded-full border border-cyan/30 bg-navy/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-cyan backdrop-blur">
@@ -106,7 +106,7 @@ export default function Global() {
       </div>
 
       {/* industries marquee */}
-      <div className="relative mt-16 border-y border-white/[.07] py-6 md:mt-24 md:py-8 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
+      <div className="relative mt-10 border-y border-white/[.07] py-5 md:mt-24 md:py-8 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
         <ul className="sr-only">
           {INDUSTRIES.map((x) => (
             <li key={x}>{x}</li>

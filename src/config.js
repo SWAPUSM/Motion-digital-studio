@@ -5,7 +5,7 @@
 export const SITE = {
   name: 'Motion Digital Studio',
   tagline: 'Websites that move business forward.',
-  url: 'https://motiondigitalstudio.com',
+  url: 'https://motiondigitalstudio.netlify.app',
 
   // TODO: WhatsApp number in international format, digits only (e.g. 66812345678)
   whatsapp: '66000000000',

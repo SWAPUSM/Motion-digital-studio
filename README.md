@@ -36,7 +36,9 @@ npm run preview   # serve the build locally
 | `social`    | Instagram, Facebook and TikTok profile URLs                  |
 | `url`       | Final domain (also update `index.html`, `public/robots.txt` and `public/sitemap.xml`) |
 
-All copy (packages, projects, process steps and industries) is in `src/data/content.js`.
+All copy is in `src/data/content.js`: packages (with their "best for" lines), projects, process steps, payment and delivery terms, FAQ and industries. If you edit the FAQ, update the matching `FAQPage` block in `index.html` as well, so that search engines see the same answers.
+
+**Testimonials:** the "Real businesses. Real websites." section lists the live client sites. Add *verified* client quotes to `TESTIMONIALS` in `src/data/content.js`, and they will appear under the list automatically. Nothing appears while the list is empty.
 
 ### Portfolio screenshots
 

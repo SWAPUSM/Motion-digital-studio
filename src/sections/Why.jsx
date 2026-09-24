@@ -31,11 +31,11 @@ function Icon({ name }) {
 
 export default function Why() {
   return (
-    <section id="why" className="relative py-24 md:py-36" aria-labelledby="why-title">
+    <section id="why" className="relative py-16 md:py-36" aria-labelledby="why-title">
       <div className="container-x">
-        <SectionHeading id="why-title" index="04" label="Why Motion" lines={['Designed to look good.', 'Built to move business forward.']} />
+        <SectionHeading id="why-title" index="05" label="Why Motion" lines={['Designed to look good.', 'Built to move business forward.']} />
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-2 md:mt-20 lg:grid-cols-4 lg:gap-5">
+        <div className="mt-9 grid gap-3 sm:grid-cols-2 sm:gap-4 md:mt-20 lg:grid-cols-4 lg:gap-5">
           {REASONS.map((r, i) => (
             <m.article
               key={r.title}
@@ -43,7 +43,7 @@ export default function Why() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-8% 0px' }}
               transition={{ duration: 0.9, delay: i * 0.1, ease }}
-              className="group relative overflow-hidden rounded-[24px] border border-white/[.07] bg-white/[.025] p-7 transition-colors duration-500 hover:border-cyan/30 hover:bg-white/[.045] md:p-8"
+              className="group relative grid grid-cols-[auto_1fr] items-center gap-x-4 overflow-hidden rounded-[20px] border border-white/[.07] bg-white/[.025] p-4 transition-colors duration-500 hover:border-cyan/30 hover:bg-white/[.045] sm:block sm:rounded-[24px] sm:p-7 md:p-8"
             >
               {/* progress sweep along the top edge */}
               <m.span
@@ -55,11 +55,11 @@ export default function Why() {
                 transition={{ duration: 1.6, delay: 0.2 + i * 0.15, ease }}
               />
               <div aria-hidden="true" className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-cyan/0 blur-2xl transition-colors duration-700 group-hover:bg-cyan/20" />
-              <div className="relative grid h-14 w-14 place-items-center rounded-2xl border border-cyan/20 bg-gradient-to-br from-electric/20 to-cyan/5 text-cyan transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1 group-hover:rotate-[-4deg]">
+              <div className="relative row-span-2 grid h-12 w-12 place-items-center rounded-2xl sm:h-14 sm:w-14 border border-cyan/20 bg-gradient-to-br from-electric/20 to-cyan/5 text-cyan transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1 group-hover:rotate-[-4deg]">
                 <Icon name={r.icon} />
               </div>
-              <h3 className="relative mt-10 text-[17px] font-extrabold uppercase tracking-[0.02em] text-white md:mt-14">{r.title}</h3>
-              <p className="relative mt-3 text-[14px] leading-relaxed text-mist/65">{r.text}</p>
+              <h3 className="relative self-end text-[15px] font-extrabold uppercase tracking-[0.02em] text-white sm:mt-10 sm:text-[17px] md:mt-14">{r.title}</h3>
+              <p className="relative mt-1 self-start text-[13.5px] leading-snug text-mist/65 sm:mt-3 sm:text-[14px] sm:leading-relaxed">{r.text}</p>
             </m.article>
           ))}
         </div>

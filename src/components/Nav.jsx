@@ -50,13 +50,14 @@ export default function Nav({ ready }) {
               scrolled ? 'glass shadow-[0_10px_40px_-12px_rgba(0,0,0,.6)]' : 'border border-transparent'
             }`}
           >
-            <a href="#top" className="flex min-w-0 items-center gap-3 md:gap-4" aria-label="Motion Digital Studio — home">
+            <a href="#top" className="flex min-w-0 items-center gap-3 md:gap-4">
               <span className="block w-[66px] shrink-0 overflow-hidden rounded-[14px] ring-1 ring-white/10 md:w-[78px]">
                 <Logo priority sizes="80px" alt="" />
               </span>
-              <span className="flex min-w-0 flex-col leading-none" aria-hidden="true">
+              <span className="flex min-w-0 flex-col leading-none">
                 <span className="text-[15px] font-extrabold uppercase tracking-[0.22em] text-white md:text-[17px]">Motion</span>
                 <span className="mt-1.5 text-[9.5px] font-semibold uppercase tracking-[0.3em] text-cyan md:text-[10.5px]">Digital Studio</span>
+                <span className="sr-only"> — home</span>
               </span>
             </a>
 
