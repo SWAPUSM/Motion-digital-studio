@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { m, useScroll, useTransform } from 'motion/react'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { BrowserFrame, PhoneFrame } from '../components/Devices.jsx'
@@ -72,7 +72,8 @@ function ProjectPanel({ project, index, total, progress }) {
               >
                 {project.name}
               </h3>
-              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-mist/70 md:mt-4 md:text-[15px]">{project.description}</p>
+              {/* on short phone screens the description gives way so the whole panel stays in view */}
+              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-mist/70 md:mt-4 md:text-[15px] max-lg:[@media(max-height:700px)]:hidden">{project.description}</p>
               <p className="mt-4 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.16em] text-mist/75 md:mt-5 md:text-[12px]">
                 <span className="sr-only">Services: </span>
                 {project.services.join(' • ')}
@@ -103,34 +104,46 @@ function ProjectPanel({ project, index, total, progress }) {
   )
 }
 
-/** Desktop capture in a browser frame, mobile capture in a phone; hover/tap scrolls both. */
+/** Desktop capture in a browser frame, with the phone capture beside it. */
 function BrowserStage({ project }) {
-  const [open, setOpen] = useState(false)
   return (
-    <button
-      type="button"
-      data-open={open}
-      onClick={() => setOpen((o) => !o)}
-      aria-pressed={open}
-      className="mock-trigger group relative block w-full cursor-pointer text-left"
+    <a
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      tabIndex={-1}
+      aria-hidden="true"
+      className="group relative block pb-4 md:pb-6"
     >
-      <div aria-hidden="true" className="transition-transform duration-700 ease-[var(--ease-expo)] lg:group-hover:-translate-y-1">
-        <BrowserFrame domain={project.domain} tone={project.tone}>
-          <img src={project.image} alt="" loading="lazy" decoding="async" className="mock-page absolute inset-x-0 top-0 block w-full" />
+      <div className="transition-transform duration-700 ease-[var(--ease-expo)] lg:group-hover:-translate-y-1">
+        <BrowserFrame domain={project.domain} tone={project.tone} aspect="aspect-[7/4]">
+          <img
+            src={project.image}
+            srcSet={project.imageSmall ? `${project.imageSmall} 900w, ${project.image} 1600w` : undefined}
+            sizes="(min-width: 1024px) 60vw, 92vw"
+            alt={`${project.name} website on desktop`}
+            width="1600"
+            height="913"
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 block h-full w-full object-cover object-top"
+          />
         </BrowserFrame>
       </div>
       {project.mobileImage && (
-        <PhoneFrame aria-hidden="true" className="absolute -bottom-4 right-3 w-[24%] rotate-[4deg] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:rotate-0 sm:right-6 md:-bottom-6 md:w-[20%]">
-          <img src={project.mobileImage} alt="" loading="lazy" decoding="async" className="mock-page absolute inset-x-0 top-0 block w-full" />
+        <PhoneFrame className="absolute bottom-0 right-2 w-[23%] max-w-[190px] rotate-[4deg] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1 group-hover:rotate-0 sm:right-5 md:w-[19%]">
+          <img
+            src={project.mobileImage}
+            alt={`${project.name} website on a phone`}
+            width="780"
+            height="1691"
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 block h-full w-full object-cover object-top"
+          />
         </PhoneFrame>
       )}
-      <span className="pointer-events-none absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-navy/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white opacity-90 backdrop-blur transition-opacity duration-500 group-hover:opacity-0 group-data-[open=true]:opacity-0 md:bottom-5 md:left-5">
-        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" />
-        <span className="lg:hidden">Tap to explore</span>
-        <span className="hidden lg:inline">Hover to explore</span>
-        <span className="sr-only"> the {project.name} website preview</span>
-      </span>
-    </button>
+    </a>
   )
 }
 

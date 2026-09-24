@@ -72,13 +72,16 @@ export const PACKAGES = [
   },
 ]
 
-// Portfolio captures live in public/work/.
-// `mobileImage` (required) is a real phone screenshot, shown in the phone frame.
-// `image` (optional) is a real desktop capture; when present the project shows a
-// browser frame with the phone beside it, otherwise the phone is shown alone, centred.
+// Portfolio captures live in public/work/ (see the README there).
+// `mobileImage` (required): real phone screenshot, shown in the phone frame.
+// `image` + `imageSmall` (optional): real desktop capture, 7:4, cropped below the
+// browser bar (1600px + 900px wide). With them the project shows a browser frame
+// with the phone beside it; without them the phone is shown alone, centred.
 export const PROJECTS = [
   {
     id: 'teddy-bike',
+    image: '/work/teddy-bike-desktop.webp',
+    imageSmall: '/work/teddy-bike-desktop-900.webp',
     mobileImage: '/work/teddy-bike-mobile.webp',
     name: 'Teddy Bike Samui',
     category: 'Scooter & Car Rental',
@@ -90,6 +93,9 @@ export const PROJECTS = [
   },
   {
     id: 'samui-property-360',
+    image: '/work/samui-property-360-desktop.webp',
+    imageSmall: '/work/samui-property-360-desktop-900.webp',
+    tone: 'dark',
     mobileImage: '/work/samui-property-360-mobile.webp',
     name: 'Samui Property 360',
     category: 'Virtual Tours & Real Estate',
@@ -101,6 +107,8 @@ export const PROJECTS = [
   },
   {
     id: 'valerie-dart-don',
+    image: '/work/valerie-dart-don-desktop.webp',
+    imageSmall: '/work/valerie-dart-don-desktop-900.webp',
     mobileImage: '/work/valerie-dart-don-mobile.webp',
     name: 'Valérie d’Art Don',
     category: 'Beauty & Permanent Makeup',
