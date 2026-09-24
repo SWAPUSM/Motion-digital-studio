@@ -66,42 +66,42 @@ export const PACKAGES = [
   },
 ]
 
-// `mock` selects the built-in device mockup, used until real screenshots are added.
-// Real screenshots: `image` fills the browser frame (desktop capture, ideally a tall
-// full-page shot) and `mobileImage` fills the phone frame (mobile capture). Put the
-// files in public/work/, e.g. image: '/work/teddy-bike-desktop.webp'.
+// Portfolio captures live in public/work/.
+// `mobileImage` (required) is a real phone screenshot, shown in the phone frame.
+// `image` (optional) is a real desktop capture; when present the project shows a
+// browser frame with the phone beside it, otherwise the phone is shown alone, centred.
 export const PROJECTS = [
   {
     id: 'teddy-bike',
+    mobileImage: '/work/teddy-bike-mobile.webp',
     name: 'Teddy Bike Samui',
     category: 'Scooter & Car Rental',
     domain: 'teddybikesamui.com',
     url: 'https://teddybikesamui.com',
     description: 'A bright, mobile-first rental experience that makes choosing a ride on the island effortless.',
     tags: ['Web design', 'Mobile first', 'WhatsApp booking'],
-    mock: 'teddy',
     accent: '#FFC928',
   },
   {
     id: 'samui-property-360',
+    mobileImage: '/work/samui-property-360-mobile.webp',
     name: 'Samui Property 360',
     category: 'Virtual Tours & Real Estate',
     domain: 'samuiproperty360.com',
     url: 'https://samuiproperty360.com',
     description: 'An immersive gateway to 360° property tours — step inside a villa before you ever set foot on the island.',
     tags: ['Immersive UI', '360° tours', 'Real estate'],
-    mock: 'property',
     accent: '#C89B5A',
   },
   {
     id: 'valerie-dart-don',
+    mobileImage: '/work/valerie-dart-don-mobile.webp',
     name: 'Valérie d’Art Don',
     category: 'Beauty & Permanent Makeup',
     domain: 'valeriedartdon.com',
     url: 'https://valeriedartdon.com',
     description: 'A soft, refined showcase for permanent makeup artistry — elegant, calm and made to convert bookings.',
     tags: ['Brand elegance', 'Service showcase', 'Bookings'],
-    mock: 'valerie',
     accent: '#D9A08E',
   },
 ]

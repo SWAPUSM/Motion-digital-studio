@@ -2,7 +2,6 @@ import { useRef, useState } from 'react'
 import { m, useScroll, useTransform } from 'motion/react'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { BrowserFrame, PhoneFrame } from '../components/Devices.jsx'
-import { ProjectMock } from '../components/Mockups.jsx'
 import { ArrowUpRight } from '../components/Icons.jsx'
 import { PROJECTS } from '../data/content.js'
 
@@ -16,7 +15,7 @@ export default function Work() {
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading id="work-title" index="03" label="Portfolio" lines={['Selected', 'work']} />
           <p className="max-w-sm text-[15px] leading-relaxed text-mist/65">
-            Real businesses, real momentum. Hover — or tap — a project to scroll through it.
+            Real businesses, real momentum — designed and built by Motion.
           </p>
         </div>
       </div>
@@ -32,7 +31,6 @@ export default function Work() {
 }
 
 function ProjectPanel({ project, index, total, progress }) {
-  const [open, setOpen] = useState(false)
   const isLast = index === total - 1
   // As later panels arrive, earlier ones recede into depth.
   const seg = 1 / Math.max(1, total - 1)
@@ -58,38 +56,7 @@ function ProjectPanel({ project, index, total, progress }) {
 
           <div className="relative grid items-center gap-6 md:gap-10 lg:grid-cols-[1.55fr_1fr]">
             {/* Device stage */}
-            <button
-              type="button"
-              data-open={open}
-              onClick={() => setOpen((o) => !o)}
-              aria-pressed={open}
-              className="mock-trigger group relative block w-full cursor-pointer text-left"
-            >
-              <div aria-hidden="true" className="transition-transform duration-700 ease-[var(--ease-expo)] lg:group-hover:-translate-y-1">
-                <BrowserFrame domain={project.domain} tone={project.mock === 'property' ? 'dark' : 'light'}>
-                  {project.image ? (
-                    <img src={project.image} alt="" loading="lazy" decoding="async" className="mock-page absolute inset-x-0 top-0 block w-full" />
-                  ) : (
-                    <ProjectMock mock={project.mock} />
-                  )}
-                </BrowserFrame>
-              </div>
-              {(project.mobileImage || !project.image) && (
-                <PhoneFrame aria-hidden="true" className="absolute -bottom-4 right-3 w-[24%] rotate-[4deg] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:rotate-0 sm:right-6 md:-bottom-6 md:w-[20%]">
-                  {project.mobileImage ? (
-                    <img src={project.mobileImage} alt="" loading="lazy" decoding="async" className="mock-page absolute inset-x-0 top-0 block w-full" />
-                  ) : (
-                    <ProjectMock mock={project.mock} mobile />
-                  )}
-                </PhoneFrame>
-              )}
-              <span className="pointer-events-none absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-navy/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white opacity-90 backdrop-blur transition-opacity duration-500 group-hover:opacity-0 group-data-[open=true]:opacity-0 md:bottom-5 md:left-5">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" />
-                <span className="lg:hidden">Tap to explore</span>
-                <span className="hidden lg:inline">Hover to explore</span>
-                <span className="sr-only"> the {project.name} website preview</span>
-              </span>
-            </button>
+            {project.image ? <BrowserStage project={project} /> : <PhoneStage project={project} />}
 
             {/* Info */}
             <div className="relative px-1 pb-2 pt-4 md:px-0 lg:pt-0">
@@ -136,5 +103,72 @@ function ProjectPanel({ project, index, total, progress }) {
         </div>
       </m.article>
     </div>
+  )
+}
+
+/** Desktop capture in a browser frame, mobile capture in a phone; hover/tap scrolls both. */
+function BrowserStage({ project }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <button
+      type="button"
+      data-open={open}
+      onClick={() => setOpen((o) => !o)}
+      aria-pressed={open}
+      className="mock-trigger group relative block w-full cursor-pointer text-left"
+    >
+      <div aria-hidden="true" className="transition-transform duration-700 ease-[var(--ease-expo)] lg:group-hover:-translate-y-1">
+        <BrowserFrame domain={project.domain} tone={project.tone}>
+          <img src={project.image} alt="" loading="lazy" decoding="async" className="mock-page absolute inset-x-0 top-0 block w-full" />
+        </BrowserFrame>
+      </div>
+      {project.mobileImage && (
+        <PhoneFrame aria-hidden="true" className="absolute -bottom-4 right-3 w-[24%] rotate-[4deg] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:rotate-0 sm:right-6 md:-bottom-6 md:w-[20%]">
+          <img src={project.mobileImage} alt="" loading="lazy" decoding="async" className="mock-page absolute inset-x-0 top-0 block w-full" />
+        </PhoneFrame>
+      )}
+      <span className="pointer-events-none absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-navy/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white opacity-90 backdrop-blur transition-opacity duration-500 group-hover:opacity-0 group-data-[open=true]:opacity-0 md:bottom-5 md:left-5">
+        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" />
+        <span className="lg:hidden">Tap to explore</span>
+        <span className="hidden lg:inline">Hover to explore</span>
+        <span className="sr-only"> the {project.name} website preview</span>
+      </span>
+    </button>
+  )
+}
+
+/** Only a mobile capture: the phone takes centre stage, lit in the project's accent. */
+function PhoneStage({ project }) {
+  return (
+    <a
+      href={project.url}
+      target="_blank"
+      rel="noopener"
+      tabIndex={-1}
+      aria-hidden="true"
+      className="group relative flex items-center justify-center py-3 sm:min-h-[440px] sm:py-8 lg:min-h-[600px]"
+    >
+      {/* stage lighting */}
+      <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_45%,rgba(0,123,255,.22),transparent_70%)]" />
+      <div
+        className="absolute left-1/2 top-1/2 aspect-square w-[80%] max-w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-3xl"
+        style={{ background: project.accent }}
+      />
+      <div className="absolute left-1/2 top-1/2 aspect-square w-[88%] max-w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[.06]" />
+      <div className="absolute left-1/2 top-1/2 aspect-square w-[64%] max-w-[410px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan/10" />
+      <div className="grid-bg absolute inset-0 opacity-50 [mask-image:radial-gradient(55%_55%_at_50%_50%,#000,transparent)]" />
+
+      {/* floor shadow */}
+      <div className="absolute bottom-[6%] left-1/2 h-8 w-[38%] max-w-[240px] -translate-x-1/2 rounded-full bg-black/60 blur-2xl" />
+
+      {/* sized by height as well as width, so the whole panel fits short phone screens */}
+      <div className="relative w-[min(40%,150px,17svh)] sm:w-[40%] sm:max-w-[210px] lg:w-[250px] lg:max-w-none">
+        <div className="animate-float-a">
+          <PhoneFrame className="rotate-[-3deg] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:rotate-0 group-hover:scale-[1.03]">
+            <img src={project.mobileImage} alt="" loading="lazy" decoding="async" className="absolute inset-0 block h-full w-full object-cover object-top" />
+          </PhoneFrame>
+        </div>
+      </div>
+    </a>
   )
 }
