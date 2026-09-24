@@ -31,9 +31,9 @@ npm run preview   # serve the build locally
 
 | Setting     | What to put                                                  |
 | ----------- | ------------------------------------------------------------ |
-| `whatsapp`  | WhatsApp number, digits only, international format (e.g. `66812345678`) |
-| `email`     | Studio email address                                         |
-| `social`    | Instagram, Facebook and TikTok profile URLs                  |
+| `whatsapp`  | **Required.** WhatsApp number, digits only, international format (e.g. `66812345678`). Every "Start your project" button opens this chat. |
+| `email`     | Optional. Studio email address. The "Email us" link and footer email appear only once this is set. |
+| `social`    | Optional. Instagram, Facebook and TikTok profile URLs. Each icon appears only once its URL is set. |
 | `url`       | Final domain (also update `index.html`, `public/robots.txt` and `public/sitemap.xml`) |
 
 All copy is in `src/data/content.js`: packages (with their "best for" lines), projects, process steps, payment and delivery terms, FAQ and industries. If you edit the FAQ, update the matching `FAQPage` block in `index.html` as well, so that search engines see the same answers.

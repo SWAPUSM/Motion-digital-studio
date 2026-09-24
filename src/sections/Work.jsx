@@ -80,7 +80,7 @@ function ProjectPanel({ project, index, total, progress }) {
               <a
                 href={project.url}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="group/link mt-5 inline-flex md:mt-8 items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.22em] text-white"
               >
                 <span className="relative">
@@ -140,7 +140,7 @@ function PhoneStage({ project }) {
     <a
       href={project.url}
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       tabIndex={-1}
       aria-hidden="true"
       className="group relative flex items-center justify-center py-3 sm:min-h-[440px] sm:py-8 lg:min-h-[600px]"

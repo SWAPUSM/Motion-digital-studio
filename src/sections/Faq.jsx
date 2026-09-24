@@ -19,7 +19,7 @@ export default function Faq() {
             <a
               href={whatsappLink('Hi Motion Digital Studio! I have a question about a website project.')}
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 font-semibold text-cyan underline-offset-4 transition-colors hover:text-white hover:underline"
             >
               <WhatsApp width="15" height="15" /> Ask us on WhatsApp

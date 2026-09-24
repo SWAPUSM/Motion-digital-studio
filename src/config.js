@@ -7,18 +7,21 @@ export const SITE = {
   tagline: 'Websites that move business forward.',
   url: 'https://motiondigitalstudio.netlify.app',
 
-  // TODO: WhatsApp number in international format, digits only (e.g. 66812345678)
+  // TODO (required): WhatsApp number in international format, digits only
+  // (e.g. 66812345678). Every "Start your project" button opens this chat.
   whatsapp: '66000000000',
-  // TODO: studio email address
-  email: 'hello@motiondigitalstudio.com',
 
-  // TODO: replace with the studio's profile URLs
+  // Optional contact details. Leave empty until real — anything empty is simply
+  // not shown (no "Email us" link, no social icons), so nothing fake goes live.
+  email: '',
   social: {
-    instagram: 'https://www.instagram.com/',
-    facebook: 'https://www.facebook.com/',
-    tiktok: 'https://www.tiktok.com/',
+    instagram: '', // e.g. 'https://www.instagram.com/motiondigitalstudio'
+    facebook: '',
+    tiktok: '',
   },
 }
+
+export const HAS_EMAIL = Boolean(SITE.email)
 
 export const DEFAULT_WA_MESSAGE =
   "Hi Motion Digital Studio! I'd like to start a website project."
@@ -36,5 +39,6 @@ export const NAV_LINKS = [
   { label: 'Services', href: '#services' },
   { label: 'Work', href: '#work' },
   { label: 'Process', href: '#process' },
+  { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#contact' },
 ]

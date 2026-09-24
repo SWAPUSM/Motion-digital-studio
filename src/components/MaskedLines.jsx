@@ -17,10 +17,11 @@ export default function MaskedLines({ lines, as = 'h2', id, className = '', acce
             className={`block ${accentLast && i === lines.length - 1 ? 'text-gradient' : ''}`}
             variants={{
               hidden: { y: '105%' },
-              show: { y: 0, transition: { duration: 1, delay: delay + i * 0.11, ease } },
+              show: { y: 0, transition: { duration: 0.85, delay: delay + i * 0.08, ease } },
             }}
           >
             {line}
+            {i < lines.length - 1 && ' '}
           </m.span>
         </span>
       ))}

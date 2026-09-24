@@ -3,7 +3,7 @@ import Ribbon from '../components/Ribbon.jsx'
 import Reveal from '../components/Reveal.jsx'
 import MaskedLines from '../components/MaskedLines.jsx'
 import { Mail, WhatsApp } from '../components/Icons.jsx'
-import { SITE, mailtoLink, whatsappLink } from '../config.js'
+import { HAS_EMAIL, SITE, mailtoLink, whatsappLink } from '../config.js'
 
 const RIBBON = 'M-100 560 C 200 600, 340 180, 620 240 S 900 620, 1120 420 S 1360 120, 1560 200'
 
@@ -27,17 +27,19 @@ export default function FinalCta() {
           </Reveal>
 
           <Reveal delay={0.35} className="mt-9 flex flex-col items-center gap-4 md:mt-12 md:gap-5">
-            <MagneticButton href={whatsappLink()} target="_blank" rel="noopener" size="xl" strength={0.35} className="w-full max-w-[380px] sm:w-auto sm:max-w-none">
+            <MagneticButton href={whatsappLink()} target="_blank" rel="noopener noreferrer" size="xl" strength={0.35} className="w-full max-w-[380px] sm:w-auto sm:max-w-none">
               <WhatsApp width="22" height="22" /> Start your project
             </MagneticButton>
-            <a
-              href={mailtoLink()}
-              className="group inline-flex items-center gap-2.5 py-2 text-[12px] font-semibold uppercase tracking-[0.25em] text-mist/70 transition-colors hover:text-white"
-            >
-              <Mail className="text-cyan" /> Email us
-              <span className="sr-only"> at {SITE.email}</span>
-              <span aria-hidden="true" className="h-px w-6 bg-cyan/60 transition-all duration-500 group-hover:w-10" />
-            </a>
+            {HAS_EMAIL && (
+              <a
+                href={mailtoLink()}
+                className="group inline-flex min-h-[44px] items-center gap-2.5 px-2 text-[12px] font-semibold uppercase tracking-[0.25em] text-mist/70 transition-colors hover:text-white"
+              >
+                <Mail className="text-cyan" /> Email us
+                <span className="sr-only"> at {SITE.email}</span>
+                <span aria-hidden="true" className="h-px w-6 bg-cyan/60 transition-all duration-500 group-hover:w-10" />
+              </a>
+            )}
           </Reveal>
         </div>
       </div>

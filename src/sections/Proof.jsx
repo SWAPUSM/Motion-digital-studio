@@ -15,7 +15,7 @@ export default function Proof() {
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
           <SectionHeading id="proof-title" index="04" label="Proof" lines={['Real businesses.', 'Real websites.']} />
           <Reveal as="p" className="max-w-sm text-[15px] leading-relaxed text-mist/70">
-            Real projects built for businesses across different industries.
+            Every project shown above was created for a real business, with a design tailored to its brand and goals.
           </Reveal>
         </div>
 
@@ -26,7 +26,7 @@ export default function Proof() {
                   <a
                     href={p.url}
                     target="_blank"
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     className="group flex min-h-[64px] items-center gap-4 px-5 py-4 transition-colors duration-500 hover:bg-white/[.04] md:px-7 md:py-5"
                   >
                     <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">

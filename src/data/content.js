@@ -25,6 +25,7 @@ export const PACKAGES = [
     price: '8,000',
     summary: 'Perfect for businesses that need a powerful, focused online presence.',
     bestFor: ['Landing pages', 'Small businesses', 'Simple online presence'],
+    delivery: '3–5 business days',
     features: [
       '1 complete page',
       'Responsive design',
@@ -40,6 +41,7 @@ export const PACKAGES = [
     price: '15,000',
     summary: 'For businesses that need a complete professional website.',
     bestFor: ['Restaurants', 'Villas', 'Service businesses', 'Growing companies'],
+    delivery: '5–10 business days',
     features: [
       'Up to 5 pages',
       'Custom responsive design',
@@ -55,6 +57,7 @@ export const PACKAGES = [
     price: '25,000',
     summary: 'For brands that want a more advanced and immersive digital experience.',
     bestFor: ['Hotels', 'Real estate', 'Established brands', 'Advanced projects'],
+    delivery: '7–14 business days',
     featured: true,
     features: [
       'Up to approximately 8 pages',
@@ -155,7 +158,7 @@ export const CUSTOM_WORK = ['E-commerce', 'Advanced booking systems', 'Membershi
 export const TERMS = [
   { label: 'Payment', value: '50% to start', detail: '50% before launch' },
   { label: 'Revisions', value: '2 rounds', detail: 'included in every package' },
-  { label: 'Typical delivery', value: '3–14 business days', detail: 'depending on the project' },
+  { label: 'Timeline', value: 'Clear timelines', detail: 'No surprises' },
 ]
 
 // Verified client testimonials only — the proof section shows them when this list
@@ -165,7 +168,7 @@ export const TESTIMONIALS = []
 export const FAQS = [
   {
     q: 'How long does a website take?',
-    a: 'Most projects take approximately 3–14 business days once all required content has been received. Timing depends on the size and complexity of the project.',
+    a: 'Delivery depends on the selected package. Typical timelines range from 3 to 14 business days once all required content and information have been received.',
   },
   {
     q: 'Do I own my website?',
@@ -173,7 +176,7 @@ export const FAQS = [
   },
   {
     q: 'Who pays for the domain?',
-    a: 'The domain is purchased and owned by the client. We can guide you through the setup and connect it to your website.',
+    a: 'The domain is purchased and owned by the client. Motion Digital Studio can guide the client through setup and connect the domain to the website.',
   },
   {
     q: 'Can you update my website after launch?',

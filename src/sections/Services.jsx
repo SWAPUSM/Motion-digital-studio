@@ -1,7 +1,7 @@
 import { m } from 'motion/react'
 import SectionHeading from '../components/SectionHeading.jsx'
 import Reveal from '../components/Reveal.jsx'
-import { ArrowUpRight, Check } from '../components/Icons.jsx'
+import { ArrowUpRight, Check, Clock } from '../components/Icons.jsx'
 import { CUSTOM_WORK, PACKAGES } from '../data/content.js'
 import { whatsappLink } from '../config.js'
 
@@ -31,7 +31,11 @@ export default function Services() {
           ))}
         </div>
 
-        <div className="mt-4 grid gap-4 md:mt-5 md:gap-5 lg:mt-6 lg:grid-cols-2 lg:gap-6">
+        <p className="mt-4 px-1 text-[12px] leading-relaxed text-mist/55 md:mt-5 md:text-[12.5px]">
+          Delivery times begin once all required content and information have been received from the client.
+        </p>
+
+        <div className="mt-5 grid gap-4 md:mt-6 md:gap-5 lg:grid-cols-2 lg:gap-6">
           <Reveal>
             <div
               onPointerMove={trackPointer}
@@ -48,7 +52,7 @@ export default function Services() {
               <a
                 href={whatsappLink("Hi! I'm interested in the Website Care plan.")}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="relative inline-flex shrink-0 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white"
               >
                 Add Website Care <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -69,7 +73,7 @@ export default function Services() {
               <a
                 href={whatsappLink("Hi! I'd like a custom quote for a larger web project.")}
                 target="_blank"
-                rel="noopener"
+                rel="noopener noreferrer"
                 className="relative inline-flex shrink-0 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white"
               >
                 Request a quote <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -86,10 +90,10 @@ function PackageCard({ pkg, index }) {
   const featured = pkg.featured
   return (
     <m.article
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-8% 0px' }}
-      transition={{ duration: 1, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.8, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       onPointerMove={trackPointer}
       className={`ring-gradient group relative flex flex-col overflow-hidden rounded-[28px] p-6 transition-[transform,box-shadow] duration-700 ease-[var(--ease-expo)] md:p-9 lg:hover:-translate-y-2 ${
         featured
@@ -116,12 +120,6 @@ function PackageCard({ pkg, index }) {
         {pkg.name}
       </h3>
       <p className="relative mt-3 text-[14px] leading-relaxed text-mist/65">{pkg.summary}</p>
-      {pkg.bestFor && (
-        <p className="relative mt-4 text-[12.5px] leading-relaxed text-mist/60">
-          <span className="mr-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan/85">Best for</span>
-          {pkg.bestFor.join(' • ')}
-        </p>
-      )}
 
       <p className="relative mt-6 flex items-baseline gap-2 md:mt-8">
         <span className="text-[12px] font-medium uppercase tracking-[0.2em] text-mist/50">From</span>
@@ -130,6 +128,12 @@ function PackageCard({ pkg, index }) {
         </span>
         <span className="text-[13px] font-semibold text-mist/60">THB</span>
       </p>
+      {pkg.bestFor && (
+        <p className="relative mt-4 text-[12.5px] leading-relaxed text-mist/60">
+          <span className="mr-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan/85">Best for</span>
+          {pkg.bestFor.join(' • ')}
+        </p>
+      )}
 
       <div className="relative my-6 h-px md:my-8 bg-gradient-to-r from-white/15 via-white/5 to-transparent" />
 
@@ -144,11 +148,21 @@ function PackageCard({ pkg, index }) {
         ))}
       </ul>
 
+      {pkg.delivery && (
+        <p className="relative mt-7 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/[.07] pt-4 md:mt-8">
+          <span className="flex items-center gap-2 whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.2em] text-mist/60">
+            <Clock className="text-cyan/85" />
+            Estimated delivery
+          </span>
+          <span className="whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.08em] text-white/90">{pkg.delivery}</span>
+        </p>
+      )}
+
       <a
         href={whatsappLink(`Hi Motion Digital Studio! I'm interested in the ${pkg.name} package.`)}
         target="_blank"
-        rel="noopener"
-        className={`relative mt-8 inline-flex h-12 md:mt-10 items-center justify-center gap-2 rounded-full text-[12px] font-semibold uppercase tracking-[0.18em] transition-all duration-500 ${
+        rel="noopener noreferrer"
+        className={`relative mt-5 inline-flex h-12 md:mt-6 items-center justify-center gap-2 rounded-full text-[12px] font-semibold uppercase tracking-[0.18em] transition-all duration-500 ${
           featured
             ? 'bg-gradient-to-r from-electric to-cyan text-white shadow-[0_10px_30px_-10px_rgba(0,209,255,.8)] hover:shadow-[0_14px_40px_-8px_rgba(0,209,255,.9)]'
             : 'border border-white/15 text-white hover:border-cyan/60 hover:bg-cyan/10'

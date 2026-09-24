@@ -61,12 +61,12 @@ export default function Nav({ ready }) {
               </span>
             </a>
 
-            <ul className="hidden items-center gap-1 lg:flex">
+            <ul className="hidden items-center gap-0.5 xl:flex">
               {NAV_LINKS.map((l) => (
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="relative rounded-full px-4 py-2 text-[12px] font-medium uppercase tracking-[0.18em] text-mist/70 transition-colors hover:text-white"
+                    className="relative rounded-full px-3.5 py-2 text-[12px] font-medium uppercase tracking-[0.18em] text-mist/70 transition-colors hover:text-white"
                   >
                     {l.label}
                   </a>
@@ -76,7 +76,7 @@ export default function Nav({ ready }) {
 
             <div className="flex items-center gap-2">
               <div className="hidden sm:block">
-                <MagneticButton href={whatsappLink()} target="_blank" rel="noopener" size="md">
+                <MagneticButton href={whatsappLink()} target="_blank" rel="noopener noreferrer" size="md">
                   <WhatsApp width="16" height="16" /> Start your project
                 </MagneticButton>
               </div>
@@ -86,7 +86,7 @@ export default function Nav({ ready }) {
                 aria-expanded={open}
                 aria-controls="mobile-menu"
                 aria-label={open ? 'Close menu' : 'Open menu'}
-                className="relative grid h-12 w-12 shrink-0 place-items-center rounded-full glass lg:hidden"
+                className="relative grid h-12 w-12 shrink-0 place-items-center rounded-full glass xl:hidden"
               >
                 <span className={`absolute h-[1.5px] w-5 bg-white transition-transform duration-500 ${open ? 'rotate-45' : '-translate-y-[4px]'}`} />
                 <span className={`absolute h-[1.5px] w-5 bg-white transition-transform duration-500 ${open ? '-rotate-45' : 'translate-y-[4px]'}`} />
@@ -100,19 +100,19 @@ export default function Nav({ ready }) {
         {open && (
           <m.div
             id="mobile-menu"
-            className="fixed inset-0 z-[55] flex flex-col bg-navy-deep/95 px-6 pb-10 pt-32 backdrop-blur-xl lg:hidden"
+            className="fixed inset-0 z-[55] flex flex-col overflow-y-auto bg-navy-deep/95 px-6 pb-[max(env(safe-area-inset-bottom),28px)] pt-[max(6rem,15svh)] backdrop-blur-xl xl:hidden"
             initial={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}
             animate={{ clipPath: 'circle(150% at calc(100% - 44px) 44px)' }}
             exit={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
           >
-            <ul className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-[min(0.5rem,1svh)]">
               {NAV_LINKS.map((l, i) => (
                 <li key={l.href} className="overflow-hidden">
                   <m.a
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="flex items-baseline gap-4 py-2 text-[2.4rem] font-extrabold uppercase tracking-[-0.01em] text-white"
+                    className="flex items-baseline gap-4 py-[min(0.5rem,1.2svh)] text-[min(2.4rem,6svh)] font-extrabold uppercase leading-[1.1] tracking-[-0.01em] text-white"
                     initial={{ y: '110%' }}
                     animate={{ y: 0 }}
                     transition={{ duration: 0.8, delay: 0.15 + i * 0.06, ease }}
@@ -124,12 +124,12 @@ export default function Nav({ ready }) {
               ))}
             </ul>
             <m.div
-              className="mt-auto"
+              className="mt-auto pt-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8, ease }}
             >
-              <MagneticButton href={whatsappLink()} target="_blank" rel="noopener" className="w-full">
+              <MagneticButton href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="w-full">
                 <WhatsApp /> Start your project
               </MagneticButton>
               <p className="mt-6 text-center text-[11px] uppercase tracking-[0.3em] text-mist/50">Thailand • Worldwide</p>

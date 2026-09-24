@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import { m, useScroll, useTransform } from 'motion/react'
 import Reveal from '../components/Reveal.jsx'
 import { PILLARS } from '../data/content.js'
@@ -28,14 +28,18 @@ export default function Intro() {
           id="intro-title"
           className="mt-5 max-w-5xl text-[clamp(1.9rem,7.6vw,5rem)] font-extrabold uppercase leading-[1.02] tracking-[-0.02em] text-white"
         >
+          {/* real spaces between words and lines keep the heading readable as words
+              for screen readers and search engines */}
           {HEADLINE.map((line, li) => (
             <span key={li} className="block">
               {line.map((w) => {
                 const i = idx++
                 return (
-                  <Word key={w + i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} accent={li === 1}>
-                    {w}
-                  </Word>
+                  <Fragment key={w + i}>
+                    <Word progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} accent={li === 1}>
+                      {w}
+                    </Word>{' '}
+                  </Fragment>
                 )
               })}
             </span>
@@ -59,7 +63,7 @@ function Word({ children, progress, range, accent }) {
   const opacity = useTransform(progress, range, [0.4, 1])
   const y = useTransform(progress, range, [6, 0])
   return (
-    <m.span style={{ opacity, y }} className={`mr-[0.25em] inline-block ${accent ? 'text-gradient-soft' : ''}`}>
+    <m.span style={{ opacity, y }} className={`inline-block ${accent ? 'text-gradient-soft' : ''}`}>
       {children}
     </m.span>
   )

@@ -33,7 +33,7 @@ export default function Splash({ onDone }) {
     } catch {
       /* storage unavailable — fine */
     }
-    const t = setTimeout(() => setVisible(false), reduce ? 350 : 1300)
+    const t = setTimeout(() => setVisible(false), reduce ? 350 : 1100)
     return () => clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible])

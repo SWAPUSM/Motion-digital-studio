@@ -72,9 +72,9 @@ export default function Hero({ ready }) {
         <m.div style={{ y: copyY, opacity: copyOpacity }} className="relative z-10">
           <m.p
             className="eyebrow flex items-center gap-3 max-[380px]:tracking-[0.2em]"
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0.5, y: 8 }}
             animate={ready ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, ease, delay: 0.05 }}
+            transition={{ duration: 0.7, ease }}
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-cyan [animation:pulse-ring_2s_ease-out_infinite]" />
@@ -87,22 +87,25 @@ export default function Hero({ ready }) {
             id="hero-title"
             className="mt-6 text-[clamp(1.85rem,9.1vw,3.9rem)] font-extrabold uppercase leading-[0.98] tracking-[-0.025em] text-white lg:text-[clamp(3.2rem,4.9vw,5.1rem)]"
           >
+            {/* The message is legible from the first frame: lines lift and brighten
+                into place rather than rising from behind a mask. */}
             {LINES.map((line, i) => (
-              <span key={line} className="block overflow-hidden pb-[0.07em]">
+              <span key={line} className="block pb-[0.07em]">
                 <m.span
                   className={`block ${i === 2 ? 'text-gradient' : ''}`}
-                  initial={{ y: '108%' }}
-                  animate={ready ? { y: 0 } : {}}
-                  transition={{ duration: 1.1, ease, delay: 0.12 + i * 0.12 }}
+                  initial={{ opacity: 0.45, y: '0.28em' }}
+                  animate={ready ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.8, ease, delay: i * 0.07 }}
                 >
                   {line}
+                  {i < LINES.length - 1 && ' '}
                   {i === 2 && (
                     <m.span
                       aria-hidden="true"
                       className="ml-3 inline-block h-[0.1em] w-[1.6em] translate-y-[-0.28em] rounded-full bg-gradient-to-r from-cyan to-transparent align-middle"
                       initial={{ scaleX: 0, originX: 0 }}
                       animate={ready ? { scaleX: 1 } : {}}
-                      transition={{ duration: 1.2, ease, delay: 0.9 }}
+                      transition={{ duration: 1, ease, delay: 0.45 }}
                     />
                   )}
                 </m.span>
@@ -112,20 +115,20 @@ export default function Hero({ ready }) {
 
           <m.p
             className="mt-5 max-w-[34rem] text-[15px] leading-relaxed text-mist/75 md:text-[17px]"
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0.55, y: 10 }}
             animate={ready ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, ease, delay: 0.55 }}
+            transition={{ duration: 0.7, ease, delay: 0.2 }}
           >
             Modern, high-performance websites designed to turn visitors into customers and businesses into stronger brands.
           </m.p>
 
           <m.div
             className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-4"
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0.6, y: 10 }}
             animate={ready ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1, ease, delay: 0.7 }}
+            transition={{ duration: 0.7, ease, delay: 0.3 }}
           >
-            <MagneticButton href={whatsappLink()} target="_blank" rel="noopener">
+            <MagneticButton href={whatsappLink()} target="_blank" rel="noopener noreferrer">
               <WhatsApp /> Start your project
             </MagneticButton>
             <MagneticButton href="#work" variant="ghost">
@@ -140,7 +143,7 @@ export default function Hero({ ready }) {
           className="relative mx-auto aspect-[4/3.1] w-full max-w-[640px] [perspective:1600px] sm:aspect-[4/3] lg:max-w-none"
           initial={{ opacity: 0 }}
           animate={ready ? { opacity: 1 } : {}}
-          transition={{ duration: 1.4, ease, delay: 0.35 }}
+          transition={{ duration: 1.1, ease, delay: 0.25 }}
           aria-hidden="true"
         >
           <m.div

@@ -27,7 +27,7 @@ export default function FloatingCta() {
         <m.a
           href={whatsappLink()}
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           aria-label="Start your project on WhatsApp"
           className="fixed bottom-[max(env(safe-area-inset-bottom),18px)] right-4 z-50 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-electric to-cyan text-white shadow-[0_12px_40px_-8px_rgba(0,123,255,.9)] md:hidden"
           initial={{ scale: 0, opacity: 0 }}

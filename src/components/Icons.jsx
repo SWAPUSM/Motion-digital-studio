@@ -26,3 +26,6 @@ export const Facebook = (p) => (
 export const TikTok = (p) => (
   <svg viewBox="0 0 24 24" width="18" height="18" {...base} {...p}><path d="M14 3v11.5a3.5 3.5 0 1 1-3.5-3.5M14 3c.4 2.6 2.2 4.4 5 4.6" /></svg>
 )
+export const Clock = (p) => (
+  <svg viewBox="0 0 24 24" width="14" height="14" {...base} strokeWidth={1.8} {...p}><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>
+)
