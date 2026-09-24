@@ -43,10 +43,13 @@ export default function Hero({ ready }) {
   const stageScale = useTransform(scrollYProgress, [0, 1], [1, 0.92])
 
   return (
-    <section
+    <m.section
       id="top"
       ref={ref}
       onPointerMove={onMove}
+      initial={{ scale: 1.06 }}
+      animate={ready ? { scale: 1 } : {}}
+      transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       className="relative isolate flex min-h-[100svh] flex-col overflow-hidden pb-10 pt-24 md:pt-32 lg:pb-10"
       aria-labelledby="hero-title"
     >
@@ -77,7 +80,7 @@ export default function Hero({ ready }) {
               <span className="absolute inline-flex h-full w-full rounded-full bg-cyan [animation:pulse-ring_2s_ease-out_infinite]" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan" />
             </span>
-            Motion Digital Studio
+            Premium web design studio
           </m.p>
 
           <h1
@@ -226,7 +229,7 @@ export default function Hero({ ready }) {
           <span className="animate-scroll-cue absolute inset-0 bg-gradient-to-b from-cyan to-electric" />
         </span>
       </m.a>
-    </section>
+    </m.section>
   )
 }
 

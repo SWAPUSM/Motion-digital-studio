@@ -50,13 +50,17 @@ export default function Nav({ ready }) {
               scrolled ? 'glass shadow-[0_10px_40px_-12px_rgba(0,0,0,.6)]' : 'border border-transparent'
             }`}
           >
-            <a href="#top" className="flex items-center gap-3" aria-label="Motion Digital Studio — home">
-              <span className="block w-[66px] overflow-hidden rounded-[14px] ring-1 ring-white/10 md:w-[78px]">
-                <Logo priority sizes="80px" alt="Motion Digital Studio" />
+            <a href="#top" className="flex min-w-0 items-center gap-3 md:gap-4" aria-label="Motion Digital Studio — home">
+              <span className="block w-[66px] shrink-0 overflow-hidden rounded-[14px] ring-1 ring-white/10 md:w-[78px]">
+                <Logo priority sizes="80px" alt="" />
+              </span>
+              <span className="flex min-w-0 flex-col leading-none" aria-hidden="true">
+                <span className="text-[15px] font-extrabold uppercase tracking-[0.22em] text-white md:text-[17px]">Motion</span>
+                <span className="mt-1.5 text-[9.5px] font-semibold uppercase tracking-[0.3em] text-cyan md:text-[10.5px]">Digital Studio</span>
               </span>
             </a>
 
-            <ul className="hidden items-center gap-1 md:flex">
+            <ul className="hidden items-center gap-1 lg:flex">
               {NAV_LINKS.map((l) => (
                 <li key={l.href}>
                   <a
@@ -81,7 +85,7 @@ export default function Nav({ ready }) {
                 aria-expanded={open}
                 aria-controls="mobile-menu"
                 aria-label={open ? 'Close menu' : 'Open menu'}
-                className="relative grid h-12 w-12 place-items-center rounded-full glass md:hidden"
+                className="relative grid h-12 w-12 shrink-0 place-items-center rounded-full glass lg:hidden"
               >
                 <span className={`absolute h-[1.5px] w-5 bg-white transition-transform duration-500 ${open ? 'rotate-45' : '-translate-y-[4px]'}`} />
                 <span className={`absolute h-[1.5px] w-5 bg-white transition-transform duration-500 ${open ? '-rotate-45' : 'translate-y-[4px]'}`} />
@@ -95,7 +99,7 @@ export default function Nav({ ready }) {
         {open && (
           <m.div
             id="mobile-menu"
-            className="fixed inset-0 z-[55] flex flex-col bg-navy-deep/95 px-6 pb-10 pt-32 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 z-[55] flex flex-col bg-navy-deep/95 px-6 pb-10 pt-32 backdrop-blur-xl lg:hidden"
             initial={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}
             animate={{ clipPath: 'circle(150% at calc(100% - 44px) 44px)' }}
             exit={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}

@@ -68,15 +68,19 @@ function ProjectPanel({ project, index, total, progress }) {
               <div aria-hidden="true" className="transition-transform duration-700 ease-[var(--ease-expo)] lg:group-hover:-translate-y-1">
                 <BrowserFrame domain={project.domain} tone={project.mock === 'property' ? 'dark' : 'light'}>
                   {project.image ? (
-                    <img src={project.image} alt="" loading="lazy" decoding="async" className="mock-page absolute inset-x-0 top-0 w-full" />
+                    <img src={project.image} alt="" loading="lazy" decoding="async" className="mock-page absolute inset-x-0 top-0 block w-full" />
                   ) : (
                     <ProjectMock mock={project.mock} />
                   )}
                 </BrowserFrame>
               </div>
-              {!project.image && (
+              {(project.mobileImage || !project.image) && (
                 <PhoneFrame aria-hidden="true" className="absolute -bottom-4 right-3 w-[24%] rotate-[4deg] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:rotate-0 sm:right-6 md:-bottom-6 md:w-[20%]">
-                  <ProjectMock mock={project.mock} mobile />
+                  {project.mobileImage ? (
+                    <img src={project.mobileImage} alt="" loading="lazy" decoding="async" className="mock-page absolute inset-x-0 top-0 block w-full" />
+                  ) : (
+                    <ProjectMock mock={project.mock} mobile />
+                  )}
                 </PhoneFrame>
               )}
               <span className="pointer-events-none absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-navy/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-white opacity-90 backdrop-blur transition-opacity duration-500 group-hover:opacity-0 group-data-[open=true]:opacity-0 md:bottom-5 md:left-5">

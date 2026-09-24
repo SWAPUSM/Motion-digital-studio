@@ -66,8 +66,10 @@ export const PACKAGES = [
   },
 ]
 
-// `mock` selects the built-in device mockup. To use a real screenshot instead,
-// add e.g. `image: '/work/teddy-bike.webp'` (a tall full-page capture works best).
+// `mock` selects the built-in device mockup, used until real screenshots are added.
+// Real screenshots: `image` fills the browser frame (desktop capture, ideally a tall
+// full-page shot) and `mobileImage` fills the phone frame (mobile capture). Put the
+// files in public/work/, e.g. image: '/work/teddy-bike-desktop.webp'.
 export const PROJECTS = [
   {
     id: 'teddy-bike',
