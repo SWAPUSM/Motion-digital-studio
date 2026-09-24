@@ -12,16 +12,55 @@ export default function Nav({ ready }) {
   const [hidden, setHidden] = useState(false)
   const [open, setOpen] = useState(false)
 
+  // Smart header: hides after a deliberate scroll down, returns on a deliberate
+  // scroll up anywhere on the page, and always shows near the top. Work is batched
+  // into one rAF per frame; direction must move ≥ THRESHOLD px before the state
+  // flips, so tiny Safari/momentum jitters never toggle it. Positions are clamped
+  // to the real scroll range, so iOS rubber-band overscroll (negative scrollY at
+  // the top, overshoot at the bottom) can't hide or show it by mistake.
   useEffect(() => {
-    let last = window.scrollY
-    const onScroll = () => {
-      const y = window.scrollY
-      setScrolled(y > 24)
-      setHidden(y > 480 && y > last + 4)
-      if (y < last - 4) setHidden(false)
-      last = y
+    const TOP = 20 // always visible within this distance of the top
+    const HIDE_AFTER = 64 // never hide before this point
+    const THRESHOLD = 8 // px of intentional movement before changing state
+    const clampY = () => {
+      const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight)
+      return Math.min(Math.max(window.scrollY, 0), max)
     }
-    onScroll()
+    let anchor = clampY() // where the current direction run started
+    let dir = 0
+    let isHidden = false
+    let ticking = false
+
+    const update = () => {
+      ticking = false
+      const y = clampY()
+      setScrolled(y > 24)
+      if (y <= TOP) {
+        anchor = y
+        dir = 0
+        if (isHidden) setHidden((isHidden = false))
+        return
+      }
+      const d = y > anchor ? 1 : y < anchor ? -1 : 0
+      if (d !== 0 && d !== dir) {
+        // direction changed: start measuring the new run from the turning point
+        dir = d
+        anchor = y - d // the 1px that revealed the new direction counts
+        return
+      }
+      const travelled = Math.abs(y - anchor)
+      if (travelled < THRESHOLD) return
+      if (dir === 1 && !isHidden && y > HIDE_AFTER) setHidden((isHidden = true))
+      else if (dir === -1 && isHidden) setHidden((isHidden = false))
+      anchor = y
+    }
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true
+        requestAnimationFrame(update)
+      }
+    }
+    update()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -35,12 +74,14 @@ export default function Nav({ ready }) {
 
   return (
     <>
-      <m.header
-        className="fixed inset-x-0 top-0 z-[60] pt-[max(env(safe-area-inset-top),10px)]"
-        initial={{ y: -90, opacity: 0 }}
-        animate={ready ? { y: hidden && !open ? -110 : 0, opacity: 1 } : {}}
-        transition={{ duration: 0.8, ease }}
+      {/* outer element slides out/in on scroll (CSS transform, GPU-only);
+          the inner one keeps the original entrance animation */}
+      <header
+        className={`fixed inset-x-0 top-0 z-[60] pt-[max(env(safe-area-inset-top),10px)] transition-transform duration-[380ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform motion-reduce:transition-none ${
+          hidden && !open ? '-translate-y-[120%]' : 'translate-y-0'
+        }`}
       >
+        <m.div initial={{ y: -90, opacity: 0 }} animate={ready ? { y: 0, opacity: 1 } : {}} transition={{ duration: 0.8, ease }}>
         <nav
           aria-label="Main"
           className={`container-x flex items-center justify-between transition-all duration-500 ${scrolled ? 'py-2' : 'py-3 md:py-5'}`}
@@ -94,7 +135,8 @@ export default function Nav({ ready }) {
             </div>
           </div>
         </nav>
-      </m.header>
+        </m.div>
+      </header>
 
       <AnimatePresence>
         {open && (

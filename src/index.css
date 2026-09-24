@@ -140,6 +140,19 @@
   0%, 100% { transform: rotateX(8deg) rotateY(-16deg); }
   50% { transform: rotateX(4deg) rotateY(-8deg); }
 }
+/* Hero workspace: each layer floats on its own slow rhythm */
+@keyframes float-slow {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -6px; }
+}
+@keyframes drift {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  50% { translate: 6px 7px; rotate: -1deg; }
+}
+@keyframes float-tilt {
+  0%, 100% { translate: 0 0; rotate: 0deg; }
+  50% { translate: -4px -9px; rotate: 1.2deg; }
+}
 @keyframes sway-soft {
   0%, 100% { transform: rotateX(5deg) rotateY(-8deg); }
   50% { transform: rotateX(2deg) rotateY(-3deg); }
@@ -175,6 +188,9 @@
 .animate-float-b { animation: float-b 8s ease-in-out infinite; }
 .animate-sway { animation: sway 10s ease-in-out infinite; }
 .animate-sway-soft { animation: sway-soft 10s ease-in-out infinite; }
+.animate-float-slow { animation: float-slow 11s ease-in-out infinite; }
+.animate-drift { animation: drift 13s ease-in-out infinite; }
+.animate-float-tilt { animation: float-tilt 9s ease-in-out -2s infinite; }
 .animate-marquee { animation: marquee 38s linear infinite; }
 .animate-scroll-cue { animation: scroll-cue 2.4s var(--ease-expo) infinite; }
 
