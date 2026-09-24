@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, m } from 'motion/react'
-import Logo from './Logo.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import { WhatsApp } from './Icons.jsx'
 import { NAV_LINKS, whatsappLink } from '../config.js'
@@ -91,9 +90,14 @@ export default function Nav({ ready }) {
               scrolled ? 'glass shadow-[0_10px_40px_-12px_rgba(0,0,0,.6)]' : 'border border-transparent'
             }`}
           >
-            <a href="#top" className="flex min-w-0 items-center gap-3 md:gap-4">
-              <span className="block w-[66px] shrink-0 overflow-hidden rounded-[14px] ring-1 ring-white/10 md:w-[78px]">
-                <Logo priority sizes="80px" alt="" />
+            <a href="#top" className="flex min-w-0 items-center gap-2 md:gap-3">
+              {/* official transparent "M" symbol, uncropped, sitting straight on the header */}
+              <span className="grid h-[44px] w-[66px] shrink-0 place-items-center md:h-[52px] md:w-[78px]">
+                <picture className="flex w-[84%]">
+                  <source type="image/avif" srcSet="/brand/motion-mark-128.avif 128w, /brand/motion-mark-256.avif 256w" sizes="(min-width: 768px) 66px, 56px" />
+                  <source type="image/webp" srcSet="/brand/motion-mark-128.webp 128w, /brand/motion-mark-256.webp 256w" sizes="(min-width: 768px) 66px, 56px" />
+                  <img src="/brand/motion-mark-256.png" width="1774" height="887" alt="" decoding="async" fetchPriority="high" className="block h-auto w-full object-contain" />
+                </picture>
               </span>
               <span className="flex min-w-0 flex-col leading-none">
                 <span className="text-[15px] font-extrabold uppercase tracking-[0.22em] text-white md:text-[17px]">Motion</span>
