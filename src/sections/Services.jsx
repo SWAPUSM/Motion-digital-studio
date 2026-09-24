@@ -104,7 +104,7 @@ function PackageCard({ pkg, index }) {
     >
       <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       {featured && (
-        <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-cyan/20 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 bg-[radial-gradient(closest-side,rgba(0,209,255,.2),transparent)]" />
       )}
 
       <div className="relative flex items-center justify-between">

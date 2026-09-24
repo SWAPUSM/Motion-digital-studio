@@ -57,7 +57,8 @@ export default function Ribbon({ d, className = '', viewBox = '0 0 1440 800', de
           strokeWidth="3"
           strokeLinecap="round"
           strokeDasharray="0.08 1.12"
-          style={{ animation: `travel 5.5s cubic-bezier(.45,0,.2,1) ${delay + 2}s infinite both`, filter: 'drop-shadow(0 0 6px #00D1FF)' }}
+          className="ribbon-pulse"
+          style={{ animation: `travel 5.5s cubic-bezier(.45,0,.2,1) ${delay + 2}s infinite both` }}
         />
       )}
     </svg>

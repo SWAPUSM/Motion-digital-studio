@@ -1,17 +1,16 @@
 # Portfolio screenshots
 
-Real captures of client websites, referenced from `src/data/content.js`.
+Generated files — don't edit by hand. Masters live in `scripts/work-masters/`:
 
-| Project            | Mobile (phone frame)             | Desktop (browser frame)                                        |
-| ------------------ | -------------------------------- | -------------------------------------------------------------- |
-| Teddy Bike Samui   | `teddy-bike-mobile.webp`         | `teddy-bike-desktop.webp` + `-desktop-900.webp`                |
-| Samui Property 360 | `samui-property-360-mobile.webp` | `samui-property-360-desktop.webp` + `-desktop-900.webp`        |
-| Valérie d'Art Don  | `valerie-dart-don-mobile.webp`   | `valerie-dart-don-desktop.webp` + `-desktop-900.webp`          |
+| Master                              | What it is                                                   |
+| ----------------------------------- | ------------------------------------------------------------ |
+| `<slug>-desktop-master.webp`        | Desktop capture, cropped just below the browser bar, 7:4, ≥1600px wide |
+| `<slug>-mobile-master.webp`         | Full iPhone screenshot (1290 × 2796 or similar), ≥780px wide |
 
-- **Mobile only** (`mobileImage`): the phone is shown large and centred.
-- **Mobile + desktop** (`image` + `imageSmall`): a browser frame with the phone beside it.
+Run `npm run work-assets` to regenerate everything in this folder:
 
-Mobile: a full iPhone screenshot (1290 × 2796) resized to 780px wide.
-Desktop: one screen, cropped just below the browser's address/tab bar (the frame draws its
-own bar), in a 7:4 ratio. Export at 1600px wide plus a 900px copy for phones.
-Save as WebP at quality 80, and keep each file under about 300 KB.
+- `<slug>-desktop-{1600,900}.{avif,webp}` and `<slug>-mobile-{780,390}.{avif,webp}`
+- tiny blurred previews in `src/data/placeholders.json` (shown while images load)
+
+Then reference the project in `src/data/content.js` with `slug: '<slug>'`, and add
+`desktop: true` if it has a desktop capture. Without it, the phone is shown alone.

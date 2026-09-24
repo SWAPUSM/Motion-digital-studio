@@ -1,4 +1,5 @@
 import { m } from 'motion/react'
+import { usePauseOffscreen } from '../hooks/usePauseOffscreen.js'
 import Reveal from '../components/Reveal.jsx'
 import MaskedLines from '../components/MaskedLines.jsx'
 import { INDUSTRIES } from '../data/content.js'
@@ -80,9 +81,10 @@ function Globe() {
 }
 
 export default function Global() {
+  const pauseRef = usePauseOffscreen()
   const row = [...INDUSTRIES, ...INDUSTRIES]
   return (
-    <section id="global" className="relative overflow-hidden py-16 md:py-36" aria-labelledby="global-title">
+    <section ref={pauseRef} id="global" className="relative overflow-hidden py-16 md:py-36" aria-labelledby="global-title">
       <div className="container-x grid items-center gap-6 md:gap-12 lg:grid-cols-[1.2fr_1fr]">
         <div>
           <p className="eyebrow flex items-center gap-3">
@@ -97,9 +99,9 @@ export default function Global() {
           </Reveal>
         </div>
         <Reveal delay={0.1} className="relative mx-auto aspect-square w-full max-w-[340px] md:max-w-[460px]">
-          <div aria-hidden="true" className="absolute inset-[10%] rounded-full bg-electric/25 blur-3xl" />
+          <div aria-hidden="true" className="absolute -inset-[5%] bg-[radial-gradient(closest-side,rgba(0,123,255,.3),transparent)]" />
           <Globe />
-          <span className="absolute left-[47%] top-[58%] rounded-full border border-cyan/30 bg-navy/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-cyan backdrop-blur">
+          <span className="absolute left-[47%] top-[58%] rounded-full border border-cyan/30 bg-navy/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-cyan">
             Thailand
           </span>
         </Reveal>

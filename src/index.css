@@ -185,6 +185,27 @@
   transition-duration: 4.5s;
 }
 
+/* Touch devices (iPhone Safari): keep scrolling smooth. Backdrop blur and
+   blend-mode layers are re-rendered on every scroll frame there, so glass
+   becomes a solid tinted surface and the noise texture is dropped. */
+@media (hover: none) {
+  .glass {
+    background: linear-gradient(160deg, rgb(20 38 62 / 0.92), rgb(10 24 42 / 0.92));
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .noise,
+  .ribbon-pulse {
+    display: none;
+  }
+}
+
+/* Decorative loops pause while their section is off-screen */
+.anim-paused *,
+.anim-paused {
+  animation-play-state: paused !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

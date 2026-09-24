@@ -17,7 +17,7 @@ export default function Footer() {
     <footer className="relative overflow-hidden pb-[max(env(safe-area-inset-bottom),28px)] pt-14 md:pt-20">
       {/* glowing hairline + soft light, echoing the motion line */}
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/50 to-transparent" />
-      <div aria-hidden="true" className="absolute left-1/2 top-0 h-40 w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-electric/15 blur-3xl" />
+      <div aria-hidden="true" className="absolute left-1/2 top-0 h-56 w-[90%] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(0,123,255,.16),transparent)]" />
 
       <div className="container-x relative">
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-[1.5fr_1fr_1fr_auto] md:gap-10">

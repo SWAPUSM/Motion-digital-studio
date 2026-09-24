@@ -7,7 +7,7 @@ export function BrowserFrame({ domain, children, className = '', aspect = 'aspec
   const light = tone === 'light'
   return (
     <div
-      className={`overflow-hidden rounded-[14px] border shadow-[0_40px_120px_-30px_rgba(0,0,0,.85),0_0_0_1px_rgba(255,255,255,.04)] ${
+      className={`overflow-hidden rounded-[14px] border shadow-[0_24px_50px_-24px_rgba(0,0,0,.85)] lg:shadow-[0_40px_120px_-30px_rgba(0,0,0,.85)] ${
         light ? 'border-white/20 bg-[#eef1f5]' : 'border-white/10 bg-[#0c1626]'
       } ${className}`}
     >
@@ -30,20 +30,40 @@ export function BrowserFrame({ domain, children, className = '', aspect = 'aspec
         </div>
         <span className="w-10 md:w-12" aria-hidden="true" />
       </div>
-      <div className={`@container relative overflow-hidden [content-visibility:auto] [--frame-h:62.5cqw] ${aspect}`}>{children}</div>
+      <div className={`@container relative overflow-hidden ${aspect}`}>{children}</div>
     </div>
   )
 }
 
+/**
+ * Realistic iPhone 15/16 Pro: brushed-titanium band, thin even black bezel,
+ * Dynamic Island, true 1179 × 2556 screen ratio and matching corner radii.
+ * Everything is sized in `cqw` of the phone's own width, so the proportions hold
+ * at any size. Straight, never tilted; only a modest static shadow (cheap to scroll).
+ */
+const BUTTON = 'absolute w-[1.1cqw] bg-gradient-to-b from-[#8d9096] via-[#55585e] to-[#8d9096]'
+
 export function PhoneFrame({ children, className = '', ...rest }) {
   return (
-    <div
-      {...rest}
-      className={`rounded-[2.1rem] border border-white/15 bg-[#05080f] p-[5px] shadow-[0_40px_90px_-20px_rgba(0,0,0,.9),inset_0_0_0_1px_rgba(255,255,255,.05)] ${className}`}
-    >
-      <div className="@container relative aspect-[9/19.5] overflow-hidden rounded-[1.75rem] [content-visibility:auto] [--frame-h:216.6cqw]">
-        {children}
-        <div className="absolute left-1/2 top-[1.8%] h-[3.2%] w-[32%] -translate-x-1/2 rounded-full bg-black" aria-hidden="true" />
+    <div {...rest} className={`@container relative ${className}`}>
+      {/* side buttons: action + volume (left), side button (right) */}
+      <span aria-hidden="true" className={`${BUTTON} -left-[0.8cqw] top-[17%] h-[5.2%] rounded-l-[0.8cqw]`} />
+      <span aria-hidden="true" className={`${BUTTON} -left-[0.8cqw] top-[25%] h-[9%] rounded-l-[0.8cqw]`} />
+      <span aria-hidden="true" className={`${BUTTON} -left-[0.8cqw] top-[36%] h-[9%] rounded-l-[0.8cqw]`} />
+      <span aria-hidden="true" className={`${BUTTON} -right-[0.8cqw] top-[28%] h-[14%] rounded-r-[0.8cqw]`} />
+
+      {/* titanium band */}
+      <div className="rounded-[16.9cqw] bg-[linear-gradient(150deg,#b4b7bc_0%,#62656b_18%,#34363b_45%,#5b5e64_75%,#aeb1b6_100%)] p-[0.9cqw] shadow-[0_18px_36px_-14px_rgba(0,0,0,.8)]">
+        {/* black bezel */}
+        <div className="rounded-[16cqw] bg-black p-[3cqw] shadow-[inset_0_0_0_0.35cqw_rgba(255,255,255,.07)]">
+          {/* display */}
+          <div className="@container relative aspect-[1179/2556] overflow-hidden rounded-[13cqw] bg-navy">
+            {children}
+            <div aria-hidden="true" className="absolute left-1/2 top-[1.3%] h-[4.3%] w-[32%] -translate-x-1/2 rounded-full bg-black" />
+            {/* faint glass reflection */}
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.07)_0%,transparent_32%)]" />
+          </div>
+        </div>
       </div>
     </div>
   )

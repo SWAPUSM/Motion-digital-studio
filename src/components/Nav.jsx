@@ -100,7 +100,7 @@ export default function Nav({ ready }) {
         {open && (
           <m.div
             id="mobile-menu"
-            className="fixed inset-0 z-[55] flex flex-col overflow-y-auto bg-navy-deep/95 px-6 pb-[max(env(safe-area-inset-bottom),28px)] pt-[max(6rem,15svh)] backdrop-blur-xl xl:hidden"
+            className="fixed inset-0 z-[55] flex flex-col overflow-y-auto bg-navy-deep/[.98] px-6 pb-[max(env(safe-area-inset-bottom),28px)] pt-[max(6rem,15svh)] xl:hidden"
             initial={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}
             animate={{ clipPath: 'circle(150% at calc(100% - 44px) 44px)' }}
             exit={{ clipPath: 'circle(0% at calc(100% - 44px) 44px)' }}

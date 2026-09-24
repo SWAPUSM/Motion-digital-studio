@@ -4,6 +4,9 @@ import SectionHeading from '../components/SectionHeading.jsx'
 import { BrowserFrame, PhoneFrame } from '../components/Devices.jsx'
 import { ArrowUpRight } from '../components/Icons.jsx'
 import { PROJECTS } from '../data/content.js'
+import PLACEHOLDERS from '../data/placeholders.json'
+import { useFinePointer } from '../hooks/useMediaQuery.js'
+import { useAfterLoad } from '../hooks/useAfterLoad.js'
 
 export default function Work() {
   const ref = useRef(null)
@@ -37,26 +40,29 @@ function ProjectPanel({ project, index, total, progress }) {
   const start = Math.min(index * seg, 1)
   const scale = useTransform(progress, [start, 1], [1, isLast ? 1 : 1 - (total - 1 - index) * 0.05])
   const dim = useTransform(progress, [start, Math.min(1, start + seg)], [0, isLast ? 0 : 0.6])
+  // Scroll-linked scale/dim only on desktop pointers. On iPhone the panels simply
+  // stack (pure CSS sticky), which Safari scrolls smoothly without JS per frame.
+  const depth = useFinePointer()
 
   return (
     <div className="sticky top-0 flex min-h-[100svh] items-start pb-6 pt-[76px] md:items-center md:py-24">
       <m.article
-        style={{ scale, top: index * 14 }}
+        style={depth ? { scale, top: index * 14 } : { top: index * 14 }}
         className="container-x relative origin-top"
         aria-labelledby={`proj-${project.id}`}
       >
-        <div className="ring-gradient relative overflow-hidden rounded-[28px] bg-gradient-to-br from-navy-soft to-navy-deep p-4 shadow-[0_-30px_80px_-40px_rgba(0,0,0,.9)] sm:p-6 md:rounded-[36px] md:p-10">
+        <div className="ring-gradient relative overflow-hidden rounded-[28px] bg-gradient-to-br from-navy-soft to-navy-deep p-4 shadow-[0_-20px_40px_-28px_rgba(0,0,0,.9)] sm:p-6 lg:shadow-[0_-30px_80px_-40px_rgba(0,0,0,.9)] md:rounded-[36px] md:p-10">
           {/* ambient glow in the project's own accent */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full opacity-25 blur-3xl"
-            style={{ background: project.accent }}
+            className="pointer-events-none absolute -right-40 -top-40 h-[28rem] w-[28rem] opacity-30"
+            style={{ background: `radial-gradient(closest-side, ${project.accent}, transparent)` }}
           />
-          <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 left-1/4 h-72 w-2/3 rounded-full bg-electric/20 blur-3xl" />
+          <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 left-[10%] h-96 w-[90%] bg-[radial-gradient(closest-side,rgba(0,123,255,.2),transparent)]" />
 
           <div className="relative grid items-center gap-6 md:gap-10 lg:grid-cols-[1.55fr_1fr]">
             {/* Device stage */}
-            {project.image ? <BrowserStage project={project} /> : <PhoneStage project={project} />}
+            {project.desktop ? <BrowserStage project={project} /> : <PhoneStage project={project} />}
 
             {/* Info */}
             <div className="relative px-1 pb-2 pt-4 md:px-0 lg:pt-0">
@@ -97,10 +103,43 @@ function ProjectPanel({ project, index, total, progress }) {
             </div>
           </div>
 
-          <m.div aria-hidden="true" style={{ opacity: dim }} className="pointer-events-none absolute inset-0 bg-navy-deep" />
+          {depth && <m.div aria-hidden="true" style={{ opacity: dim }} className="pointer-events-none absolute inset-0 bg-navy-deep" />}
         </div>
       </m.article>
     </div>
+  )
+}
+
+/**
+ * A portfolio screenshot: AVIF with WebP fallback at two widths, chosen by `sizes`.
+ * Fetched as soon as the page has loaded (not when scrolled to), so it's ready long
+ * before it comes into view; until then a 20px blurred preview + brand colour shows.
+ */
+const SHOT = { desktop: { widths: [900, 1600], w: 1600, h: 913 }, mobile: { widths: [390, 780], w: 780, h: 1691 } }
+
+function Shot({ slug, kind, alt, sizes }) {
+  const loaded = useAfterLoad()
+  const { widths, w, h } = SHOT[kind]
+  const set = (ext) => widths.map((x) => `/work/${slug}-${kind}-${x}.${ext} ${x}w`).join(', ')
+  const preview = { backgroundImage: `url(${PLACEHOLDERS[`${slug}-${kind}`]})` }
+  if (!loaded) return <div role="img" aria-label={alt} className="absolute inset-0 bg-navy-soft bg-cover bg-top" style={preview} />
+  return (
+    <picture>
+      <source type="image/avif" srcSet={set('avif')} sizes={sizes} />
+      <img
+        src={`/work/${slug}-${kind}-${widths[1]}.webp`}
+        srcSet={set('webp')}
+        sizes={sizes}
+        alt={alt}
+        width={w}
+        height={h}
+        loading="eager"
+        fetchPriority="low"
+        decoding="async"
+        className="absolute inset-0 block h-full w-full bg-navy-soft bg-cover bg-top object-cover object-top"
+        style={preview}
+      />
+    </picture>
   )
 }
 
@@ -113,36 +152,18 @@ function BrowserStage({ project }) {
       rel="noopener noreferrer"
       tabIndex={-1}
       aria-hidden="true"
-      className="group relative block pb-4 md:pb-6"
+      className="group relative block pb-5 md:pb-8"
     >
       <div className="transition-transform duration-700 ease-[var(--ease-expo)] lg:group-hover:-translate-y-1">
         <BrowserFrame domain={project.domain} tone={project.tone} aspect="aspect-[7/4]">
-          <img
-            src={project.image}
-            srcSet={project.imageSmall ? `${project.imageSmall} 900w, ${project.image} 1600w` : undefined}
-            sizes="(min-width: 1024px) 60vw, 92vw"
-            alt={`${project.name} website on desktop`}
-            width="1600"
-            height="913"
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 block h-full w-full object-cover object-top"
-          />
+          <Shot slug={project.slug} kind="desktop" alt={`${project.name} website on desktop`} sizes="(min-width: 1024px) 58vw, 92vw" />
         </BrowserFrame>
       </div>
-      {project.mobileImage && (
-        <PhoneFrame className="absolute bottom-0 right-2 w-[23%] max-w-[190px] rotate-[4deg] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1 group-hover:rotate-0 sm:right-5 md:w-[19%]">
-          <img
-            src={project.mobileImage}
-            alt={`${project.name} website on a phone`}
-            width="780"
-            height="1691"
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 block h-full w-full object-cover object-top"
-          />
+      <div className="absolute bottom-0 right-3 w-[22%] max-w-[180px] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1.5 sm:right-6 md:w-[18%]">
+        <PhoneFrame>
+          <Shot slug={project.slug} kind="mobile" alt={`${project.name} website on a phone`} sizes="(min-width: 1024px) 11vw, 22vw" />
         </PhoneFrame>
-      )}
+      </div>
     </a>
   )
 }
@@ -161,23 +182,16 @@ function PhoneStage({ project }) {
       {/* stage lighting */}
       <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_45%,rgba(0,123,255,.22),transparent_70%)]" />
       <div
-        className="absolute left-1/2 top-1/2 aspect-square w-[80%] max-w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-3xl"
-        style={{ background: project.accent }}
+        className="absolute left-1/2 top-1/2 aspect-square w-full max-w-[640px] -translate-x-1/2 -translate-y-1/2 opacity-35"
+        style={{ background: `radial-gradient(closest-side, ${project.accent}, transparent)` }}
       />
       <div className="absolute left-1/2 top-1/2 aspect-square w-[88%] max-w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[.06]" />
-      <div className="absolute left-1/2 top-1/2 aspect-square w-[64%] max-w-[410px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan/10" />
-      <div className="grid-bg absolute inset-0 opacity-50 [mask-image:radial-gradient(55%_55%_at_50%_50%,#000,transparent)]" />
-
-      {/* floor shadow */}
-      <div className="absolute bottom-[6%] left-1/2 h-8 w-[38%] max-w-[240px] -translate-x-1/2 rounded-full bg-black/60 blur-2xl" />
 
       {/* sized by height as well as width, so the whole panel fits short phone screens */}
-      <div className="relative w-[min(40%,150px,17svh)] sm:w-[40%] sm:max-w-[210px] lg:w-[250px] lg:max-w-none">
-        <div className="animate-float-a">
-          <PhoneFrame className="rotate-[-3deg] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:rotate-0 group-hover:scale-[1.03]">
-            <img src={project.mobileImage} alt={`${project.name} website on a phone`} width="780" height="1691" loading="lazy" decoding="async" className="absolute inset-0 block h-full w-full object-cover object-top" />
-          </PhoneFrame>
-        </div>
+      <div className="relative w-[min(40%,150px,17svh)] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1.5 sm:w-[40%] sm:max-w-[210px] lg:w-[250px] lg:max-w-none">
+        <PhoneFrame>
+          <Shot slug={project.slug} kind="mobile" alt={`${project.name} website on a phone`} sizes="(min-width: 1024px) 250px, 40vw" />
+        </PhoneFrame>
       </div>
     </a>
   )

@@ -52,7 +52,7 @@ export function AuroraDesktop() {
           ['Villa Marée', ['#1b3d6b', '#88c9ea'], ['#0f5d86', '#07263b']],
           ['Villa Horizon', ['#140e2e', '#b56a8a'], ['#2b3b6b', '#0c1731']],
         ].map(([name, sky, sea]) => (
-          <div key={name} className="overflow-hidden rounded-[1cqw] border border-white/10 bg-white/5 backdrop-blur">
+          <div key={name} className="overflow-hidden rounded-[1cqw] border border-white/10 bg-[#0b1a2e]/80">
             <Scene className="h-[7.5cqw]" sky={sky} sea={sea} horizon={58} sunX={30} />
             <div className="flex items-center justify-between px-[1.2cqw] py-[1cqw] text-[1.1cqw]">
               <span style={serif}>{name}</span>

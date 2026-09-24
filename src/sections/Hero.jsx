@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { m, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
 import { useFinePointer } from '../hooks/useMediaQuery.js'
+import { usePauseOffscreen } from '../hooks/usePauseOffscreen.js'
 import MagneticButton from '../components/MagneticButton.jsx'
 import Ribbon from '../components/Ribbon.jsx'
 import Particles from '../components/Particles.jsx'
@@ -15,6 +16,7 @@ const RIBBON = 'M-80 640 C 180 660, 300 250, 560 300 S 820 700, 1040 460 S 1300 
 
 export default function Hero({ ready }) {
   const ref = useRef(null)
+  const pauseRef = usePauseOffscreen()
   const reduce = useReducedMotion()
   const fine = useFinePointer()
   const tilt = fine && !reduce
@@ -139,6 +141,7 @@ export default function Hero({ ready }) {
 
         {/* 3D stage */}
         <m.div
+          ref={pauseRef}
           style={{ y: stageY, scale: stageScale }}
           className="relative mx-auto aspect-[4/3.1] w-full max-w-[640px] [perspective:1600px] sm:aspect-[4/3] lg:max-w-none"
           initial={{ opacity: 0 }}
@@ -151,7 +154,7 @@ export default function Hero({ ready }) {
             style={tilt ? { rotateX, rotateY } : reduce ? { rotateX: 8, rotateY: -12 } : undefined}
           >
             {/* depth glow */}
-            <div className="absolute inset-[8%] rounded-[40px] bg-[radial-gradient(closest-side,rgba(0,123,255,.45),transparent)] blur-2xl [transform:translateZ(-160px)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(closest-side,rgba(0,123,255,.4),transparent)] [transform:translateZ(-160px)]" />
 
             {/* design-system card (back) */}
             <Layer z={-80} className="left-[-4%] top-[-3%] w-[34%]" delay={0.55} ready={ready} float="b">
@@ -173,7 +176,7 @@ export default function Hero({ ready }) {
               <BrowserFrame domain="aurora-villas.com">
                 <AuroraDesktop />
               </BrowserFrame>
-              <div className="absolute -bottom-6 left-[10%] right-[10%] h-10 rounded-full bg-electric/40 blur-2xl" />
+              <div className="absolute -bottom-8 left-[5%] right-[5%] h-16 bg-[radial-gradient(closest-side,rgba(0,123,255,.45),transparent)]" />
             </Layer>
 
             {/* phone (front) */}

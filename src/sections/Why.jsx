@@ -54,7 +54,7 @@ export default function Why() {
                 viewport={{ once: true }}
                 transition={{ duration: 1.6, delay: 0.2 + i * 0.15, ease }}
               />
-              <div aria-hidden="true" className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-cyan/0 blur-2xl transition-colors duration-700 group-hover:bg-cyan/20" />
+              <div aria-hidden="true" className="absolute -right-16 -top-16 h-44 w-44 bg-[radial-gradient(closest-side,rgba(0,209,255,.2),transparent)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
               <div className="relative row-span-2 grid h-12 w-12 place-items-center rounded-2xl sm:h-14 sm:w-14 border border-cyan/20 bg-gradient-to-br from-electric/20 to-cyan/5 text-cyan transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1 group-hover:rotate-[-4deg]">
                 <Icon name={r.icon} />
               </div>
