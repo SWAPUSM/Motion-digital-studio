@@ -33,7 +33,33 @@
     <meta name="twitter:description" content="Modern, high-performance websites for businesses in Thailand and worldwide." />
     <meta name="twitter:image" content="https://motiondigitalstudio.com/brand/og-image.jpg" />
 
-    <link rel="preload" as="image" type="image/avif" href="/brand/motion-logo-480.avif" />
+    <!-- Opening intro: painted with the very first frame (before the app's JS loads),
+         so there is never a white or empty screen. Pure CSS; the tiny script below
+         hands off to the app. Plays once per browsing session. -->
+    <style>
+      html,body{background:#061424;margin:0}
+      #mds-intro{position:fixed;inset:0;z-index:90;display:grid;place-items:center;pointer-events:none;overflow:hidden}
+      #mds-intro .bg{position:absolute;inset:0;background:radial-gradient(38% 30% at 50% 50%,rgba(0,123,255,.13),rgba(0,209,255,.04) 55%,transparent 75%),#04101f}
+      #mds-intro .halo{position:absolute;width:clamp(260px,70vw,520px);aspect-ratio:2/1;background:radial-gradient(closest-side,rgba(0,150,255,.28),rgba(0,209,255,.08) 55%,transparent);opacity:0;animation:mds-halo 1s ease-out .15s forwards}
+      #mds-intro .mark{position:relative;width:clamp(128px,36vw,210px);aspect-ratio:1774/887;opacity:0;transform:scale(.9);will-change:transform,opacity}
+      #mds-intro.go .mark{animation:mds-in .85s cubic-bezier(.16,1,.3,1) .05s forwards}
+      #mds-intro .mark img{display:block;width:100%;height:100%;filter:drop-shadow(0 0 10px rgba(0,190,255,.35))}
+      #mds-intro .sweep{position:absolute;inset:0;overflow:hidden;-webkit-mask:url(/brand/motion-mark-512.webp) center/contain no-repeat;mask:url(/brand/motion-mark-512.webp) center/contain no-repeat}
+      #mds-intro .sweep::before{content:"";position:absolute;top:0;bottom:0;left:0;width:45%;background:linear-gradient(100deg,transparent,rgba(210,250,255,.55) 50%,transparent);transform:translateX(-120%)}
+      #mds-intro.go .sweep::before{animation:mds-sweep .8s cubic-bezier(.45,0,.25,1) .35s forwards}
+      #mds-intro.exit .bg{opacity:0;transition:opacity .6s cubic-bezier(.4,0,.2,1) .05s}
+      #mds-intro.exit .halo{opacity:0;transition:opacity .4s ease}
+      #mds-intro.exit .mark{animation:mds-out .65s cubic-bezier(.22,1,.36,1) forwards}
+      #mds-intro.reduce .halo,#mds-intro.reduce .sweep{display:none}
+      #mds-intro.reduce .mark{opacity:1;transform:none;animation:none}
+      #mds-intro.reduce.exit .mark{animation:none;opacity:0;transition:opacity .3s ease}
+      #mds-intro.reduce.exit .bg{transition:opacity .3s ease}
+      @keyframes mds-in{to{opacity:1;transform:scale(1)}}
+      @keyframes mds-halo{to{opacity:1}}
+      @keyframes mds-sweep{to{transform:translateX(260%)}}
+      @keyframes mds-out{from{opacity:1;transform:scale(1);filter:blur(0)}to{opacity:0;transform:scale(1.45);filter:blur(6px)}}
+    </style>
+    <noscript><style>#mds-intro{display:none}</style></noscript>
 
     <script type="application/ld+json">
       {
@@ -118,6 +144,59 @@
     </script>
   </head>
   <body>
+    <div id="mds-intro" aria-hidden="true">
+      <div class="bg"></div>
+      <div class="halo"></div>
+      <div class="mark">
+        <picture>
+          <source type="image/avif" srcset="/brand/motion-mark-512.avif 512w, /brand/motion-mark-768.avif 768w" sizes="clamp(128px, 36vw, 210px)" />
+          <img src="/brand/motion-mark-512.webp" srcset="/brand/motion-mark-512.webp 512w, /brand/motion-mark-768.webp 768w" sizes="clamp(128px, 36vw, 210px)" width="1774" height="887" alt="" fetchpriority="high" />
+        </picture>
+        <div class="sweep"></div>
+      </div>
+    </div>
+    <script>
+      // Intro hand-off: exits once BOTH the minimum reveal time has passed and the
+      // app has mounted (so the hero is really there behind the M), then signals the
+      // app to start the hero entrance. Skipped for the rest of the browsing session.
+      ;(function () {
+        var el = document.getElementById('mds-intro')
+        var seen = false
+        try { seen = sessionStorage.getItem('mds-intro-seen') === '1' } catch (e) {}
+        if (seen) { el.remove(); window.__mdsIntro = 'done'; return }
+        try { sessionStorage.setItem('mds-intro-seen', '1') } catch (e) {}
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        if (reduce) el.classList.add('reduce')
+        var start = performance.now(), minTime = reduce ? 300 : 950, appReady = false, imgReady = false, scheduled = false, done = false
+        function exit() {
+          if (done) return
+          done = true
+          el.classList.add('exit')
+          window.__mdsIntro = 'done'
+          window.dispatchEvent(new Event('mds:intro-exit'))
+          setTimeout(function () { el.remove() }, reduce ? 350 : 720)
+        }
+        // exit once the M has been shown for its full reveal AND the app is mounted
+        function tryExit() {
+          if (!appReady || !imgReady || scheduled) return
+          scheduled = true
+          setTimeout(exit, Math.max(0, minTime - (performance.now() - start)))
+        }
+        window.__mdsAppReady = function () { appReady = true; tryExit() }
+        // the M's reveal starts only when its image is decoded, so it never pops in late
+        var img = el.querySelector('img')
+        function onImg() {
+          if (imgReady) return
+          imgReady = true
+          start = performance.now()
+          el.classList.add('go')
+          tryExit()
+        }
+        if (img.complete && img.naturalWidth) onImg()
+        else { img.addEventListener('load', onImg); img.addEventListener('error', onImg) }
+        setTimeout(exit, 8000) // safety net on a very slow connection
+      })()
+    </script>
     <div id="root"></div>
     <noscript>
       <div style="padding:48px 24px;font-family:system-ui,sans-serif;color:#E2E8F0;background:#061424;min-height:100vh">

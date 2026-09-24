@@ -2,7 +2,6 @@ import { startTransition, useEffect, useMemo, useState } from 'react'
 import { LazyMotion, MotionConfig, domAnimation, useReducedMotion } from 'motion/react'
 import { useFinePointer } from './hooks/useMediaQuery.js'
 import { useSmoothScroll } from './hooks/useSmoothScroll.js'
-import Splash from './components/Splash.jsx'
 import Nav from './components/Nav.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import FloatingCta from './components/FloatingCta.jsx'
@@ -21,10 +20,24 @@ import Footer from './sections/Footer.jsx'
 export default function App() {
   const reduce = useReducedMotion()
   const fine = useFinePointer()
-  const [ready, setReady] = useState(false)
+  // The opening intro lives in index.html (painted before this bundle loads).
+  // Tell it the app is mounted; it exits after its short reveal and signals back,
+  // which starts the hero entrance while the intro fades — one continuous move.
+  const [ready, setReady] = useState(() => window.__mdsIntro === 'done')
   const [rest, setRest] = useState(false)
 
   useSmoothScroll(fine && !reduce)
+
+  useEffect(() => {
+    if (ready) return
+    const go = () => setReady(true)
+    window.addEventListener('mds:intro-exit', go)
+    if (typeof window.__mdsAppReady === 'function') window.__mdsAppReady()
+    else go() // no intro on the page
+    if (window.__mdsIntro === 'done') go()
+    return () => window.removeEventListener('mds:intro-exit', go)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Paint the hero first, then render the rest of the page as an interruptible
   // transition so the main thread never blocks on one long task.
@@ -74,7 +87,6 @@ export default function App() {
         >
           Skip to content
         </a>
-        <Splash onDone={() => setReady(true)} />
         <ScrollProgress />
         <Nav ready={ready} />
         <main id="main">
