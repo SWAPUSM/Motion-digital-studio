@@ -5,8 +5,7 @@ import { usePauseOffscreen } from '../hooks/usePauseOffscreen.js'
 import MagneticButton from '../components/MagneticButton.jsx'
 import Ribbon from '../components/Ribbon.jsx'
 import Particles from '../components/Particles.jsx'
-import { BrowserFrame, PhoneFrame } from '../components/Devices.jsx'
-import { AuroraDesktop, AuroraMobile } from '../components/Mockups.jsx'
+import HeroShowcase from '../components/HeroShowcase.jsx'
 import { ArrowRight, WhatsApp } from '../components/Icons.jsx'
 import { whatsappLink } from '../config.js'
 
@@ -139,87 +138,17 @@ export default function Hero({ ready }) {
           </m.div>
         </m.div>
 
-        {/* 3D stage */}
-        <m.div
-          ref={pauseRef}
-          style={{ y: stageY, scale: stageScale }}
-          className="relative mx-auto aspect-[4/3.1] w-full max-w-[640px] [perspective:1600px] sm:aspect-[4/3] lg:max-w-none"
-          initial={{ opacity: 0 }}
-          animate={ready ? { opacity: 1 } : {}}
-          transition={{ duration: 1.1, ease, delay: 0.25 }}
-          aria-hidden="true"
-        >
-          <m.div
-            className={`absolute inset-0 [transform-style:preserve-3d] ${tilt || reduce ? '' : 'animate-sway'}`}
-            style={tilt ? { rotateX, rotateY } : reduce ? { rotateX: 8, rotateY: -12 } : undefined}
-          >
-            {/* depth glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(closest-side,rgba(0,123,255,.4),transparent)] [transform:translateZ(-160px)]" />
-
-            {/* design-system card (back) */}
-            <Layer z={-80} className="left-[-4%] top-[-3%] w-[34%]" delay={0.55} ready={ready} float="b">
-              <div className="glass rounded-2xl p-[6%] shadow-2xl">
-                <p className="text-[clamp(7px,1.1vw,10px)] font-semibold uppercase tracking-[0.25em] text-mist/60">Design system</p>
-                <div className="mt-3 flex gap-1.5">
-                  {['#061424', '#007BFF', '#00D1FF', '#E2E8F0'].map((c) => (
-                    <span key={c} className="aspect-square flex-1 rounded-md ring-1 ring-white/10" style={{ background: c }} />
-                  ))}
-                </div>
-                <p className="mt-3 text-[clamp(16px,3vw,30px)] font-bold leading-none text-white">Aa</p>
-                <div className="mt-2 h-1 w-3/4 rounded bg-white/15" />
-                <div className="mt-1.5 h-1 w-1/2 rounded bg-white/10" />
-              </div>
-            </Layer>
-
-            {/* main browser */}
-            <Layer z={0} className="left-[6%] top-[14%] w-[86%]" delay={0.4} ready={ready}>
-              <BrowserFrame domain="aurora-villas.com">
-                <AuroraDesktop />
-              </BrowserFrame>
-              <div className="absolute -bottom-8 left-[5%] right-[5%] h-16 bg-[radial-gradient(closest-side,rgba(0,123,255,.45),transparent)]" />
-            </Layer>
-
-            {/* phone (front) */}
-            <Layer z={110} className="right-[-1%] top-[30%] w-[25%]" delay={0.7} ready={ready} float="a">
-              <PhoneFrame>
-                <AuroraMobile />
-              </PhoneFrame>
-            </Layer>
-
-            {/* status chip (front) */}
-            <Layer z={160} className="bottom-[4%] left-[-1%] w-[42%]" delay={0.85} ready={ready} float="b">
-              <div className="glass flex items-center gap-3 rounded-2xl p-3 shadow-[0_20px_60px_-15px_rgba(0,0,0,.8)] md:p-4">
-                <div className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-electric to-cyan md:h-10 md:w-10">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round">
-                    <path d="M3 17l6-6 4 4 8-8M15 7h6v6" />
-                  </svg>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="flex items-center gap-1.5 text-[clamp(7px,1.1vw,10px)] font-semibold uppercase tracking-[0.2em] text-cyan">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#28c840]" /> Live
-                  </p>
-                  <svg viewBox="0 0 120 28" className="mt-1 h-5 w-full md:h-6" fill="none">
-                    <defs>
-                      <linearGradient id="spark" x1="0" x2="1">
-                        <stop offset="0" stopColor="#007BFF" />
-                        <stop offset="1" stopColor="#00D1FF" />
-                      </linearGradient>
-                    </defs>
-                    <m.path
-                      d="M2 24 C 20 22, 26 18, 40 19 S 60 12, 72 13 S 96 6, 118 3"
-                      stroke="url(#spark)"
-                      strokeWidth="2.4"
-                      strokeLinecap="round"
-                      initial={{ pathLength: 0 }}
-                      animate={ready ? { pathLength: 1 } : {}}
-                      transition={{ duration: 1.6, ease, delay: 1.2 }}
-                    />
-                  </svg>
-                </div>
-              </div>
-            </Layer>
-          </m.div>
-        </m.div>
+        {/* device showcase: real work (Samui Property 360) on desktop + mobile */}
+        <HeroShowcase
+          ready={ready}
+          tilt={tilt}
+          reduce={reduce}
+          rotateX={rotateX}
+          rotateY={rotateY}
+          stageY={stageY}
+          stageScale={stageScale}
+          pauseRef={pauseRef}
+        />
       </div>
 
       {/* scroll cue */}
@@ -236,19 +165,5 @@ export default function Hero({ ready }) {
         </span>
       </m.a>
     </m.section>
-  )
-}
-
-function Layer({ z, className, children, delay, ready, float }) {
-  return (
-    <m.div
-      className={`absolute ${className}`}
-      style={{ transformStyle: 'preserve-3d', z }}
-      initial={{ opacity: 0, y: 40 }}
-      animate={ready ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 1.3, ease, delay }}
-    >
-      <div className={float === 'a' ? 'animate-float-a' : float === 'b' ? 'animate-float-b' : ''}>{children}</div>
-    </m.div>
   )
 }

@@ -140,6 +140,10 @@
   0%, 100% { transform: rotateX(8deg) rotateY(-16deg); }
   50% { transform: rotateX(4deg) rotateY(-8deg); }
 }
+@keyframes sway-soft {
+  0%, 100% { transform: rotateX(5deg) rotateY(-8deg); }
+  50% { transform: rotateX(2deg) rotateY(-3deg); }
+}
 @keyframes travel {
   from { stroke-dashoffset: 1.2; }
   to { stroke-dashoffset: 0; }
@@ -170,6 +174,7 @@
 .animate-float-a { animation: float-a 7s ease-in-out infinite; }
 .animate-float-b { animation: float-b 8s ease-in-out infinite; }
 .animate-sway { animation: sway 10s ease-in-out infinite; }
+.animate-sway-soft { animation: sway-soft 10s ease-in-out infinite; }
 .animate-marquee { animation: marquee 38s linear infinite; }
 .animate-scroll-cue { animation: scroll-cue 2.4s var(--ease-expo) infinite; }
 

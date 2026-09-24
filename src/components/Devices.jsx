@@ -68,39 +68,3 @@ export function PhoneFrame({ children, className = '', ...rest }) {
     </div>
   )
 }
-
-/** Stylised photographic scene (sky, sun, sea) — lightweight stand-in for imagery. */
-export function Scene({ sky = ['#0b2545', '#f4a37a'], sea = ['#123d5e', '#061a2c'], sun = '#ffe1b0', horizon = 62, sunX = 64, hills, className = '', children }) {
-  return (
-    <div
-      className={`relative overflow-hidden ${className}`}
-      style={{ background: `linear-gradient(180deg, ${sky[0]} 0%, ${sky[1]} ${horizon}%, ${sea[0]} ${horizon}%, ${sea[1]} 100%)` }}
-    >
-      <div
-        className="absolute aspect-square w-[16%] -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{ left: `${sunX}%`, top: `${horizon - 6}%`, background: `radial-gradient(circle, ${sun} 0 38%, transparent 70%)`, filter: 'blur(1px)' }}
-      />
-      {hills && (
-        <div
-          className="absolute inset-x-0"
-          style={{
-            top: `${horizon - 14}%`,
-            height: '14.2%',
-            background: hills,
-            clipPath: 'polygon(0 100%,0 55%,12% 30%,24% 52%,38% 18%,52% 46%,63% 34%,76% 60%,88% 38%,100% 55%,100% 100%)',
-          }}
-        />
-      )}
-      <div
-        className="absolute inset-x-0 bottom-0 opacity-30"
-        style={{
-          top: `${horizon}%`,
-          background: 'repeating-linear-gradient(180deg, rgba(255,255,255,.18) 0 1px, transparent 1px 7px)',
-          maskImage: 'linear-gradient(180deg, #000, transparent)',
-          WebkitMaskImage: 'linear-gradient(180deg, #000, transparent)',
-        }}
-      />
-      {children}
-    </div>
-  )
-}
