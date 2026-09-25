@@ -15,7 +15,7 @@ export default function Intro() {
   let idx = 0
 
   return (
-    <section id="intro" className="relative py-16 md:py-40" aria-labelledby="intro-title">
+    <section id="intro" className="relative py-16 md:py-40 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="intro-title">
       <div className="container-x">
         <p className="eyebrow flex items-center gap-3">
           <span className="text-white/55">01</span>
@@ -46,7 +46,7 @@ export default function Intro() {
           ))}
         </h2>
 
-        <Reveal as="p" className="mt-7 max-w-md text-[15px] leading-relaxed text-mist/70 md:mt-14 md:text-[17px]">
+        <Reveal as="p" className="mt-7 max-w-md text-[15px] leading-relaxed text-mist/70 md:mt-14 md:text-[17px] lg:mt-10">
           Motion Digital Studio creates modern websites engineered around three objectives. Every pixel, animation and line of code
           exists to move your business forward.
         </Reveal>
@@ -76,7 +76,7 @@ function Pillars() {
   const fill = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   return (
-    <div ref={ref} className="relative mt-11 md:mt-24">
+    <div ref={ref} className="relative mt-11 md:mt-24 lg:mt-16">
       {/* connecting line: vertical on mobile, horizontal on desktop */}
       <div aria-hidden="true" className="absolute bottom-8 left-[19px] top-8 w-px bg-white/10 md:bottom-auto md:left-0 md:right-0 md:top-[19px] md:h-px md:w-auto">
         <m.div style={{ scaleY: fill }} className="absolute inset-0 origin-top bg-gradient-to-b from-electric to-cyan md:hidden" />

@@ -15,7 +15,7 @@ function trackPointer(e) {
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-16 md:py-36" aria-labelledby="services-title">
+    <section id="services" className="relative py-16 md:py-36 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="services-title">
       <div aria-hidden="true" className="absolute inset-x-0 top-1/3 -z-10 h-[60%] bg-[radial-gradient(50%_50%_at_50%_50%,rgba(0,123,255,.12),transparent)]" />
       <div className="container-x">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
@@ -25,7 +25,7 @@ export default function Services() {
           </Reveal>
         </div>
 
-        <div className="mt-9 grid gap-4 md:mt-20 md:gap-5 lg:grid-cols-3 lg:gap-6">
+        <div className="mt-9 grid gap-4 md:mt-20 md:gap-5 lg:mt-14 lg:grid-cols-3 lg:gap-6">
           {PACKAGES.map((pkg, i) => (
             <PackageCard key={pkg.id} pkg={pkg} index={i} />
           ))}

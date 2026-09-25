@@ -15,12 +15,12 @@ export default function Process() {
   })
 
   return (
-    <section id="process" className="relative py-16 md:py-36" aria-labelledby="process-title">
+    <section id="process" className="relative py-16 md:py-36 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="process-title">
       <div aria-hidden="true" className="grid-bg absolute inset-0 -z-10 [mask-image:radial-gradient(60%_60%_at_50%_50%,#000,transparent)]" />
       <div className="container-x">
         <SectionHeading id="process-title" index="06" label="Process" lines={['From idea', 'to launch.']} />
 
-        <div ref={ref} className="relative mt-10 md:mt-24">
+        <div ref={ref} className="relative mt-10 md:mt-24 lg:mt-14">
           {/* track */}
           <div aria-hidden="true" className="absolute bottom-0 left-[23px] top-0 w-px bg-white/10 lg:bottom-auto lg:left-0 lg:right-0 lg:top-[23px] lg:h-px lg:w-auto">
             <m.div style={{ scaleY: fill }} className="absolute inset-0 origin-top bg-gradient-to-b from-electric to-cyan shadow-[0_0_12px_#00D1FF] lg:hidden" />
@@ -31,7 +31,7 @@ export default function Process() {
             {STEPS.map((s, i) => {
               const on = i <= active
               return (
-                <li key={s.n} className="relative pl-[4.25rem] lg:pl-0 lg:pt-24">
+                <li key={s.n} className="relative pl-[4.25rem] lg:pl-0 lg:pt-[4.5rem]">
                   <span
                     className={`absolute left-0 top-0 grid h-12 w-12 place-items-center rounded-full border text-[12px] font-bold transition-all duration-700 ${
                       on
@@ -58,7 +58,7 @@ export default function Process() {
         </div>
 
         {/* commercial reassurance: how working together works */}
-        <Reveal className="mt-12 md:mt-20">
+        <Reveal className="mt-12 md:mt-20 lg:mt-12">
           <dl className="ring-gradient grid overflow-hidden rounded-[24px] bg-white/[.03] sm:grid-cols-3">
             {TERMS.map((t, i) => (
               <div

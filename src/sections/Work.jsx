@@ -13,7 +13,7 @@ export default function Work() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
 
   return (
-    <section id="work" className="relative pt-16 md:pt-36" aria-labelledby="work-title">
+    <section id="work" className="relative pt-16 md:pt-36 lg:pt-[clamp(88px,7vw,120px)]" aria-labelledby="work-title">
       <div className="container-x">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
           <SectionHeading id="work-title" index="03" label="Portfolio" lines={['Selected', 'work']} />
@@ -24,7 +24,15 @@ export default function Work() {
       </div>
 
       {/* Stacked, sticky project stage — each project slides over the last */}
-      <div ref={ref} className="relative mt-2 md:mt-16">
+      <div className="relative mt-2 md:mt-16 lg:mt-4" style={{ '--n1': PROJECTS.length - 1 }}>
+        {/* scroll-progress track: runs from the first panel until the last one settles.
+            Below lg each panel is a full viewport, so that's the whole stack; on lg the
+            panels are min(100svh, 700px) tall and stick vertically centred. */}
+        <div
+          ref={ref}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-full lg:h-[calc(var(--n1)*min(100svh,700px)+min(100svh,700px)/2+50svh)]"
+        />
         {PROJECTS.map((p, i) => (
           <ProjectPanel key={p.id} project={p} index={i} total={PROJECTS.length} progress={scrollYProgress} />
         ))}
@@ -45,7 +53,7 @@ function ProjectPanel({ project, index, total, progress }) {
   const depth = useFinePointer()
 
   return (
-    <div className="sticky top-0 flex min-h-[100svh] items-start pb-6 pt-[76px] md:items-center md:py-24">
+    <div className="sticky top-0 flex min-h-[100svh] items-start pb-6 pt-[76px] md:items-center md:py-24 lg:top-[max(0px,calc((100svh-700px)/2))] lg:min-h-[min(100svh,700px)] lg:py-8">
       <m.article
         style={depth ? { scale, top: index * 14 } : { top: index * 14 }}
         className="container-x relative origin-top"

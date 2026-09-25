@@ -84,7 +84,7 @@ export default function Global() {
   const pauseRef = usePauseOffscreen()
   const row = [...INDUSTRIES, ...INDUSTRIES]
   return (
-    <section ref={pauseRef} id="global" className="relative overflow-hidden py-16 md:py-36" aria-labelledby="global-title">
+    <section ref={pauseRef} id="global" className="relative overflow-hidden py-16 md:py-36 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="global-title">
       <div className="container-x grid items-center gap-6 md:gap-12 lg:grid-cols-[1.2fr_1fr]">
         <div>
           <p className="eyebrow flex items-center gap-3">
@@ -108,7 +108,7 @@ export default function Global() {
       </div>
 
       {/* industries marquee */}
-      <div className="relative mt-10 border-y border-white/[.07] py-5 md:mt-24 md:py-8 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
+      <div className="relative mt-10 border-y border-white/[.07] py-5 md:mt-24 md:py-8 lg:mt-16 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
         <ul className="sr-only">
           {INDUSTRIES.map((x) => (
             <li key={x}>{x}</li>
