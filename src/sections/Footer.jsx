@@ -1,4 +1,3 @@
-import Logo from '../components/Logo.jsx'
 import { Facebook, Instagram, Mail, TikTok, WhatsApp } from '../components/Icons.jsx'
 import { HAS_EMAIL, NAV_LINKS, SITE, mailtoLink, whatsappLink } from '../config.js'
 
@@ -24,9 +23,12 @@ export default function Footer() {
           {/* brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-4">
-              <span className="block w-[88px] shrink-0 overflow-hidden rounded-2xl ring-1 ring-white/[.08] md:w-[104px]">
-                <Logo sizes="104px" alt="Motion Digital Studio logo" />
-              </span>
+              {/* official transparent "M" symbol (same asset as the header), uncropped */}
+              <picture className="flex w-[88px] shrink-0 md:w-[104px]">
+                <source type="image/avif" srcSet="/brand/motion-mark-128.avif 128w, /brand/motion-mark-256.avif 256w" sizes="(min-width: 768px) 104px, 88px" />
+                <source type="image/webp" srcSet="/brand/motion-mark-128.webp 128w, /brand/motion-mark-256.webp 256w" sizes="(min-width: 768px) 104px, 88px" />
+                <img src="/brand/motion-mark-256.png" width="1774" height="887" alt="Motion Digital Studio" loading="lazy" decoding="async" className="block h-auto w-full object-contain" />
+              </picture>
               <div>
                 <p className="text-[15px] font-extrabold uppercase tracking-[0.2em] text-white md:text-[16px]">Motion Digital Studio</p>
                 <p className="mt-1.5 text-[13.5px] text-mist/65">{SITE.tagline}</p>
