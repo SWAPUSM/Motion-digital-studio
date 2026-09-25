@@ -1,4 +1,4 @@
-import { m } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { REASONS } from '../data/content.js'
 
@@ -33,6 +33,7 @@ function Icon({ name }) {
 }
 
 export default function Why() {
+  const reduce = useReducedMotion()
   return (
     <section id="why" className="relative py-16 md:py-36 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="why-title">
       <div className="container-x">
@@ -46,7 +47,7 @@ export default function Why() {
                 hidden: { opacity: 0, y: 40 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.9, delay: i * 0.1, ease } },
               }}
-              initial="hidden"
+              initial={reduce ? false : 'hidden'}
               whileInView="show"
               viewport={{ once: true, margin: '-8% 0px' }}
               className="group relative grid grid-cols-[auto_1fr] items-center gap-x-4 overflow-hidden rounded-[20px] border border-white/[.07] bg-white/[.025] p-4 transition-colors duration-500 hover:border-cyan/30 hover:bg-white/[.045] sm:block sm:rounded-[24px] sm:p-7 md:p-8"

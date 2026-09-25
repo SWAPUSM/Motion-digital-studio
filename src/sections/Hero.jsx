@@ -1,10 +1,8 @@
-import { useRef } from 'react'
-import { m, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
+import { m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react'
 import { useFinePointer } from '../hooks/useMediaQuery.js'
 import { usePauseOffscreen } from '../hooks/usePauseOffscreen.js'
 import MagneticButton from '../components/MagneticButton.jsx'
 import Ribbon from '../components/Ribbon.jsx'
-import Particles from '../components/Particles.jsx'
 import HeroShowcase from '../components/HeroShowcase.jsx'
 import { ArrowRight, WhatsApp } from '../components/Icons.jsx'
 import { whatsappLink } from '../config.js'
@@ -14,7 +12,7 @@ const LINES = ['Websites that', 'move business', 'forward.']
 const RIBBON = 'M-80 640 C 180 660, 300 250, 560 300 S 820 700, 1040 460 S 1300 90, 1540 170'
 
 export default function Hero({ ready }) {
-  const ref = useRef(null)
+  // decorative loops in the hero (stage sway, scroll cue) pause once it's off-screen
   const pauseRef = usePauseOffscreen()
   const reduce = useReducedMotion()
   const fine = useFinePointer()
@@ -26,27 +24,18 @@ export default function Hero({ ready }) {
   const spring = { stiffness: 90, damping: 18, mass: 0.6 }
   const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [-20, -4]), spring)
   const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [12, 2]), spring)
-  const glowX = useSpring(useTransform(px, [-0.5, 0.5], ['30%', '70%']), spring)
-  const glowY = useSpring(useTransform(py, [-0.5, 0.5], ['30%', '70%']), spring)
 
   const onMove = (e) => {
     if (!tilt) return
-    const r = ref.current.getBoundingClientRect()
+    const r = e.currentTarget.getBoundingClientRect()
     px.set((e.clientX - r.left) / r.width - 0.5)
     py.set((e.clientY - r.top) / r.height - 0.5)
   }
 
-  // Scroll: the stage drifts forward, copy lifts away
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, -90])
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
-  const stageY = useTransform(scrollYProgress, [0, 1], [0, 110])
-  const stageScale = useTransform(scrollYProgress, [0, 1], [1, 0.92])
-
   return (
     <m.section
       id="top"
-      ref={ref}
+      ref={pauseRef}
       onPointerMove={onMove}
       initial={{ scale: 1.06 }}
       animate={ready ? { scale: 1 } : {}}
@@ -57,20 +46,15 @@ export default function Hero({ ready }) {
       {/* Atmosphere */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(90%_60%_at_75%_30%,rgba(0,123,255,.28),transparent_60%),radial-gradient(60%_50%_at_10%_90%,rgba(0,209,255,.12),transparent_60%)]" />
-        <m.div
-          className="absolute h-[60vmax] w-[60vmax] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,209,255,.16),transparent_60%)]"
-          style={{ left: tilt ? glowX : '70%', top: tilt ? glowY : '40%' }}
-        />
+        <div className="absolute left-[70%] top-[40%] h-[60vmax] w-[60vmax] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,209,255,.16),transparent_60%)]" />
         <div className="grid-bg absolute inset-0 [mask-image:radial-gradient(70%_60%_at_60%_40%,#000,transparent)]" />
-        <Particles className="absolute inset-0 h-full w-full" density={fine ? 1 : 0.5} />
-        {ready && <Ribbon d={RIBBON} className="absolute inset-0 h-full w-full opacity-90" delay={0.3} />}
+        {ready && <Ribbon d={RIBBON} className="absolute inset-0 h-full w-full opacity-90" delay={0.3} animateIn={!reduce} />}
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-navy" />
-        <div className="noise absolute inset-0" />
       </div>
 
       <div className="container-x grid flex-1 items-center gap-6 sm:gap-12 lg:grid-cols-[1.08fr_1fr] lg:gap-6">
         {/* Copy */}
-        <m.div style={{ y: copyY, opacity: copyOpacity }} className="relative z-10">
+        <div className="relative z-10">
           <m.p
             className="eyebrow flex items-center gap-3 max-[380px]:tracking-[0.2em]"
             initial={{ opacity: 0.5, y: 8 }}
@@ -78,7 +62,7 @@ export default function Hero({ ready }) {
             transition={{ duration: 0.7, ease }}
           >
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-cyan [animation:pulse-ring_2s_ease-out_infinite]" />
+              <span className="absolute -inset-1 rounded-full bg-cyan/25" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan" />
             </span>
             Premium web design studio
@@ -136,7 +120,7 @@ export default function Hero({ ready }) {
               View our work <ArrowRight className="transition-transform duration-500 group-hover:translate-x-1" />
             </MagneticButton>
           </m.div>
-        </m.div>
+        </div>
 
         {/* device showcase: real work (Samui Property 360) on desktop + mobile */}
         <HeroShowcase
@@ -145,9 +129,6 @@ export default function Hero({ ready }) {
           reduce={reduce}
           rotateX={rotateX}
           rotateY={rotateY}
-          stageY={stageY}
-          stageScale={stageScale}
-          pauseRef={pauseRef}
         />
       </div>
 
@@ -161,7 +142,7 @@ export default function Hero({ ready }) {
       >
         Scroll
         <span className="relative h-10 w-px overflow-hidden bg-white/10">
-          <span className="animate-scroll-cue absolute inset-0 bg-gradient-to-b from-cyan to-electric" />
+          <span className="animate-scroll-cue absolute inset-x-0 top-0 h-[40%] bg-gradient-to-b from-transparent via-cyan to-transparent" />
         </span>
       </m.a>
     </m.section>

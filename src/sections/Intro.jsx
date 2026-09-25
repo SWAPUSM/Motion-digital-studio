@@ -1,5 +1,5 @@
-import { Fragment, useRef } from 'react'
-import { m, useScroll, useTransform } from 'motion/react'
+import { Fragment } from 'react'
+import { m } from 'motion/react'
 import Reveal from '../components/Reveal.jsx'
 import { PILLARS } from '../data/content.js'
 
@@ -9,9 +9,6 @@ const HEADLINE = [
 ]
 
 export default function Intro() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 90%', 'start 45%'] })
-  const words = HEADLINE.flat()
   let idx = 0
 
   return (
@@ -23,9 +20,11 @@ export default function Intro() {
           The studio
         </p>
 
-        <h2
-          ref={ref}
+        <m.h2
           id="intro-title"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-12% 0px' }}
           className="mt-5 max-w-5xl text-[clamp(1.9rem,7.6vw,5rem)] font-extrabold uppercase leading-[1.02] tracking-[-0.02em] text-white"
         >
           {/* real spaces between words and lines keep the heading readable as words
@@ -36,7 +35,7 @@ export default function Intro() {
                 const i = idx++
                 return (
                   <Fragment key={w + i}>
-                    <Word progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} accent={li === 1}>
+                    <Word index={i} accent={li === 1}>
                       {w}
                     </Word>{' '}
                   </Fragment>
@@ -44,7 +43,7 @@ export default function Intro() {
               })}
             </span>
           ))}
-        </h2>
+        </m.h2>
 
         <Reveal as="p" className="mt-7 max-w-md text-[15px] leading-relaxed text-mist/70 md:mt-14 md:text-[17px] lg:mt-10">
           Motion Digital Studio creates modern websites engineered around three objectives. Every pixel, animation and line of code
@@ -57,13 +56,17 @@ export default function Intro() {
   )
 }
 
-// Words brighten as they scroll into place. They start at 40% — dim enough to
-// read as "in motion", bright enough to stay legible (≥ 3:1 for large text).
-function Word({ children, progress, range, accent }) {
-  const opacity = useTransform(progress, range, [0.4, 1])
-  const y = useTransform(progress, range, [6, 0])
+// Words brighten into place one after another once the heading is in view (a
+// one-off entrance, nothing computed per scroll frame). They start at 40% — dim
+// enough to read as "in motion", bright enough to stay legible (≥ 3:1 for large text).
+function Word({ children, index, accent }) {
   return (
-    <m.span style={{ opacity, y }} className={`inline-block ${accent ? 'text-gradient-soft' : ''}`}>
+    <m.span
+      variants={{
+        hidden: { opacity: 0.4, y: 6 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.6, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] } },
+      }}
+      className={`inline-block ${accent ? 'text-gradient-soft' : ''}`}>
       {children}
     </m.span>
   )
@@ -71,16 +74,16 @@ function Word({ children, progress, range, accent }) {
 
 /** DESIGN → PERFORMANCE → RESULTS, joined by a line of momentum. */
 function Pillars() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 80%', 'end 60%'] })
-  const fill = useTransform(scrollYProgress, [0, 1], [0, 1])
+  // the line draws once as the pillars come into view
+  const draw = { duration: 1.6, ease: [0.65, 0, 0.35, 1] }
+  const inView = { once: true, margin: '-15% 0px' }
 
   return (
-    <div ref={ref} className="relative mt-11 md:mt-24 lg:mt-16">
+    <div className="relative mt-11 md:mt-24 lg:mt-16">
       {/* connecting line: vertical on mobile, horizontal on desktop */}
       <div aria-hidden="true" className="absolute bottom-8 left-[19px] top-8 w-px bg-white/10 md:bottom-auto md:left-0 md:right-0 md:top-[19px] md:h-px md:w-auto">
-        <m.div style={{ scaleY: fill }} className="absolute inset-0 origin-top bg-gradient-to-b from-electric to-cyan md:hidden" />
-        <m.div style={{ scaleX: fill }} className="absolute inset-0 hidden origin-left bg-gradient-to-r from-electric via-cyan to-white md:block" />
+        <m.div initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={inView} transition={draw} className="absolute inset-0 origin-top bg-gradient-to-b from-electric to-cyan md:hidden" />
+        <m.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={inView} transition={draw} className="absolute inset-0 hidden origin-left bg-gradient-to-r from-electric via-cyan to-white md:block" />
       </div>
 
       <ol className="relative grid gap-7 md:grid-cols-3 md:gap-8">

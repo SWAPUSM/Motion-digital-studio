@@ -1,7 +1,5 @@
 import { startTransition, useEffect, useMemo, useState } from 'react'
-import { LazyMotion, MotionConfig, domAnimation, useReducedMotion } from 'motion/react'
-import { useFinePointer } from './hooks/useMediaQuery.js'
-import { useSmoothScroll } from './hooks/useSmoothScroll.js'
+import { LazyMotion, MotionConfig, domAnimation } from 'motion/react'
 import Nav from './components/Nav.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import FloatingCta from './components/FloatingCta.jsx'
@@ -18,15 +16,11 @@ import FinalCta from './sections/FinalCta.jsx'
 import Footer from './sections/Footer.jsx'
 
 export default function App() {
-  const reduce = useReducedMotion()
-  const fine = useFinePointer()
   // The opening intro lives in index.html (painted before this bundle loads).
   // Tell it the app is mounted; it exits after its short reveal and signals back,
   // which starts the hero entrance while the intro fades — one continuous move.
   const [ready, setReady] = useState(() => window.__mdsIntro === 'done')
   const [rest, setRest] = useState(false)
-
-  useSmoothScroll(fine && !reduce)
 
   useEffect(() => {
     if (ready) return

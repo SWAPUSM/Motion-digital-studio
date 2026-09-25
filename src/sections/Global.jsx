@@ -1,4 +1,4 @@
-import { m } from 'motion/react'
+import { m, useReducedMotion } from 'motion/react'
 import { usePauseOffscreen } from '../hooks/usePauseOffscreen.js'
 import Reveal from '../components/Reveal.jsx'
 import MaskedLines from '../components/MaskedLines.jsx'
@@ -23,8 +23,10 @@ function arc([x1, y1], [x2, y2]) {
 }
 
 function Globe() {
+  // reduced motion: the arcs are simply there, already drawn
+  const reduce = useReducedMotion()
   return (
-    <svg viewBox="0 0 400 400" className="h-full w-full" aria-hidden="true">
+    <m.svg viewBox="0 0 400 400" className="h-full w-full" aria-hidden="true" initial={reduce ? false : 'hidden'} whileInView="show" viewport={{ once: true }}>
       <defs>
         <radialGradient id="globe-fill" cx="38%" cy="32%" r="75%">
           <stop offset="0" stopColor="#0b3b73" stopOpacity=".7" />
@@ -44,15 +46,9 @@ function Globe() {
         {[-120, -80, -40, 0, 40, 80, 120].map((y) => (
           <ellipse key={y} cx="200" cy={200 + y} rx={Math.sqrt(170 ** 2 - y ** 2)} ry={Math.sqrt(170 ** 2 - y ** 2) * 0.16} />
         ))}
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <ellipse
-            key={i}
-            cx="200"
-            cy="200"
-            rx="170"
-            ry="170"
-            style={{ transformOrigin: '200px 200px', animation: `meridian 18s linear ${-i * 3}s infinite` }}
-          />
+        {/* meridians, fixed at a few angles (static: nothing repaints while scrolling) */}
+        {[164, 120, 44].map((rx) => (
+          <ellipse key={rx} cx="200" cy="200" rx={rx} ry="170" />
         ))}
       </g>
       {DESTS.map((d, i) => (
@@ -63,20 +59,19 @@ function Globe() {
             stroke="url(#arc-g)"
             strokeWidth="1.3"
             strokeLinecap="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.6, delay: 0.4 + i * 0.18, ease }}
+            variants={{
+              hidden: { pathLength: 0, opacity: 0 },
+              show: { pathLength: 1, opacity: 1, transition: { duration: 1.6, delay: 0.4 + i * 0.18, ease } },
+            }}
           />
-          <path d={arc(TH, d)} fill="none" stroke="#E6FBFF" strokeWidth="1.6" strokeDasharray="3 37" style={{ animation: `dash ${3 + i * 0.4}s linear infinite` }} />
           <circle cx={d[0]} cy={d[1]} r="3" fill="#00D1FF" />
         </g>
       ))}
       <g>
-        <circle cx={TH[0]} cy={TH[1]} r="6" fill="#00D1FF" style={{ transformOrigin: `${TH[0]}px ${TH[1]}px`, animation: 'pulse-ring 2.4s ease-out infinite' }} />
+        <circle cx={TH[0]} cy={TH[1]} r="10" fill="#00D1FF" opacity=".25" />
         <circle cx={TH[0]} cy={TH[1]} r="5" fill="#fff" stroke="#00D1FF" strokeWidth="2" />
       </g>
-    </svg>
+    </m.svg>
   )
 }
 

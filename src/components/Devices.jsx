@@ -7,7 +7,7 @@ export function BrowserFrame({ domain, children, className = '', aspect = 'aspec
   const light = tone === 'light'
   return (
     <div
-      className={`overflow-hidden rounded-[14px] border shadow-[0_24px_50px_-24px_rgba(0,0,0,.85)] lg:shadow-[0_40px_120px_-30px_rgba(0,0,0,.85)] ${
+      className={`overflow-hidden rounded-[14px] border max-md:shadow-none md:shadow-[0_24px_50px_-24px_rgba(0,0,0,.85)] lg:shadow-[0_32px_64px_-30px_rgba(0,0,0,.85)] ${
         light ? 'border-white/20 bg-[#eef1f5]' : 'border-white/10 bg-[#0c1626]'
       } ${className}`}
     >

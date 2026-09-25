@@ -97,8 +97,8 @@ function PackageCard({ pkg, index }) {
       onPointerMove={trackPointer}
       className={`ring-gradient group relative flex flex-col overflow-hidden rounded-[28px] p-6 transition-[transform,box-shadow] duration-700 ease-[var(--ease-expo)] md:p-9 lg:hover:-translate-y-2 ${
         featured
-          ? 'bg-gradient-to-b from-electric/[.18] via-navy-soft/60 to-navy-soft/30 shadow-[0_30px_100px_-30px_rgba(0,123,255,.6)]'
-          : 'bg-white/[.03] hover:shadow-[0_30px_80px_-30px_rgba(0,123,255,.45)]'
+          ? 'bg-gradient-to-b from-electric/[.18] via-navy-soft/60 to-navy-soft/30 shadow-[0_24px_60px_-30px_rgba(0,123,255,.6)]'
+          : 'bg-white/[.03] hover:shadow-[0_24px_60px_-30px_rgba(0,123,255,.45)]'
       }`}
       aria-labelledby={`pkg-${pkg.id}`}
     >

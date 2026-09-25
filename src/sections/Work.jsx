@@ -1,17 +1,11 @@
-import { useRef } from 'react'
-import { m, useScroll, useTransform } from 'motion/react'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { BrowserFrame, PhoneFrame } from '../components/Devices.jsx'
 import { ArrowUpRight } from '../components/Icons.jsx'
 import { PROJECTS } from '../data/content.js'
 import PLACEHOLDERS from '../data/placeholders.json'
-import { useFinePointer } from '../hooks/useMediaQuery.js'
 import { useAfterLoad } from '../hooks/useAfterLoad.js'
 
 export default function Work() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] })
-
   return (
     <section id="work" className="relative pt-16 md:pt-36 lg:pt-[clamp(88px,7vw,120px)]" aria-labelledby="work-title">
       <div className="container-x">
@@ -23,43 +17,26 @@ export default function Work() {
         </div>
       </div>
 
-      {/* Stacked, sticky project stage — each project slides over the last */}
-      <div className="relative mt-2 md:mt-16 lg:mt-4" style={{ '--n1': PROJECTS.length - 1 }}>
-        {/* scroll-progress track: runs from the first panel until the last one settles.
-            Below lg each panel is a full viewport, so that's the whole stack; on lg the
-            panels are min(100svh, 700px) tall and stick vertically centred. */}
-        <div
-          ref={ref}
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 h-full lg:h-[calc(var(--n1)*min(100svh,700px)+min(100svh,700px)/2+50svh)]"
-        />
+      {/* Stacked, sticky project stage — each project slides over the last.
+          Pure CSS (position: sticky): nothing is computed while scrolling. */}
+      <div className="relative mt-2 md:mt-16 lg:mt-4">
         {PROJECTS.map((p, i) => (
-          <ProjectPanel key={p.id} project={p} index={i} total={PROJECTS.length} progress={scrollYProgress} />
+          <ProjectPanel key={p.id} project={p} index={i} total={PROJECTS.length} />
         ))}
       </div>
     </section>
   )
 }
 
-function ProjectPanel({ project, index, total, progress }) {
-  const isLast = index === total - 1
-  // As later panels arrive, earlier ones recede into depth.
-  const seg = 1 / Math.max(1, total - 1)
-  const start = Math.min(index * seg, 1)
-  const scale = useTransform(progress, [start, 1], [1, isLast ? 1 : 1 - (total - 1 - index) * 0.05])
-  const dim = useTransform(progress, [start, Math.min(1, start + seg)], [0, isLast ? 0 : 0.6])
-  // Scroll-linked scale/dim only on desktop pointers. On iPhone the panels simply
-  // stack (pure CSS sticky), which Safari scrolls smoothly without JS per frame.
-  const depth = useFinePointer()
-
+function ProjectPanel({ project, index, total }) {
   return (
     <div className="sticky top-0 flex min-h-[100svh] items-start pb-6 pt-[76px] md:items-center md:py-24 lg:top-[max(0px,calc((100svh-700px)/2))] lg:min-h-[min(100svh,700px)] lg:py-8">
-      <m.article
-        style={depth ? { scale, top: index * 14 } : { top: index * 14 }}
-        className="container-x relative origin-top"
+      <article
+        style={{ top: index * 14 }}
+        className="container-x relative"
         aria-labelledby={`proj-${project.id}`}
       >
-        <div className="ring-gradient relative overflow-hidden rounded-[28px] bg-gradient-to-br from-navy-soft to-navy-deep p-4 shadow-[0_-20px_40px_-28px_rgba(0,0,0,.9)] sm:p-6 lg:shadow-[0_-30px_80px_-40px_rgba(0,0,0,.9)] md:rounded-[36px] md:p-10">
+        <div className="ring-gradient relative overflow-hidden rounded-[28px] bg-gradient-to-br from-navy-soft to-navy-deep p-4 shadow-[0_-20px_40px_-28px_rgba(0,0,0,.9)] sm:p-6 md:rounded-[36px] md:p-10">
           {/* ambient glow in the project's own accent */}
           <div
             aria-hidden="true"
@@ -110,10 +87,8 @@ function ProjectPanel({ project, index, total, progress }) {
               <p className="mt-4 hidden text-[12px] text-mist/55 sm:block">{project.domain}</p>
             </div>
           </div>
-
-          {depth && <m.div aria-hidden="true" style={{ opacity: dim }} className="pointer-events-none absolute inset-0 bg-navy-deep" />}
         </div>
-      </m.article>
+      </article>
     </div>
   )
 }

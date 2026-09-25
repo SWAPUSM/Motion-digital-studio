@@ -1,5 +1,15 @@
 @import 'tailwindcss';
 
+/* Montserrat (variable), Latin subset only: it covers all of the site's text.
+   Self-hosted at a stable URL so index.html can preload it. */
+@font-face {
+  font-family: 'Montserrat Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/montserrat-latin-wght.woff2') format('woff2-variations');
+}
+
 @theme {
   --color-navy: #061424;
   --color-navy-deep: #030c18;
@@ -35,14 +45,6 @@
     outline: 2px solid var(--color-cyan);
     outline-offset: 3px;
     border-radius: 6px;
-  }
-  /* Lenis handles smooth scrolling on desktop */
-  html.lenis,
-  html.lenis body {
-    height: auto;
-  }
-  html.lenis {
-    scroll-behavior: auto;
   }
 }
 
@@ -81,11 +83,11 @@
     color: transparent;
   }
 
+  /* Frosted look without backdrop-filter: a tinted translucent surface.
+     (Backdrop blur re-renders whatever scrolls beneath it on every frame.) */
   .glass {
-    background: linear-gradient(160deg, rgb(255 255 255 / 0.07), rgb(255 255 255 / 0.015));
+    background: linear-gradient(160deg, rgb(24 44 70 / 0.82), rgb(10 24 42 / 0.86));
     border: 1px solid rgb(255 255 255 / 0.08);
-    backdrop-filter: blur(18px) saturate(140%);
-    -webkit-backdrop-filter: blur(18px) saturate(140%);
   }
 
   /* Gradient hairline border using a mask — crisp on retina */
@@ -120,46 +122,15 @@
     background-size: 64px 64px;
   }
 
-  .noise {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
-    opacity: 0.035;
-    mix-blend-mode: overlay;
-  }
 }
 
-/* ── Keyframes ─────────────────────────────────────────────── */
-@keyframes float-a {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -10px; }
-}
-@keyframes float-b {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 8px; }
-}
-@keyframes sway {
-  0%, 100% { transform: rotateX(8deg) rotateY(-16deg); }
-  50% { transform: rotateX(4deg) rotateY(-8deg); }
-}
-/* Hero workspace: each layer floats on its own slow rhythm */
-@keyframes float-slow {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -6px; }
-}
-@keyframes drift {
-  0%, 100% { translate: 0 0; rotate: 0deg; }
-  50% { translate: 6px 7px; rotate: -1deg; }
-}
-@keyframes float-tilt {
-  0%, 100% { translate: 0 0; rotate: 0deg; }
-  50% { translate: -4px -9px; rotate: 1.2deg; }
-}
+/* ── Keyframes ───────────────────────────────────────────────
+   Only transform and opacity are animated (compositor-only, no repaint).
+   Every loop is paused while its section is off-screen (.anim-paused). */
+/* Hero workspace: one slow, gentle sway of the whole 3D stage */
 @keyframes sway-soft {
   0%, 100% { transform: rotateX(5deg) rotateY(-8deg); }
   50% { transform: rotateX(2deg) rotateY(-3deg); }
-}
-@keyframes travel {
-  from { stroke-dashoffset: 1.2; }
-  to { stroke-dashoffset: 0; }
 }
 @keyframes marquee {
   from { transform: translate3d(0, 0, 0); }
@@ -169,55 +140,30 @@
   0% { transform: scale(0.6); opacity: 0.9; }
   100% { transform: scale(2.6); opacity: 0; }
 }
-@keyframes meridian {
-  0% { transform: scaleX(1); }
-  50% { transform: scaleX(-1); }
-  100% { transform: scaleX(1); }
-}
-@keyframes dash {
-  to { stroke-dashoffset: -40; }
-}
+/* a short light travelling down the "scroll" hairline */
 @keyframes scroll-cue {
-  0% { transform: scaleY(0); transform-origin: top; }
-  45% { transform: scaleY(1); transform-origin: top; }
-  55% { transform: scaleY(1); transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(250%); }
+}
+@keyframes scroll-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
-.animate-float-a { animation: float-a 7s ease-in-out infinite; }
-.animate-float-b { animation: float-b 8s ease-in-out infinite; }
-.animate-sway { animation: sway 10s ease-in-out infinite; }
 .animate-sway-soft { animation: sway-soft 10s ease-in-out infinite; }
-.animate-float-slow { animation: float-slow 11s ease-in-out infinite; }
-.animate-drift { animation: drift 13s ease-in-out infinite; }
-.animate-float-tilt { animation: float-tilt 9s ease-in-out -2s infinite; }
 .animate-marquee { animation: marquee 38s linear infinite; }
 .animate-scroll-cue { animation: scroll-cue 2.4s var(--ease-expo) infinite; }
 
-/* Device mock pages scroll to their end on hover (desktop) or tap (touch).
-   --frame-h is the visible height of the device viewport, set on the frame. */
-.mock-page {
-  transition: transform 3.5s cubic-bezier(0.45, 0, 0.2, 1);
-  will-change: transform;
+/* Page progress hairline, driven by the scroll position itself (no JS). */
+.scroll-progress {
+  display: none;
 }
-.mock-trigger:hover .mock-page,
-.mock-trigger[data-open='true'] .mock-page {
-  transform: translateY(min(0px, calc(-100% + var(--frame-h, 100%))));
-  transition-duration: 4.5s;
-}
-
-/* Touch devices (iPhone Safari): keep scrolling smooth. Backdrop blur and
-   blend-mode layers are re-rendered on every scroll frame there, so glass
-   becomes a solid tinted surface and the noise texture is dropped. */
-@media (hover: none) {
-  .glass {
-    background: linear-gradient(160deg, rgb(20 38 62 / 0.92), rgb(10 24 42 / 0.92));
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-  .noise,
-  .ribbon-pulse {
-    display: none;
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    transform: scaleX(0);
+    animation: scroll-progress linear both;
+    animation-timeline: scroll(root block);
   }
 }
 
@@ -227,6 +173,8 @@
   animation-play-state: paused !important;
 }
 
+/* Reduced motion: a calm, static site. No loops, no parallax or tilt, and
+   entrances become simple fades (MotionConfig reducedMotion="user"). */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -238,7 +186,7 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .mock-trigger:hover .mock-page {
-    transform: none;
+  .scroll-progress {
+    animation-duration: auto !important;
   }
 }

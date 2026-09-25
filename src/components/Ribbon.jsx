@@ -3,9 +3,10 @@ import { m } from 'motion/react'
 
 /**
  * A luminous ribbon of light echoing the flowing "M" of the logo —
- * the visual thread of motion that runs through the site.
+ * the visual thread of motion that runs through the site. It draws in once and
+ * then stays still (an endless travelling pulse would repaint it every frame).
  */
-export default function Ribbon({ d, className = '', viewBox = '0 0 1440 800', delay = 0.2, animateIn = true, travel = true }) {
+export default function Ribbon({ d, className = '', viewBox = '0 0 1440 800', delay = 0.2, animateIn = true }) {
   const id = useId().replace(/:/g, '')
   return (
     <svg className={`pointer-events-none ${className}`} viewBox={viewBox} preserveAspectRatio="xMidYMid slice" fill="none" aria-hidden="true">
@@ -48,19 +49,6 @@ export default function Ribbon({ d, className = '', viewBox = '0 0 1440 800', de
         animate={{ pathLength: 1 }}
         transition={{ duration: 2.2, delay: delay + 0.1, ease: [0.65, 0, 0.35, 1] }}
       />
-      {/* a pulse of light travelling forward along the ribbon */}
-      {travel && (
-        <path
-          d={d}
-          pathLength="1"
-          stroke="#E6FBFF"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeDasharray="0.08 1.12"
-          className="ribbon-pulse"
-          style={{ animation: `travel 5.5s cubic-bezier(.45,0,.2,1) ${delay + 2}s infinite both` }}
-        />
-      )}
     </svg>
   )
 }

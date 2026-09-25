@@ -1,18 +1,27 @@
-import { useRef, useState } from 'react'
-import { m, useMotionValueEvent, useScroll, useSpring } from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
+import { m, useInView, useReducedMotion } from 'motion/react'
 import SectionHeading from '../components/SectionHeading.jsx'
 import Reveal from '../components/Reveal.jsx'
 import { STEPS, TERMS } from '../data/content.js'
 
 export default function Process() {
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 75%', 'end 55%'] })
-  const fill = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
+  // Plays once when the timeline comes into view: the track fills and each step
+  // lights up in turn. Nothing is computed per scroll frame.
+  const inView = useInView(ref, { once: true, margin: '0px 0px -30% 0px' })
+  const reduce = useReducedMotion()
   const [active, setActive] = useState(-1)
+  const STEP_MS = 420
 
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    setActive(v < 0.02 ? -1 : Math.min(STEPS.length - 1, Math.floor(v * STEPS.length)))
-  })
+  useEffect(() => {
+    if (!inView) return
+    if (reduce) return setActive(STEPS.length - 1)
+    const timers = STEPS.map((_, i) => setTimeout(() => setActive(i), 150 + i * STEP_MS))
+    return () => timers.forEach(clearTimeout)
+  }, [inView, reduce])
+
+  const fillTo = inView ? 1 : 0
+  const fillTransition = { duration: (150 + STEPS.length * STEP_MS) / 1000, ease: 'linear' }
 
   return (
     <section id="process" className="relative py-16 md:py-36 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="process-title">
@@ -23,8 +32,8 @@ export default function Process() {
         <div ref={ref} className="relative mt-10 md:mt-24 lg:mt-14">
           {/* track */}
           <div aria-hidden="true" className="absolute bottom-0 left-[23px] top-0 w-px bg-white/10 lg:bottom-auto lg:left-0 lg:right-0 lg:top-[23px] lg:h-px lg:w-auto">
-            <m.div style={{ scaleY: fill }} className="absolute inset-0 origin-top bg-gradient-to-b from-electric to-cyan shadow-[0_0_12px_#00D1FF] lg:hidden" />
-            <m.div style={{ scaleX: fill }} className="absolute inset-0 hidden origin-left bg-gradient-to-r from-electric to-cyan shadow-[0_0_12px_#00D1FF] lg:block" />
+            <m.div initial={{ scaleY: 0 }} animate={{ scaleY: fillTo }} transition={fillTransition} className="absolute inset-0 origin-top bg-gradient-to-b from-electric to-cyan shadow-[0_0_12px_#00D1FF] lg:hidden" />
+            <m.div initial={{ scaleX: 0 }} animate={{ scaleX: fillTo }} transition={fillTransition} className="absolute inset-0 hidden origin-left bg-gradient-to-r from-electric to-cyan shadow-[0_0_12px_#00D1FF] lg:block" />
           </div>
 
           <ol className="relative grid gap-8 lg:grid-cols-4 lg:gap-8">

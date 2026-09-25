@@ -1,4 +1,4 @@
-import { m, useScroll, useTransform } from 'motion/react'
+import { m } from 'motion/react'
 import { BrowserFrame, PhoneFrame } from './Devices.jsx'
 import PLACEHOLDERS from '../data/placeholders.json'
 import { useMediaQuery } from '../hooks/useMediaQuery.js'
@@ -136,24 +136,15 @@ function BuildCard() {
 /**
  * A layered digital workspace in the existing 3D stage: the real Samui Property 360
  * site on desktop (dominant) and mobile, with small process cards at different
- * depths. Every layer floats on its own slow rhythm, and on scroll the layers
- * drift at slightly different speeds (background slower, foreground faster).
+ * depths. The whole stage sways gently as one (a single compositor animation) and
+ * follows the cursor on desktop; nothing here is tied to scrolling.
  * Phones get a flatter composition with two cards; large screens get three.
  */
-export default function HeroShowcase({ ready, tilt, reduce, rotateX, rotateY, stageY, stageScale, pauseRef }) {
-  // Scroll parallax per depth (px across the first ~700px of scroll). Small on purpose.
-  const { scrollY } = useScroll()
+export default function HeroShowcase({ ready, tilt, reduce, rotateX, rotateY }) {
   const isLg = useMediaQuery('(min-width: 1024px)')
-  const depth = (px) => (reduce ? 0 : px)
-  const yBack = useTransform(scrollY, [0, 700], [0, depth(42)], { clamp: true })
-  const yMid = useTransform(scrollY, [0, 700], [0, depth(16)], { clamp: true })
-  const yPhone = useTransform(scrollY, [0, 700], [0, depth(-26)], { clamp: true })
-  const yFront = useTransform(scrollY, [0, 700], [0, depth(-48)], { clamp: true })
 
   return (
     <m.div
-      ref={pauseRef}
-      style={{ y: stageY, scale: stageScale }}
       className="relative mx-auto aspect-[10/8.2] w-full max-w-[560px] [perspective:1600px] sm:max-w-[620px] lg:aspect-[4/3] lg:max-w-none"
       initial={{ opacity: 0 }}
       animate={ready ? { opacity: 1 } : {}}
@@ -168,12 +159,12 @@ export default function HeroShowcase({ ready, tilt, reduce, rotateX, rotateY, st
         <div className="absolute inset-0 bg-[radial-gradient(closest-side,rgba(0,123,255,.38),transparent)] [transform:translateZ(-160px)]" />
 
         {/* back: design system, peeking out behind the browser's top-left corner */}
-        <Layer z={isLg ? -120 : -50} y={yBack} float="drift" delay={0.55} ready={ready} className="left-[2%] top-[-6%] w-[34%] lg:left-[-4%] lg:top-[-9%] lg:w-[27%]">
+        <Layer z={isLg ? -120 : -50} delay={0.55} ready={ready} className="left-[2%] top-[-6%] w-[34%] lg:left-[-4%] lg:top-[-9%] lg:w-[27%]">
           <DesignSystemCard />
         </Layer>
 
         {/* middle: the real website on desktop — the dominant element */}
-        <Layer z={0} float="slow" delay={0.4} ready={ready} className="left-[4%] top-[18%] w-[85%] lg:left-[1%] lg:top-[16%] lg:w-[92%]">
+        <Layer z={0} delay={0.4} ready={ready} className="left-[4%] top-[18%] w-[85%] lg:left-[1%] lg:top-[16%] lg:w-[92%]">
           <BrowserFrame domain={SHOWCASE.domain} tone="dark" aspect="aspect-[7/4]">
             <Shot kind="desktop" sizes="(min-width: 1024px) 46vw, 86vw" />
           </BrowserFrame>
@@ -181,19 +172,19 @@ export default function HeroShowcase({ ready, tilt, reduce, rotateX, rotateY, st
         </Layer>
 
         {/* middle-front (large screens): responsive card between browser and phone */}
-        <Layer z={45} y={yMid} float="b" delay={0.7} ready={ready} className="right-[-4%] top-[5%] hidden w-[22%] lg:block">
+        <Layer z={45} delay={0.7} ready={ready} className="right-[-4%] top-[5%] hidden w-[22%] lg:block">
           <ResponsiveCard />
         </Layer>
 
         {/* front: the same site on mobile, overlapping the browser's corner */}
-        <Layer z={90} y={yPhone} float="a" delay={0.65} ready={ready} className="right-[1%] top-[35%] w-[24%] lg:right-[-2%] lg:top-[33%] lg:w-[23%]">
+        <Layer z={90} delay={0.65} ready={ready} className="right-[1%] top-[35%] w-[24%] lg:right-[-2%] lg:top-[33%] lg:w-[23%]">
           <PhoneFrame>
             <Shot kind="mobile" sizes="(min-width: 1024px) 12vw, 24vw" />
           </PhoneFrame>
         </Layer>
 
         {/* foreground edge: development card over the browser's bottom-left corner */}
-        <Layer z={150} y={yFront} float="tilt" delay={0.85} ready={ready} className="bottom-[1%] left-[6%] w-[35%] lg:bottom-[2%] lg:left-[-5%] lg:w-[32%]">
+        <Layer z={150} delay={0.85} ready={ready} className="bottom-[1%] left-[6%] w-[35%] lg:bottom-[2%] lg:left-[-5%] lg:w-[32%]">
           <BuildCard />
         </Layer>
       </m.div>
@@ -201,9 +192,7 @@ export default function HeroShowcase({ ready, tilt, reduce, rotateX, rotateY, st
   )
 }
 
-const FLOAT = { a: 'animate-float-a', b: 'animate-float-b', slow: 'animate-float-slow', drift: 'animate-drift', tilt: 'animate-float-tilt' }
-
-function Layer({ z, y, className, children, delay, ready, float }) {
+function Layer({ z, className, children, delay, ready }) {
   return (
     <m.div
       className={`absolute ${className}`}
@@ -212,9 +201,7 @@ function Layer({ z, y, className, children, delay, ready, float }) {
       animate={ready ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 1.3, ease, delay }}
     >
-      <m.div style={y ? { y } : undefined}>
-        <div className={FLOAT[float] || ''}>{children}</div>
-      </m.div>
+      {children}
     </m.div>
   )
 }
