@@ -192,6 +192,6 @@ export const FAQS = [
   },
   {
     q: 'Do you work with businesses outside Thailand?',
-    a: 'Yes. Motion Digital Studio is based in Thailand and works with businesses worldwide.',
+    a: 'Yes. Motion Digital Studio is based in Koh Samui, Thailand, and works with businesses worldwide.',
   },
 ]

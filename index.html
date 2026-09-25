@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Motion Digital Studio | Premium Web Design</title>
+    <title>Motion Digital Studio | Web Design Thailand &amp; Koh Samui</title>
     <meta
       name="description"
-      content="Motion Digital Studio creates modern, high-performance websites for businesses in Thailand and worldwide."
+      content="Motion Digital Studio creates premium, high-performance websites in Koh Samui for businesses across Thailand and worldwide. Modern web design built for business."
     />
     <meta name="theme-color" content="#061424" />
     <meta name="color-scheme" content="dark" />
@@ -21,10 +21,10 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Motion Digital Studio" />
-    <meta property="og:title" content="Motion Digital Studio | Premium Web Design" />
+    <meta property="og:title" content="Motion Digital Studio | Web Design Thailand &amp; Koh Samui" />
     <meta
       property="og:description"
-      content="Motion Digital Studio creates modern, high-performance websites for businesses in Thailand and worldwide."
+      content="Premium, high-performance websites created in Koh Samui for businesses across Thailand and worldwide. Modern web design built for business."
     />
     <meta property="og:url" content="https://motiondigitalstudio.com/" />
     <meta property="og:image" content="https://motiondigitalstudio.com/brand/social-share.jpg" />
@@ -34,8 +34,8 @@
     <meta property="og:image:alt" content="The Motion Digital Studio M symbol above the wordmark and the tagline “Websites that move business forward.”, glowing blue on a dark background." />
     <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Motion Digital Studio | Premium Web Design" />
-    <meta name="twitter:description" content="Modern, high-performance websites for businesses in Thailand and worldwide." />
+    <meta name="twitter:title" content="Motion Digital Studio | Web Design Thailand &amp; Koh Samui" />
+    <meta name="twitter:description" content="Premium, high-performance websites created in Koh Samui for businesses across Thailand and worldwide. Modern web design built for business." />
     <meta name="twitter:image" content="https://motiondigitalstudio.com/brand/social-share.jpg" />
     <meta name="twitter:image:alt" content="The Motion Digital Studio M symbol above the wordmark and the tagline “Websites that move business forward.”, glowing blue on a dark background." />
 
@@ -70,84 +70,69 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "Motion Digital Studio",
-        "slogan": "Websites that move business forward.",
-        "description": "Web design and development studio creating modern, high-performance websites for businesses worldwide.",
-        "url": "https://motiondigitalstudio.com/",
-        "image": "https://motiondigitalstudio.com/brand/social-share.jpg",
-        "areaServed": "Worldwide",
-        "telephone": "+66998422004",
-        "email": "motiondigitalstudioth@gmail.com",
-        "sameAs": [
-          "https://www.instagram.com/motiondigital.studio/",
-          "https://www.facebook.com/share/1EnTocKk83/",
-          "https://www.tiktok.com/@motiondigital.studio"
-        ],
-        "address": { "@type": "PostalAddress", "addressCountry": "TH" },
-        "makesOffer": [
-          { "@type": "Offer", "name": "One Page Website", "priceCurrency": "THB", "price": "8000" },
-          { "@type": "Offer", "name": "Multi Page Website", "priceCurrency": "THB", "price": "15000" },
-          { "@type": "Offer", "name": "Premium Website", "priceCurrency": "THB", "price": "25000" }
+        "@graph": [
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://motiondigitalstudio.com/#studio",
+            "name": "Motion Digital Studio",
+            "url": "https://motiondigitalstudio.com/",
+            "slogan": "Websites that move business forward.",
+            "description": "Premium web design studio based in Koh Samui, Thailand, designing and developing modern, high-performance websites for businesses across Thailand and worldwide.",
+            "image": "https://motiondigitalstudio.com/brand/social-share.jpg",
+            "logo": "https://motiondigitalstudio.com/brand/icon-512.png",
+            "telephone": "+66998422004",
+            "email": "motiondigitalstudioth@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Koh Samui",
+              "addressRegion": "Surat Thani",
+              "addressCountry": "TH"
+            },
+            "areaServed": [
+              { "@type": "Country", "name": "Thailand" },
+              { "@type": "Place", "name": "Worldwide" }
+            ],
+            "knowsAbout": ["Web design", "Website development"],
+            "sameAs": [
+              "https://www.instagram.com/motiondigital.studio/",
+              "https://www.facebook.com/share/1EnTocKk83/",
+              "https://www.tiktok.com/@motiondigital.studio"
+            ],
+            "makesOffer": [
+              {
+                "@type": "Offer",
+                "itemOffered": { "@type": "Service", "name": "One Page Website", "serviceType": "Web design" },
+                "priceSpecification": { "@type": "PriceSpecification", "minPrice": 8000, "priceCurrency": "THB" }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": { "@type": "Service", "name": "Multi Page Website", "serviceType": "Web design" },
+                "priceSpecification": { "@type": "PriceSpecification", "minPrice": 15000, "priceCurrency": "THB" }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": { "@type": "Service", "name": "Premium Website", "serviceType": "Web design" },
+                "priceSpecification": { "@type": "PriceSpecification", "minPrice": 25000, "priceCurrency": "THB" }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": { "@type": "Service", "name": "Website Care", "serviceType": "Website maintenance" },
+                "priceSpecification": { "@type": "UnitPriceSpecification", "price": 1500, "priceCurrency": "THB", "unitText": "month" }
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://motiondigitalstudio.com/#website",
+            "url": "https://motiondigitalstudio.com/",
+            "name": "Motion Digital Studio",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://motiondigitalstudio.com/#studio" }
+          }
         ]
       }
     </script>
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How long does a website take?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Delivery depends on the selected package. Typical timelines range from 3 to 14 business days once all required content and information have been received."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do I own my website?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Once the project has been fully paid, the final website deliverables are yours, subject to any third-party services, tools or licenses used by the website."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Who pays for the domain?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The domain is purchased and owned by the client. Motion Digital Studio can guide the client through setup and connect the domain to the website."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can you update my website after launch?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Optional Website Care is available from 1,500 THB/month for ongoing support and small updates."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can you build a bilingual website?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Multilingual websites can be included depending on the project and package."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you work with businesses outside Thailand?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Motion Digital Studio is based in Thailand and works with businesses worldwide."
-      }
-    }
-  ]
-}
-    </script>
+    <!-- faq-schema -->
   </head>
   <body>
     <div id="mds-intro" aria-hidden="true">
