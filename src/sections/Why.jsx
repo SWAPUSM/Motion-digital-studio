@@ -4,7 +4,7 @@ import { REASONS } from '../data/content.js'
 
 const ease = [0.16, 1, 0.3, 1]
 
-// Line icons drawn on as they enter the viewport
+// Line icons drawn on as their card enters the viewport
 const ICONS = {
   design: ['M4 20l4-1 11-11-3-3L5 16l-1 4Z', 'M14 6l3 3', 'M4 4h6M4 8h3'],
   mobile: ['M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z', 'M11 18h2'],
@@ -16,13 +16,16 @@ function Icon({ name }) {
   return (
     <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       {ICONS[name].map((d, i) => (
+        // No observer of its own: the path inherits its card's "hidden" → "show"
+        // state. Observing SVG <path>s directly is unreliable (WebKit, straight
+        // segments with zero-height boxes), which left some icons undrawn.
         <m.path
           key={d}
           d={d}
-          initial={{ pathLength: 0, opacity: 0 }}
-          whileInView={{ pathLength: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.4, delay: 0.3 + i * 0.2, ease }}
+          variants={{
+            hidden: { pathLength: 0, opacity: 0 },
+            show: { pathLength: 1, opacity: 1, transition: { duration: 1.4, delay: 0.3 + i * 0.2, ease } },
+          }}
         />
       ))}
     </svg>
@@ -39,10 +42,13 @@ export default function Why() {
           {REASONS.map((r, i) => (
             <m.article
               key={r.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                show: { opacity: 1, y: 0, transition: { duration: 0.9, delay: i * 0.1, ease } },
+              }}
+              initial="hidden"
+              whileInView="show"
               viewport={{ once: true, margin: '-8% 0px' }}
-              transition={{ duration: 0.9, delay: i * 0.1, ease }}
               className="group relative grid grid-cols-[auto_1fr] items-center gap-x-4 overflow-hidden rounded-[20px] border border-white/[.07] bg-white/[.025] p-4 transition-colors duration-500 hover:border-cyan/30 hover:bg-white/[.045] sm:block sm:rounded-[24px] sm:p-7 md:p-8"
             >
               {/* progress sweep along the top edge */}
