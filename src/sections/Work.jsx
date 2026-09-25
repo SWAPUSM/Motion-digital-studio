@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import SectionHeading from '../components/SectionHeading.jsx'
 import { BrowserFrame, PhoneFrame } from '../components/Devices.jsx'
 import { ArrowUpRight } from '../components/Icons.jsx'
@@ -7,7 +8,7 @@ import { useAfterLoad } from '../hooks/useAfterLoad.js'
 
 export default function Work() {
   return (
-    <section id="work" className="relative pt-16 md:pt-36 lg:pt-[clamp(88px,7vw,120px)]" aria-labelledby="work-title">
+    <section id="work" className="relative pt-16 md:pt-28 lg:pt-[clamp(88px,7vw,120px)]" aria-labelledby="work-title">
       <div className="container-x">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
           <SectionHeading id="work-title" index="03" label="Portfolio" lines={['Selected', 'work']} />
@@ -19,7 +20,7 @@ export default function Work() {
 
       {/* Stacked, sticky project stage — each project slides over the last.
           Pure CSS (position: sticky): nothing is computed while scrolling. */}
-      <div className="relative mt-2 md:mt-16 lg:mt-4">
+      <div className="relative mt-2 md:mt-6 lg:mt-4">
         {PROJECTS.map((p, i) => (
           <ProjectPanel key={p.id} project={p} index={i} total={PROJECTS.length} />
         ))}
@@ -28,9 +29,34 @@ export default function Work() {
   )
 }
 
+/*
+ * Where each panel sticks. --h is the panel's height (plus its stack offset),
+ * measured on load/resize only — never per scroll frame.
+ *  - A panel taller than the screen sticks only once its bottom is in view
+ *    (top = 100svh − h), so the whole card — "View project" included — is always
+ *    reachable before the next one slides over it.
+ *  - Phones: otherwise top 0, as before.
+ *  - Tablet/desktop: otherwise vertically centred, (100svh − h) / 2.
+ */
+const STICK =
+  'top-[min(0px,calc(100svh_-_var(--h,0px)))] md:top-[min(calc((100svh_-_var(--h,0px))/2),calc(100svh_-_var(--h,0px)))]'
+
 function ProjectPanel({ project, index, total }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    const el = ref.current
+    const measure = () => el.style.setProperty('--h', `${el.offsetHeight + index * 14}px`)
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [index])
+
   return (
-    <div className="sticky top-0 flex min-h-[100svh] items-start pb-6 pt-[76px] md:items-center md:py-24 lg:top-[max(0px,calc((100svh-700px)/2))] lg:min-h-[min(100svh,700px)] lg:py-8">
+    <div
+      ref={ref}
+      className={`sticky ${STICK} flex min-h-[100svh] items-start pb-6 pt-[76px] md:min-h-0 md:items-center md:py-12 lg:min-h-[min(100svh,700px)] lg:py-8`}
+    >
       <article
         style={{ top: index * 14 }}
         className="container-x relative"
@@ -82,7 +108,7 @@ function ProjectPanel({ project, index, total }) {
                 <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 transition-all duration-500 group-hover/link:border-cyan group-hover/link:bg-cyan group-hover/link:text-navy">
                   <ArrowUpRight />
                 </span>
-                <span className="sr-only">— {project.domain} (opens in a new tab)</span>
+                <span className="sr-only"> — {project.domain} (opens in a new tab)</span>
               </a>
               <p className="mt-4 hidden text-[12px] text-mist/55 sm:block">{project.domain}</p>
             </div>
@@ -98,7 +124,7 @@ function ProjectPanel({ project, index, total }) {
  * Fetched as soon as the page has loaded (not when scrolled to), so it's ready long
  * before it comes into view; until then a 20px blurred preview + brand colour shows.
  */
-const SHOT = { desktop: { widths: [900, 1600], w: 1600, h: 913 }, mobile: { widths: [390, 780], w: 780, h: 1691 } }
+const SHOT = { desktop: { widths: [900, 1600], w: 1600, h: 913 }, mobile: { widths: [200, 390, 780], w: 780, h: 1691 } }
 
 function Shot({ slug, kind, alt, sizes }) {
   const loaded = useAfterLoad()
@@ -110,7 +136,7 @@ function Shot({ slug, kind, alt, sizes }) {
     <picture>
       <source type="image/avif" srcSet={set('avif')} sizes={sizes} />
       <img
-        src={`/work/${slug}-${kind}-${widths[1]}.webp`}
+        src={`/work/${slug}-${kind}-${widths[widths.length - 1]}.webp`}
         srcSet={set('webp')}
         sizes={sizes}
         alt={alt}
@@ -144,7 +170,7 @@ function BrowserStage({ project }) {
       </div>
       <div className="absolute bottom-0 right-3 w-[22%] max-w-[180px] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1.5 sm:right-6 md:w-[18%]">
         <PhoneFrame>
-          <Shot slug={project.slug} kind="mobile" alt={`${project.name} website on a phone`} sizes="(min-width: 1024px) 11vw, 22vw" />
+          <Shot slug={project.slug} kind="mobile" alt={`${project.name} website on a phone`} sizes="(min-width: 1280px) 110px, (min-width: 1024px) 8.5vw, (min-width: 768px) 14vw, 17vw" />
         </PhoneFrame>
       </div>
     </a>

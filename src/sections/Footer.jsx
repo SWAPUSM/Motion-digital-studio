@@ -27,7 +27,7 @@ export default function Footer() {
               <picture className="flex w-[88px] shrink-0 md:w-[104px]">
                 <source type="image/avif" srcSet="/brand/motion-mark-128.avif 128w, /brand/motion-mark-256.avif 256w" sizes="(min-width: 768px) 104px, 88px" />
                 <source type="image/webp" srcSet="/brand/motion-mark-128.webp 128w, /brand/motion-mark-256.webp 256w" sizes="(min-width: 768px) 104px, 88px" />
-                <img src="/brand/motion-mark-256.png" width="1774" height="887" alt="Motion Digital Studio" loading="lazy" decoding="async" className="block h-auto w-full object-contain" />
+                <img src="/brand/motion-mark-256.png" width="1774" height="887" alt="" loading="lazy" decoding="async" className="block h-auto w-full object-contain" />
               </picture>
               <div>
                 <p className="text-[15px] font-extrabold uppercase tracking-[0.2em] text-white md:text-[16px]">Motion Digital Studio</p>

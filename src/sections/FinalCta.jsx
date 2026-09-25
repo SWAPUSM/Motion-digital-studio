@@ -9,8 +9,8 @@ const RIBBON = 'M-100 560 C 200 600, 340 180, 620 240 S 900 620, 1120 420 S 1360
 
 export default function FinalCta() {
   return (
-    <section id="contact" className="relative px-3 py-12 md:px-6 md:py-28 lg:pb-[clamp(64px,5vw,88px)] lg:pt-[clamp(32px,3vw,48px)]" aria-labelledby="contact-title">
-      <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-[32px] border border-white/[.08] bg-[radial-gradient(120%_90%_at_50%_0%,#0d3a78_0%,#08203f_40%,#040f1d_100%)] px-5 py-16 text-center md:rounded-[48px] md:py-36 lg:py-[clamp(96px,8vw,128px)]">
+    <section id="contact" className="relative px-3 py-12 md:px-6 md:pb-20 md:pt-10 lg:pb-[clamp(64px,5vw,88px)] lg:pt-[clamp(32px,3vw,48px)]" aria-labelledby="contact-title">
+      <div className="relative mx-auto max-w-[1400px] overflow-hidden rounded-[32px] border border-white/[.08] bg-[radial-gradient(120%_90%_at_50%_0%,#0d3a78_0%,#08203f_40%,#040f1d_100%)] px-5 py-16 text-center md:rounded-[48px] md:py-28 lg:py-[clamp(96px,8vw,128px)]">
         <div aria-hidden="true" className="absolute inset-0">
           <Ribbon d={RIBBON} className="absolute inset-0 h-full w-full opacity-60" animateIn={false} />
           <div className="absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-cyan to-transparent" />

@@ -2,14 +2,14 @@
 // scripts/work-masters/ (kept out of public/ so they are never deployed):
 //   <slug>-desktop-master.webp  (7:4 desktop capture, ≥1600px wide)
 //   <slug>-mobile-master.webp   (full iPhone screenshot, ≥780px wide)
-// Outputs AVIF + WebP at two widths each, plus tiny blurred previews that are
-// inlined in src/data/placeholders.json (shown while the real image loads).
+// Outputs AVIF + WebP at two (desktop) or three (mobile) widths, plus tiny blurred
+// previews that are inlined in src/data/placeholders.json (shown while the real image loads).
 import sharp from 'sharp'
 import { readdir, writeFile } from 'node:fs/promises'
 
 const SRC = new URL('./work-masters/', import.meta.url).pathname
 const DIR = new URL('../public/work/', import.meta.url).pathname
-const SIZES = { desktop: [1600, 900], mobile: [780, 390] }
+const SIZES = { desktop: [1600, 900], mobile: [780, 390, 200] }
 
 const placeholders = {}
 for (const file of (await readdir(SRC)).filter((f) => f.endsWith('-master.webp')).sort()) {

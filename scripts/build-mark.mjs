@@ -5,8 +5,8 @@ import sharp from 'sharp'
 const SRC = new URL('./mark-source.png', import.meta.url).pathname
 const OUT = new URL('../public/brand/', import.meta.url).pathname
 
-// 128/256: header lockup · 512/768: opening intro (up to ~220px wide at 3x)
-for (const w of [128, 256, 512, 768]) {
+// 128/256: header + footer lockup · 256–768: opening intro (128–210px wide, 1–3x)
+for (const w of [128, 256, 384, 512, 768]) {
   const img = sharp(SRC).resize({ width: w })
   await img.clone().avif({ quality: 70 }).toFile(`${OUT}motion-mark-${w}.avif`)
   await img.clone().webp({ quality: 90, alphaQuality: 100 }).toFile(`${OUT}motion-mark-${w}.webp`)

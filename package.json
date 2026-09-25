@@ -6,7 +6,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "assets": "node scripts/build-assets.mjs",
+    "icons": "node scripts/build-icons.mjs",
     "work-assets": "node scripts/build-work-assets.mjs",
     "mark": "node scripts/build-mark.mjs"
   },

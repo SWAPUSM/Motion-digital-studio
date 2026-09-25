@@ -12,7 +12,7 @@ export default function Intro() {
   let idx = 0
 
   return (
-    <section id="intro" className="relative py-16 md:py-40 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="intro-title">
+    <section id="intro" className="relative py-16 md:py-28 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="intro-title">
       <div className="container-x">
         <p className="eyebrow flex items-center gap-3">
           <span className="text-white/55">01</span>
@@ -45,7 +45,7 @@ export default function Intro() {
           ))}
         </m.h2>
 
-        <Reveal as="p" className="mt-7 max-w-md text-[15px] leading-relaxed text-mist/70 md:mt-14 md:text-[17px] lg:mt-10">
+        <Reveal as="p" className="mt-7 max-w-md text-[15px] leading-relaxed text-mist/70 md:mt-10 md:text-[17px]">
           Motion Digital Studio creates modern websites engineered around three objectives. Every pixel, animation and line of code
           exists to move your business forward.
         </Reveal>
@@ -79,7 +79,7 @@ function Pillars() {
   const inView = { once: true, margin: '-15% 0px' }
 
   return (
-    <div className="relative mt-11 md:mt-24 lg:mt-16">
+    <div className="relative mt-11 md:mt-16">
       {/* connecting line: vertical on mobile, horizontal on desktop */}
       <div aria-hidden="true" className="absolute bottom-8 left-[19px] top-8 w-px bg-white/10 md:bottom-auto md:left-0 md:right-0 md:top-[19px] md:h-px md:w-auto">
         <m.div initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={inView} transition={draw} className="absolute inset-0 origin-top bg-gradient-to-b from-electric to-cyan md:hidden" />
@@ -92,7 +92,7 @@ function Pillars() {
             <span className="absolute left-0 top-0 grid h-10 w-10 place-items-center rounded-full border border-cyan/40 bg-navy text-[11px] font-semibold text-cyan shadow-[0_0_24px_rgba(0,209,255,.25)]">
               0{i + 1}
             </span>
-            <h3 className="text-[clamp(1.5rem,5vw,2.4rem)] font-extrabold uppercase tracking-[-0.01em] text-white">{p.title}</h3>
+            <h3 className="text-[clamp(1.5rem,5vw,2.4rem)] font-extrabold uppercase tracking-[-0.01em] text-white md:text-[clamp(1.5rem,calc((100vw_-_144px)/26),2.4rem)]">{p.title}</h3>
             <p className="mt-2 max-w-xs text-[15px] leading-relaxed text-mist/65 md:mt-3">{p.text}</p>
           </Reveal>
         ))}

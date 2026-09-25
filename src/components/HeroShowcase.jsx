@@ -15,7 +15,7 @@ const SHOWCASE = { slug: 'samui-property-360', domain: 'samuiproperty360.com', n
 
 const SHOT = {
   desktop: { widths: [900, 1600], w: 1600, h: 913 },
-  mobile: { widths: [390, 780], w: 780, h: 1691 },
+  mobile: { widths: [200, 390, 780], w: 780, h: 1691 },
 }
 
 function Shot({ kind, sizes }) {
@@ -179,7 +179,7 @@ export default function HeroShowcase({ ready, tilt, reduce, rotateX, rotateY }) 
         {/* front: the same site on mobile, overlapping the browser's corner */}
         <Layer z={90} delay={0.65} ready={ready} className="right-[1%] top-[35%] w-[24%] lg:right-[-2%] lg:top-[33%] lg:w-[23%]">
           <PhoneFrame>
-            <Shot kind="mobile" sizes="(min-width: 1024px) 12vw, 24vw" />
+            <Shot kind="mobile" sizes="(min-width: 1280px) 140px, (min-width: 1024px) 8.5vw, (min-width: 768px) 160px, 22vw" />
           </PhoneFrame>
         </Layer>
 

@@ -12,7 +12,7 @@ import { PROJECTS, TESTIMONIALS } from '../data/content.js'
 export default function Proof() {
   const pauseRef = usePauseOffscreen()
   return (
-    <section ref={pauseRef} id="proof" className="relative py-16 md:py-28 lg:py-[clamp(72px,5.5vw,96px)]" aria-labelledby="proof-title">
+    <section ref={pauseRef} id="proof" className="relative py-16 md:py-24 lg:py-[clamp(72px,5.5vw,96px)]" aria-labelledby="proof-title">
       <div className="container-x">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
           <SectionHeading id="proof-title" index="04" label="Proof" lines={['Real businesses.', 'Real websites.']} />
@@ -22,9 +22,9 @@ export default function Proof() {
         </div>
 
         <Reveal delay={0.1} className="mt-8 md:mt-12">
-            <ul className="ring-gradient grid overflow-hidden rounded-[24px] bg-white/[.03] lg:grid-cols-3">
+            <ul className="ring-gradient grid overflow-hidden rounded-[24px] bg-white/[.03] xl:grid-cols-3">
               {PROJECTS.map((p, i) => (
-                <li key={p.id} className={i > 0 ? 'border-t border-white/[.07] lg:border-l lg:border-t-0' : ''}>
+                <li key={p.id} className={i > 0 ? 'border-t border-white/[.07] xl:border-l xl:border-t-0' : ''}>
                   <a
                     href={p.url}
                     target="_blank"
@@ -36,10 +36,10 @@ export default function Proof() {
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-[#28c840]" />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[14px] font-extrabold uppercase tracking-[0.04em] text-white md:text-[15px]">{p.name}</span>
-                      <span className="mt-0.5 block truncate text-[12.5px] text-mist/60">{p.category}</span>
-                    </span>
-                    <span className="hidden text-[12.5px] text-mist/60 sm:block lg:hidden">{p.domain}</span>
+                      <span className="block text-[14px] font-extrabold uppercase tracking-[0.04em] text-white [overflow-wrap:anywhere] md:text-[15px]">{p.name}</span>{' '}
+                      <span className="mt-0.5 block text-[12.5px] text-mist/60">{p.category}</span>
+                    </span>{' '}
+                    <span aria-hidden="true" className="hidden text-[12.5px] text-mist/60 sm:block xl:hidden">{p.domain}</span>{' '}
                     <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-white/15 text-white transition-all duration-500 group-hover:border-cyan group-hover:bg-cyan group-hover:text-navy">
                       <ArrowUpRight width="16" height="16" />
                     </span>

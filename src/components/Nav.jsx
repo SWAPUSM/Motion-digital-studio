@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, m } from 'motion/react'
 import MagneticButton from './MagneticButton.jsx'
 import { WhatsApp } from './Icons.jsx'
@@ -10,6 +10,8 @@ export default function Nav({ ready }) {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [open, setOpen] = useState(false)
+  const wrapRef = useRef(null)
+  const buttonRef = useRef(null)
 
   // Smart header: hides after a deliberate scroll down, returns on a deliberate
   // scroll up anywhere on the page, and always shows near the top. Work is batched
@@ -64,15 +66,41 @@ export default function Nav({ ready }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Open menu = modal dialog (header + panel): the page behind is inert, Tab and
+  // Shift+Tab cycle through the header and menu only, and Escape closes it and
+  // returns focus to the menu button.
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
-    const onKey = (e) => e.key === 'Escape' && setOpen(false)
+    if (!open) return
+    const wrap = wrapRef.current
+    const behind = [...wrap.parentElement.children].filter((el) => el !== wrap)
+    behind.forEach((el) => (el.inert = true))
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        buttonRef.current?.focus()
+      } else if (e.key === 'Tab') {
+        const items = [...wrap.querySelectorAll('a[href], button')].filter((el) => el.getClientRects().length)
+        const first = items[0]
+        const last = items[items.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => {
+      behind.forEach((el) => (el.inert = false))
+      window.removeEventListener('keydown', onKey)
+    }
   }, [open])
 
   return (
-    <>
+    <div ref={wrapRef} role={open ? 'dialog' : undefined} aria-modal={open || undefined} aria-label={open ? 'Site menu' : undefined}>
       {/* outer element slides out/in on scroll (CSS transform, GPU-only);
           the inner one keeps the original entrance animation */}
       <header
@@ -100,7 +128,7 @@ export default function Nav({ ready }) {
                 </picture>
               </span>
               <span className="flex min-w-0 flex-col leading-none">
-                <span className="text-[15px] font-extrabold uppercase tracking-[0.22em] text-white md:text-[17px]">Motion</span>
+                <span className="text-[15px] font-extrabold uppercase tracking-[0.22em] text-white md:text-[17px]">Motion</span>{' '}
                 <span className="mt-1.5 text-[9.5px] font-semibold uppercase tracking-[0.3em] text-cyan md:text-[10.5px]">Digital Studio</span>
                 <span className="sr-only"> — home</span>
               </span>
@@ -126,6 +154,7 @@ export default function Nav({ ready }) {
                 </MagneticButton>
               </div>
               <button
+                ref={buttonRef}
                 type="button"
                 onClick={() => setOpen((o) => !o)}
                 aria-expanded={open}
@@ -183,6 +212,6 @@ export default function Nav({ ready }) {
           </m.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   )
 }

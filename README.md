@@ -46,7 +46,11 @@ Each project currently shows a hand-built HTML/CSS mockup, so there are no image
 
 ## Logo
 
-The official logo is used exactly as supplied. `scripts/logo-source.png` is the master file. `npm run assets` only resizes and re-encodes it (AVIF, WebP and JPEG, plus the social share image and icons) into `public/brand/`. The artwork is never cropped, recoloured or redrawn.
+The official artwork is used exactly as supplied: never cropped, recoloured or redrawn, only resized and re-encoded.
+
+- `scripts/mark-source.png` is the standalone M (the symbol). `npm run mark` builds the web versions used by the intro, header and footer. `npm run icons` builds `favicon.ico`, the 48/96px favicons, the Apple touch icon and the 192/512px manifest icons.
+- `public/brand/social-share.jpg` is the approved 1200×630 social sharing image.
+- `scripts/logo-source.png` is the full logo master (not used on the site).
 
 ## Deploy to Netlify
 

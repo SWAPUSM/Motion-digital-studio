@@ -35,11 +35,11 @@ function Icon({ name }) {
 export default function Why() {
   const reduce = useReducedMotion()
   return (
-    <section id="why" className="relative py-16 md:py-36 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="why-title">
+    <section id="why" className="relative py-16 md:py-28 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="why-title">
       <div className="container-x">
         <SectionHeading id="why-title" index="05" label="Why Motion" lines={['Designed to look good.', 'Built to move business forward.']} />
 
-        <div className="mt-9 grid gap-3 sm:grid-cols-2 sm:gap-4 md:mt-20 lg:mt-14 lg:grid-cols-4 lg:gap-5">
+        <div className="mt-9 grid gap-3 sm:grid-cols-2 sm:gap-4 md:mt-14 lg:grid-cols-4 lg:gap-5">
           {REASONS.map((r, i) => (
             <m.article
               key={r.title}
@@ -65,7 +65,7 @@ export default function Why() {
               <div className="relative row-span-2 grid h-12 w-12 place-items-center rounded-2xl sm:h-14 sm:w-14 border border-cyan/20 bg-gradient-to-br from-electric/20 to-cyan/5 text-cyan transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1 group-hover:rotate-[-4deg]">
                 <Icon name={r.icon} />
               </div>
-              <h3 className="relative self-end text-[15px] font-extrabold uppercase tracking-[0.02em] text-white sm:mt-10 sm:text-[17px] md:mt-14 lg:mt-10">{r.title}</h3>
+              <h3 className="relative self-end text-[15px] font-extrabold uppercase tracking-[0.02em] text-white sm:mt-10 sm:text-[17px]">{r.title}</h3>
               <p className="relative mt-1 self-start text-[13.5px] leading-snug text-mist/65 sm:mt-3 sm:text-[14px] sm:leading-relaxed">{r.text}</p>
             </m.article>
           ))}

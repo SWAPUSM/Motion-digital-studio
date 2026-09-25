@@ -15,7 +15,7 @@ function trackPointer(e) {
 
 export default function Services() {
   return (
-    <section id="services" className="relative py-16 md:py-36 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="services-title">
+    <section id="services" className="relative py-16 md:py-28 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="services-title">
       <div aria-hidden="true" className="absolute inset-x-0 top-1/3 -z-10 h-[60%] bg-[radial-gradient(50%_50%_at_50%_50%,rgba(0,123,255,.12),transparent)]" />
       <div className="container-x">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
@@ -25,7 +25,7 @@ export default function Services() {
           </Reveal>
         </div>
 
-        <div className="mt-9 grid gap-4 md:mt-20 md:gap-5 lg:mt-14 lg:grid-cols-3 lg:gap-6">
+        <div className="mt-9 grid gap-4 md:mt-14 md:gap-5 lg:grid-cols-3 lg:gap-6">
           {PACKAGES.map((pkg, i) => (
             <PackageCard key={pkg.id} pkg={pkg} index={i} />
           ))}
@@ -35,7 +35,7 @@ export default function Services() {
           Delivery times begin once all required content and information have been received from the client.
         </p>
 
-        <div className="mt-5 grid gap-4 md:mt-6 md:gap-5 lg:grid-cols-2 lg:gap-6">
+        <div className="mt-5 grid gap-4 md:mt-6 md:gap-5 lg:gap-6 xl:grid-cols-2">
           <Reveal>
             <div
               onPointerMove={trackPointer}
@@ -44,7 +44,7 @@ export default function Services() {
               <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               <div className="relative">
                 <p className="eyebrow">Website care</p>
-                <p className="mt-3 text-2xl font-extrabold text-white md:text-3xl">
+                <p className="mt-3 whitespace-nowrap text-2xl font-extrabold text-white md:text-3xl">
                   1,500 THB <span className="text-base font-medium text-mist/50">/ month</span>
                 </p>
                 <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-mist/65">Optional ongoing website support and small updates.</p>

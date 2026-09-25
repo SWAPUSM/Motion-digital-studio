@@ -13,8 +13,11 @@
     <link rel="canonical" href="https://motiondigitalstudio.com/" />
     <link rel="preload" href="/fonts/montserrat-latin-wght.woff2" as="font" type="font/woff2" crossorigin />
 
-    <link rel="icon" type="image/png" sizes="32x32" href="/brand/icon-32.png" />
-    <link rel="apple-touch-icon" href="/brand/icon-180.png" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/brand/favicon-96.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/brand/favicon-48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Motion Digital Studio" />
@@ -24,15 +27,17 @@
       content="Motion Digital Studio creates modern, high-performance websites for businesses in Thailand and worldwide."
     />
     <meta property="og:url" content="https://motiondigitalstudio.com/" />
-    <meta property="og:image" content="https://motiondigitalstudio.com/brand/og-image.jpg" />
+    <meta property="og:image" content="https://motiondigitalstudio.com/brand/social-share.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Motion Digital Studio logo — Websites that move business forward." />
+    <meta property="og:image:alt" content="The Motion Digital Studio M symbol above the wordmark and the tagline “Websites that move business forward.”, glowing blue on a dark background." />
     <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Motion Digital Studio | Premium Web Design" />
     <meta name="twitter:description" content="Modern, high-performance websites for businesses in Thailand and worldwide." />
-    <meta name="twitter:image" content="https://motiondigitalstudio.com/brand/og-image.jpg" />
+    <meta name="twitter:image" content="https://motiondigitalstudio.com/brand/social-share.jpg" />
+    <meta name="twitter:image:alt" content="The Motion Digital Studio M symbol above the wordmark and the tagline “Websites that move business forward.”, glowing blue on a dark background." />
 
     <!-- Opening intro: painted with the very first frame (before the app's JS loads),
          so there is never a white or empty screen. Pure CSS; the tiny script below
@@ -45,7 +50,7 @@
       #mds-intro .mark{position:relative;width:clamp(128px,36vw,210px);aspect-ratio:1774/887;opacity:0;transform:scale(.9);will-change:transform,opacity}
       #mds-intro.go .mark{animation:mds-in .85s cubic-bezier(.16,1,.3,1) .05s forwards}
       #mds-intro .mark img{display:block;width:100%;height:100%;filter:drop-shadow(0 0 10px rgba(0,190,255,.35))}
-      #mds-intro .sweep{position:absolute;inset:0;overflow:hidden;-webkit-mask:url(/brand/motion-mark-512.webp) center/contain no-repeat;mask:url(/brand/motion-mark-512.webp) center/contain no-repeat}
+      #mds-intro .sweep{position:absolute;inset:0;overflow:hidden;-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
       #mds-intro .sweep::before{content:"";position:absolute;top:0;bottom:0;left:0;width:45%;background:linear-gradient(100deg,transparent,rgba(210,250,255,.55) 50%,transparent);transform:translateX(-120%)}
       #mds-intro.go .sweep::before{animation:mds-sweep .8s cubic-bezier(.45,0,.25,1) .35s forwards}
       #mds-intro.exit .bg{opacity:0;transition:opacity .6s cubic-bezier(.4,0,.2,1) .05s}
@@ -70,7 +75,7 @@
         "slogan": "Websites that move business forward.",
         "description": "Web design and development studio creating modern, high-performance websites for businesses worldwide.",
         "url": "https://motiondigitalstudio.com/",
-        "image": "https://motiondigitalstudio.com/brand/og-image.jpg",
+        "image": "https://motiondigitalstudio.com/brand/social-share.jpg",
         "areaServed": "Worldwide",
         "telephone": "+66998422004",
         "email": "motiondigitalstudioth@gmail.com",
@@ -150,8 +155,8 @@
       <div class="halo"></div>
       <div class="mark">
         <picture>
-          <source type="image/avif" srcset="/brand/motion-mark-512.avif 512w, /brand/motion-mark-768.avif 768w" sizes="clamp(128px, 36vw, 210px)" />
-          <img src="/brand/motion-mark-512.webp" srcset="/brand/motion-mark-512.webp 512w, /brand/motion-mark-768.webp 768w" sizes="clamp(128px, 36vw, 210px)" width="1774" height="887" alt="" fetchpriority="high" />
+          <source type="image/avif" srcset="/brand/motion-mark-256.avif 256w, /brand/motion-mark-384.avif 384w, /brand/motion-mark-512.avif 512w, /brand/motion-mark-768.avif 768w" sizes="clamp(128px, 36vw, 210px)" />
+          <img src="/brand/motion-mark-512.webp" srcset="/brand/motion-mark-256.webp 256w, /brand/motion-mark-384.webp 384w, /brand/motion-mark-512.webp 512w, /brand/motion-mark-768.webp 768w" sizes="clamp(128px, 36vw, 210px)" width="1774" height="887" alt="" fetchpriority="high" />
         </picture>
         <div class="sweep"></div>
       </div>
@@ -189,6 +194,8 @@
         function onImg() {
           if (imgReady) return
           imgReady = true
+          // the light sweep is masked by the very file the M just loaded (no second download)
+          if (img.currentSrc) el.style.setProperty('--m', 'url("' + img.currentSrc + '")')
           start = performance.now()
           el.classList.add('go')
           tryExit()

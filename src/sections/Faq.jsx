@@ -10,7 +10,7 @@ export default function Faq() {
   const uid = useId()
 
   return (
-    <section id="faq" className="relative py-16 md:py-28 lg:py-[clamp(72px,5.5vw,96px)]" aria-labelledby="faq-title">
+    <section id="faq" className="relative py-16 md:py-24 lg:py-[clamp(72px,5.5vw,96px)]" aria-labelledby="faq-title">
       <div className="container-x grid gap-8 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
         <div>
           <SectionHeading id="faq-title" index="08" label="FAQ" lines={['Questions,', 'answered.']} />
