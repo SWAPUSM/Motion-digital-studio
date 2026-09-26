@@ -10,6 +10,8 @@ export const SITE = {
   // WhatsApp number in international format, digits only (+66 99 842 2004).
   // Every "Start your project" button opens this chat.
   whatsapp: '66998422004',
+  // The same number, as displayed on the site.
+  phone: '+66 99 842 2004',
 
   // Anything left empty is simply not shown (no "Email us" link, no social icon).
   email: 'motiondigitalstudioth@gmail.com',

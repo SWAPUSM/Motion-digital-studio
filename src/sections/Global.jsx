@@ -89,7 +89,14 @@ export default function Global() {
           </p>
           <MaskedLines id="global-title" lines={['Based in Thailand.', 'Building worldwide.']} className="mt-6 text-[clamp(2rem,8.4vw,5.2rem)] font-extrabold uppercase leading-[1] tracking-[-0.025em] text-white" />
           <Reveal as="p" delay={0.2} className="mt-6 max-w-md text-[15px] leading-relaxed text-mist/65 md:text-[17px]">
-            Our studio is in Koh Samui. Our clients are everywhere. Wherever your business is, we design for the customers you want to
+            Our studio is in{' '}
+            <a
+              href="/web-design-koh-samui/"
+              className="underline decoration-cyan/40 underline-offset-4 transition-colors hover:text-white hover:decoration-cyan"
+            >
+              Koh Samui
+            </a>
+            . Our clients are everywhere. Wherever your business is, we design for the customers you want to
             reach.
           </Reveal>
         </div>

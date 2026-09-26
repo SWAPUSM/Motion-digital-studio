@@ -20,9 +20,13 @@ export default function Footer({ base = '' }) {
       <div aria-hidden="true" className="absolute left-1/2 top-0 h-56 w-[90%] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(0,123,255,.16),transparent)]" />
 
       <div className="container-x relative">
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-[1.5fr_1fr_1fr_auto] md:gap-10">
+        {/* Contact gets a column wide enough for the phone number and email on one line:
+            phones: brand, Navigate | Services, Contact, Follow (full width rows);
+            tablets: brand | Follow, then Navigate | Contact with Services below;
+            lg+: four columns, Services under Contact. */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-[1fr_1.6fr_auto] md:grid-rows-[auto_auto_1fr] md:gap-x-10 lg:grid-cols-[1.5fr_0.9fr_1.1fr_auto] lg:grid-rows-[auto_1fr] lg:gap-y-8">
           {/* brand */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-2 md:col-start-1 md:row-start-1 lg:col-span-1 lg:row-span-2">
             <div className="flex items-center gap-4">
               {/* official transparent "M" symbol (same asset as the header), uncropped */}
               <picture className="flex w-[88px] shrink-0 md:w-[104px]">
@@ -42,7 +46,7 @@ export default function Footer({ base = '' }) {
             </p>
           </div>
 
-          <nav aria-label="Footer">
+          <nav aria-label="Footer" className="md:col-start-1 md:row-start-2 md:row-span-2 lg:col-start-2 lg:row-start-1">
             <p className={heading}>Navigate</p>
             <ul className="mt-4 space-y-2.5">
               {NAV_LINKS.map((l) => (
@@ -55,23 +59,8 @@ export default function Footer({ base = '' }) {
             </ul>
           </nav>
 
-          <div>
-            <p className={heading}>Contact</p>
-            <ul className="mt-4 space-y-2.5">
-              <li>
-                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className={`${link} inline-flex items-center gap-2`}>
-                  <WhatsApp width="15" height="15" className="text-cyan" /> WhatsApp
-                </a>
-              </li>
-              {HAS_EMAIL && (
-                <li>
-                  <a href={mailtoLink()} className={`${link} inline-flex items-center gap-2`}>
-                    <Mail width="15" height="15" className="text-cyan" /> Email
-                  </a>
-                </li>
-              )}
-            </ul>
-            <p className={`${heading} mt-8`}>Services</p>
+          <div className="md:col-start-2 md:row-start-3 lg:col-start-3 lg:row-start-2">
+            <p className={heading}>Services</p>
             <ul className="mt-4 space-y-2.5">
               <li>
                 <a href="/web-design-koh-samui/" className={link}>
@@ -81,8 +70,35 @@ export default function Footer({ base = '' }) {
             </ul>
           </div>
 
+          <div className="col-span-2 md:col-span-1 md:col-start-2 md:row-start-2 lg:col-start-3 lg:row-start-1">
+            <p className={heading}>Contact</p>
+            <ul className="mt-4 space-y-2.5">
+              <li>
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className={`${link} inline-flex items-center gap-2`}>
+                  <WhatsApp width="15" height="15" className="shrink-0 text-cyan" />
+                  <span className="whitespace-nowrap">
+                    <span className="sr-only">WhatsApp </span>
+                    {SITE.phone}
+                  </span>
+                </a>
+              </li>
+              {HAS_EMAIL && (
+                <li>
+                  {/* fits on one line except around 1024–1279px, where it breaks before the @ */}
+                  <a href={mailtoLink()} className={`${link} inline-flex max-w-full items-start gap-2`}>
+                    <Mail width="15" height="15" className="mt-[3px] shrink-0 text-cyan" />
+                    <span className="min-w-0 [overflow-wrap:anywhere]">
+                      {SITE.email.split('@')[0]}
+                      <wbr />@{SITE.email.split('@')[1]}
+                    </span>
+                  </a>
+                </li>
+              )}
+            </ul>
+          </div>
+
           {SOCIALS.length > 0 && (
-            <div className="col-span-2 md:col-span-1">
+            <div className="col-span-2 md:col-span-1 md:col-start-3 md:row-start-1 lg:col-start-4 lg:row-span-2">
               <p className={heading}>Follow</p>
               <ul className="mt-4 flex gap-3">
                 {SOCIALS.map(({ label, href, Icon }) => (
