@@ -5,7 +5,25 @@ import { WhatsApp } from '../components/Icons.jsx'
 import { FAQS } from '../data/content.js'
 import { whatsappLink } from '../config.js'
 
-/** `items` defaults to the homepage FAQ; other pages pass their own questions. */
+/**
+ * `items` defaults to the homepage FAQ; other pages pass their own questions.
+ * An answer may carry `link: { text, href }` — that part of its text becomes a link
+ * (the text itself, and so the FAQ schema, stay the same).
+ */
+function answer({ a, link }) {
+  if (!link) return a
+  const i = a.indexOf(link.text)
+  return (
+    <>
+      {a.slice(0, i)}
+      <a href={link.href} className="text-cyan underline-offset-4 transition-colors hover:text-white hover:underline">
+        {link.text}
+      </a>
+      {a.slice(i + link.text.length)}
+    </>
+  )
+}
+
 export default function Faq({ items = FAQS, index = '08' }) {
   const [open, setOpen] = useState(-1)
   const uid = useId()
@@ -70,7 +88,7 @@ export default function Faq({ items = FAQS, index = '08' }) {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="max-w-2xl px-5 pb-5 text-[14px] leading-relaxed text-mist/75 md:px-7 md:pb-6 md:text-[15px]">{f.a}</p>
+                      <p className="max-w-2xl px-5 pb-5 text-[14px] leading-relaxed text-mist/75 md:px-7 md:pb-6 md:text-[15px]">{answer(f)}</p>
                     </div>
                   </div>
                 </div>

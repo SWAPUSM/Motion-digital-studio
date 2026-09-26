@@ -67,6 +67,11 @@ export default function Footer({ base = '' }) {
                   Web Design Koh Samui
                 </a>
               </li>
+              <li>
+                <a href="/website-redesign/" className={link}>
+                  Website Redesign
+                </a>
+              </li>
             </ul>
           </div>
 

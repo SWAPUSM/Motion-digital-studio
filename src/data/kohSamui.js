@@ -63,7 +63,8 @@ export const KS_FAQS = [
   },
   {
     q: 'Can you redesign an existing website?',
-    a: 'Yes. If you already have a website, we can design and build a new one to replace it, using the package that fits your project. The domain stays yours and can be connected to the new website.',
+    a: 'Yes. If you already have a website, we can design and build a new one to replace it, using the package that fits your project. The domain stays yours and can be connected to the new website. Read more about website redesign.',
+    link: { text: 'website redesign', href: '/website-redesign/' },
   },
   {
     q: 'Can you build a website for a villa, hotel or restaurant?',
