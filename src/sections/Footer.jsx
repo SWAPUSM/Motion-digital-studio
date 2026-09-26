@@ -11,7 +11,8 @@ const SOCIALS = [
 const heading = 'text-[10px] font-semibold uppercase tracking-[0.3em] text-mist/55'
 const link = 'text-[14px] font-medium text-mist/75 transition-colors duration-300 hover:text-cyan'
 
-export default function Footer() {
+/** `base`: '' on the homepage; '/' on other pages, so section links lead back to it. */
+export default function Footer({ base = '' }) {
   return (
     <footer className="relative overflow-hidden pb-[max(env(safe-area-inset-bottom),28px)] pt-14 md:pt-20">
       {/* glowing hairline + soft light, echoing the motion line */}
@@ -46,7 +47,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2.5">
               {NAV_LINKS.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href} className={link}>
+                  <a href={base + l.href} className={link}>
                     {l.label}
                   </a>
                 </li>
@@ -69,6 +70,14 @@ export default function Footer() {
                   </a>
                 </li>
               )}
+            </ul>
+            <p className={`${heading} mt-8`}>Services</p>
+            <ul className="mt-4 space-y-2.5">
+              <li>
+                <a href="/web-design-koh-samui/" className={link}>
+                  Web Design Koh Samui
+                </a>
+              </li>
             </ul>
           </div>
 

@@ -6,7 +6,8 @@ import { NAV_LINKS, whatsappLink } from '../config.js'
 
 const ease = [0.16, 1, 0.3, 1]
 
-export default function Nav({ ready }) {
+/** `base`: '' on the homepage; '/' on other pages, so section links lead back to it. */
+export default function Nav({ ready, base = '' }) {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [open, setOpen] = useState(false)
@@ -118,7 +119,7 @@ export default function Nav({ ready }) {
               scrolled ? 'glass shadow-[0_10px_40px_-12px_rgba(0,0,0,.6)]' : 'border border-transparent'
             }`}
           >
-            <a href="#top" className="flex min-w-0 items-center gap-2 md:gap-3">
+            <a href={base ? '/' : '#top'} className="flex min-w-0 items-center gap-2 md:gap-3">
               {/* official transparent "M" symbol, uncropped, sitting straight on the header */}
               <span className="grid h-[44px] w-[66px] shrink-0 place-items-center md:h-[52px] md:w-[78px]">
                 <picture className="flex w-[84%]">
@@ -138,7 +139,7 @@ export default function Nav({ ready }) {
               {NAV_LINKS.map((l) => (
                 <li key={l.href}>
                   <a
-                    href={l.href}
+                    href={base + l.href}
                     className="relative rounded-full px-3.5 py-2 text-[12px] font-medium uppercase tracking-[0.18em] text-mist/70 transition-colors hover:text-white"
                   >
                     {l.label}
@@ -185,7 +186,7 @@ export default function Nav({ ready }) {
               {NAV_LINKS.map((l, i) => (
                 <li key={l.href} className="overflow-hidden">
                   <m.a
-                    href={l.href}
+                    href={base + l.href}
                     onClick={() => setOpen(false)}
                     className="flex items-baseline gap-4 py-[min(0.5rem,1.2svh)] text-[min(2.4rem,6svh)] font-extrabold uppercase leading-[1.1] tracking-[-0.01em] text-white"
                     initial={{ y: '110%' }}

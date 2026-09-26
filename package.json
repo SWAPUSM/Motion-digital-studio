@@ -4,7 +4,7 @@
   "description": "Motion Digital Studio — Websites that move business forward.",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
     "icons": "node scripts/build-icons.mjs",
     "work-assets": "node scripts/build-work-assets.mjs",

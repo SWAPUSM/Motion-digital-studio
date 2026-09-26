@@ -25,64 +25,76 @@ export default function Services() {
           </Reveal>
         </div>
 
-        <div className="mt-9 grid gap-4 md:mt-14 md:gap-5 lg:grid-cols-3 lg:gap-6">
-          {PACKAGES.map((pkg, i) => (
-            <PackageCard key={pkg.id} pkg={pkg} index={i} />
-          ))}
-        </div>
-
-        <p className="mt-4 px-1 text-[12px] leading-relaxed text-mist/55 md:mt-5 md:text-[12.5px]">
-          Delivery times begin once all required content and information have been received from the client.
-        </p>
-
-        <div className="mt-5 grid gap-4 md:mt-6 md:gap-5 lg:gap-6 xl:grid-cols-2">
-          <Reveal>
-            <div
-              onPointerMove={trackPointer}
-              className="ring-gradient group relative flex h-full flex-col gap-4 overflow-hidden rounded-[28px] bg-white/[.03] p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6 md:p-9"
-            >
-              <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <div className="relative">
-                <p className="eyebrow">Website care</p>
-                <p className="mt-3 whitespace-nowrap text-2xl font-extrabold text-white md:text-3xl">
-                  1,500 THB <span className="text-base font-medium text-mist/50">/ month</span>
-                </p>
-                <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-mist/65">Optional ongoing website support and small updates.</p>
-              </div>
-              <a
-                href={whatsappLink("Hi! I'm interested in the Website Care plan.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative inline-flex shrink-0 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white"
-              >
-                Add Website Care <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div
-              onPointerMove={trackPointer}
-              className="ring-gradient group relative flex h-full flex-col gap-4 overflow-hidden rounded-[28px] bg-white/[.03] p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6 md:p-9"
-            >
-              <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <div className="relative">
-                <p className="eyebrow">Custom quote</p>
-                <p className="mt-3 text-2xl font-extrabold text-white md:text-3xl">Bigger ideas.</p>
-                <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-mist/65">{CUSTOM_WORK.join(' • ')}</p>
-              </div>
-              <a
-                href={whatsappLink("Hi! I'd like a custom quote for a larger web project.")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative inline-flex shrink-0 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white"
-              >
-                Request a quote <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </a>
-            </div>
-          </Reveal>
-        </div>
+        <PricingPlans />
       </div>
     </section>
+  )
+}
+
+/**
+ * The three packages, the delivery note and the Website Care / custom quote cards.
+ * Shared by the homepage Services section and the Koh Samui page.
+ */
+export function PricingPlans() {
+  return (
+    <>
+      <div className="mt-9 grid gap-4 md:mt-14 md:gap-5 lg:grid-cols-3 lg:gap-6">
+        {PACKAGES.map((pkg, i) => (
+          <PackageCard key={pkg.id} pkg={pkg} index={i} />
+        ))}
+      </div>
+
+      <p className="mt-4 px-1 text-[12px] leading-relaxed text-mist/55 md:mt-5 md:text-[12.5px]">
+        Delivery times begin once all required content and information have been received from the client.
+      </p>
+
+      <div className="mt-5 grid gap-4 md:mt-6 md:gap-5 lg:gap-6 xl:grid-cols-2">
+        <Reveal>
+          <div
+            onPointerMove={trackPointer}
+            className="ring-gradient group relative flex h-full flex-col gap-4 overflow-hidden rounded-[28px] bg-white/[.03] p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6 md:p-9"
+          >
+            <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="relative">
+              <p className="eyebrow">Website care</p>
+              <p className="mt-3 whitespace-nowrap text-2xl font-extrabold text-white md:text-3xl">
+                1,500 THB <span className="text-base font-medium text-mist/50">/ month</span>
+              </p>
+              <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-mist/65">Optional ongoing website support and small updates.</p>
+            </div>
+            <a
+              href={whatsappLink("Hi! I'm interested in the Website Care plan.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative inline-flex shrink-0 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white"
+            >
+              Add Website Care <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          </div>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <div
+            onPointerMove={trackPointer}
+            className="ring-gradient group relative flex h-full flex-col gap-4 overflow-hidden rounded-[28px] bg-white/[.03] p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6 md:p-9"
+          >
+            <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+            <div className="relative">
+              <p className="eyebrow">Custom quote</p>
+              <p className="mt-3 text-2xl font-extrabold text-white md:text-3xl">Bigger ideas.</p>
+              <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-mist/65">{CUSTOM_WORK.join(' • ')}</p>
+            </div>
+            <a
+              href={whatsappLink("Hi! I'd like a custom quote for a larger web project.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative inline-flex shrink-0 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white"
+            >
+              Request a quote <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </>
   )
 }
 
