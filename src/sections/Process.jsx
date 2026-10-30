@@ -27,7 +27,7 @@ export default function Process() {
     <section id="process" className="relative py-16 md:py-28 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="process-title">
       <div aria-hidden="true" className="grid-bg absolute inset-0 -z-10 [mask-image:radial-gradient(60%_60%_at_50%_50%,#000,transparent)]" />
       <div className="container-x">
-        <SectionHeading id="process-title" index="06" label="Process" lines={['From idea', 'to launch.']} />
+        <SectionHeading id="process-title" index="05" label="Process" lines={['From idea', 'to launch.']} />
 
         <div ref={ref} className="relative mt-10 md:mt-14">
           {/* track */}
@@ -44,8 +44,8 @@ export default function Process() {
                   <span
                     className={`absolute left-0 top-0 grid h-12 w-12 place-items-center rounded-full border text-[12px] font-bold transition-all duration-700 ${
                       on
-                        ? 'border-cyan bg-gradient-to-br from-electric to-cyan text-white shadow-[0_0_30px_rgba(0,209,255,.55)]'
-                        : 'border-white/15 bg-navy text-mist/60'
+                        ? 'border-cyan bg-gradient-to-br from-electric to-cyan text-[#fff] shadow-[0_0_30px_rgba(0,209,255,.55)]'
+                        : 'border-white/15 bg-navy text-mist/70'
                     }`}
                   >
                     {s.n}
@@ -76,10 +76,10 @@ export default function Process() {
                   i > 0 ? 'border-t border-white/[.07] sm:border-l sm:border-t-0' : ''
                 }`}
               >
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.25em] text-cyan/85">{t.label}</dt>
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.25em] text-cyan">{t.label}</dt>
                 <dd className="text-right sm:mt-3 sm:text-left">
                   <span className="block text-[15px] font-extrabold uppercase tracking-[0.02em] text-white sm:text-[19px]">{t.value}</span>
-                  <span className="mt-0.5 block text-[12.5px] text-mist/60 sm:mt-1 sm:text-[13px]">{t.detail}</span>
+                  <span className="mt-0.5 block text-[12.5px] text-mist/75 sm:mt-1 sm:text-[13px]">{t.detail}</span>
                 </dd>
               </div>
             ))}

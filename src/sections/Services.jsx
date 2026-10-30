@@ -1,187 +1,154 @@
+import { Fragment } from 'react'
 import { m } from 'motion/react'
-import SectionHeading from '../components/SectionHeading.jsx'
 import Reveal from '../components/Reveal.jsx'
-import { ArrowUpRight, Check, Clock } from '../components/Icons.jsx'
-import { CUSTOM_WORK, PACKAGES } from '../data/content.js'
-import { whatsappLink } from '../config.js'
+import { ArrowRight, Check } from '../components/Icons.jsx'
+import { PILLARS } from '../data/content.js'
+import { KS_SERVICES } from '../data/kohSamui.js'
 
-/** Writes pointer position to CSS vars — no React re-render per mouse move. */
-function trackPointer(e) {
-  const el = e.currentTarget
-  const r = el.getBoundingClientRect()
-  el.style.setProperty('--mx', `${e.clientX - r.left}px`)
-  el.style.setProperty('--my', `${e.clientY - r.top}px`)
-}
+// What we build: website creation first (Website Care is listed with the prices).
+const BUILD = KS_SERVICES.filter((s) => s.title !== 'Website Care')
 
+const HEADLINE = [
+  ['More', 'than', 'a', 'website.'],
+  ['A', 'digital', 'experience.'],
+]
+
+const STATEMENT =
+  'Motion Digital Studio creates modern websites engineered around three objectives. Every pixel, animation and line of code exists to move your business forward.'
+
+/** Services: the studio's approach (design → performance → results) and what we build. */
 export default function Services() {
-  return (
-    <section id="services" className="relative py-16 md:py-28 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="services-title">
-      <div aria-hidden="true" className="absolute inset-x-0 top-1/3 -z-10 h-[60%] bg-[radial-gradient(50%_50%_at_50%_50%,rgba(0,123,255,.12),transparent)]" />
-      <div className="container-x">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
-          <SectionHeading id="services-title" index="02" label="Services" lines={['Choose your', 'momentum.']} />
-          <Reveal as="p" className="max-w-sm text-[15px] leading-relaxed text-mist/65">
-            Transparent packages, premium craft. Every website is custom-designed — never a template.
-          </Reveal>
-        </div>
+  let idx = 0
 
-        <PricingPlans />
+  return (
+    <section id="services" className="relative isolate overflow-clip py-16 md:py-28 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="services-title">
+      {/* atmosphere: a low aurora behind the statement */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <div className="absolute -right-[20%] top-[-10%] h-[70vmax] w-[70vmax] rounded-full bg-[radial-gradient(closest-side,rgba(0,123,255,.16),transparent)]" />
+        <div className="absolute -left-[25%] top-[35%] h-[55vmax] w-[55vmax] rounded-full bg-[radial-gradient(closest-side,rgba(0,209,255,.08),transparent)]" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/30 to-transparent" />
+      </div>
+      <div className="container-x">
+        <p className="eyebrow flex items-center gap-3">
+          <span className="text-white/70">02</span>
+          <span className="h-px w-8 bg-gradient-to-r from-cyan to-transparent" aria-hidden="true" />
+          Services
+        </p>
+
+        <m.h2
+          id="services-title"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-12% 0px' }}
+          className="mt-5 max-w-5xl text-[clamp(1.9rem,7.6vw,5rem)] uppercase leading-[0.98] tracking-[-0.035em] text-white md:mt-7"
+        >
+          {/* real spaces between words and lines keep the heading readable as words
+              for screen readers and search engines */}
+          {HEADLINE.map((line, li) => (
+            <span key={li} className={`block ${li === HEADLINE.length - 1 ? 'font-extrabold' : 'font-light text-white/90'}`}>
+              {line.map((w) => {
+                const i = idx++
+                return (
+                  <Fragment key={w + i}>
+                    <Word index={i} accent={li === 1}>
+                      {w}
+                    </Word>{' '}
+                  </Fragment>
+                )
+              })}
+            </span>
+          ))}
+        </m.h2>
+
+        {/* the studio's statement, lit word by word by the scroll position (CSS scroll timeline;
+            fully lit without support or with reduced motion) */}
+        <p className="scroll-lit mt-9 max-w-4xl text-[clamp(1.3rem,4.6vw,2.5rem)] font-medium leading-[1.25] tracking-[-0.015em] text-white md:mt-14">
+          {STATEMENT.split(' ').map((w, i) => (
+            <Fragment key={i}>
+              <span className="scroll-lit-word" style={{ '--i': i }}>
+                {w}
+              </span>{' '}
+            </Fragment>
+          ))}
+        </p>
+
+        <Pillars />
+        <Build />
       </div>
     </section>
   )
 }
 
-/**
- * The three packages, the delivery note and the Website Care / custom quote cards.
- * Shared by the homepage Services section and the Koh Samui page.
- */
-export function PricingPlans() {
+// Words brighten into place one after another once the heading is in view (a
+// one-off entrance, nothing computed per scroll frame). They start at 40% — dim
+// enough to read as "in motion", bright enough to stay legible (≥ 3:1 for large text).
+function Word({ children, index, accent }) {
   return (
-    <>
-      <div className="mt-9 grid gap-4 md:mt-14 md:gap-5 lg:grid-cols-3 lg:gap-6">
-        {PACKAGES.map((pkg, i) => (
-          <PackageCard key={pkg.id} pkg={pkg} index={i} />
-        ))}
-      </div>
-
-      <p className="mt-4 px-1 text-[12px] leading-relaxed text-mist/55 md:mt-5 md:text-[12.5px]">
-        Delivery times begin once all required content and information have been received from the client.
-      </p>
-
-      <div className="mt-5 grid gap-4 md:mt-6 md:gap-5 lg:gap-6 xl:grid-cols-2">
-        <Reveal>
-          <div
-            onPointerMove={trackPointer}
-            className="ring-gradient group relative flex h-full flex-col gap-4 overflow-hidden rounded-[28px] bg-white/[.03] p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6 md:p-9"
-          >
-            <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            <div className="relative">
-              <p className="eyebrow">Website care</p>
-              <p className="mt-3 whitespace-nowrap text-2xl font-extrabold text-white md:text-3xl">
-                1,500 THB <span className="text-base font-medium text-mist/50">/ month</span>
-              </p>
-              <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-mist/65">Optional ongoing website support and small updates.</p>
-            </div>
-            <a
-              href={whatsappLink("Hi! I'm interested in the Website Care plan.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative inline-flex shrink-0 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white"
-            >
-              Add Website Care <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
-          </div>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <div
-            onPointerMove={trackPointer}
-            className="ring-gradient group relative flex h-full flex-col gap-4 overflow-hidden rounded-[28px] bg-white/[.03] p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6 md:p-9"
-          >
-            <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-            <div className="relative">
-              <p className="eyebrow">Custom quote</p>
-              <p className="mt-3 text-2xl font-extrabold text-white md:text-3xl">Bigger ideas.</p>
-              <p className="mt-2 max-w-sm text-[14px] leading-relaxed text-mist/65">{CUSTOM_WORK.join(' • ')}</p>
-            </div>
-            <a
-              href={whatsappLink("Hi! I'd like a custom quote for a larger web project.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative inline-flex shrink-0 items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white"
-            >
-              Request a quote <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
-          </div>
-        </Reveal>
-      </div>
-    </>
+    <m.span
+      variants={{
+        hidden: { opacity: 0.4, y: 6 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.6, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] } },
+      }}
+      className={`inline-block ${accent ? 'text-gradient-soft' : ''}`}>
+      {children}
+    </m.span>
   )
 }
 
-function PackageCard({ pkg, index }) {
-  const featured = pkg.featured
-  return (
-    <m.article
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-8% 0px' }}
-      transition={{ duration: 0.8, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      onPointerMove={trackPointer}
-      className={`ring-gradient group relative flex flex-col overflow-hidden rounded-[28px] p-6 transition-[transform,box-shadow] duration-700 ease-[var(--ease-expo)] md:p-9 lg:hover:-translate-y-2 ${
-        featured
-          ? 'bg-gradient-to-b from-electric/[.18] via-navy-soft/60 to-navy-soft/30 shadow-[0_24px_60px_-30px_rgba(0,123,255,.6)]'
-          : 'bg-white/[.03] hover:shadow-[0_24px_60px_-30px_rgba(0,123,255,.45)]'
-      }`}
-      aria-labelledby={`pkg-${pkg.id}`}
-    >
-      <div className="spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-      {featured && (
-        <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 bg-[radial-gradient(closest-side,rgba(0,209,255,.2),transparent)]" />
-      )}
+/** DESIGN → PERFORMANCE → RESULTS, joined by a line of momentum. */
+function Pillars() {
+  // the line draws once as the pillars come into view
+  const draw = { duration: 1.6, ease: [0.65, 0, 0.35, 1] }
+  const inView = { once: true, margin: '-15% 0px' }
 
-      <div className="relative flex items-center justify-between">
-        <span className="text-[11px] font-semibold tracking-[0.25em] text-white/55">0{index + 1}</span>
-        {featured && (
-          <span className="rounded-full border border-cyan/40 bg-cyan/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan">
-            Most immersive
-          </span>
-        )}
+  return (
+    <div className="relative mt-11 md:mt-16">
+      {/* connecting line: vertical on mobile, horizontal on desktop */}
+      <div aria-hidden="true" className="absolute bottom-8 left-[19px] top-8 w-px bg-white/10 md:bottom-auto md:left-0 md:right-0 md:top-[19px] md:h-px md:w-auto">
+        <m.div initial={{ scaleY: 0 }} whileInView={{ scaleY: 1 }} viewport={inView} transition={draw} className="absolute inset-0 origin-top bg-gradient-to-b from-electric to-cyan md:hidden" />
+        <m.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={inView} transition={draw} className="absolute inset-0 hidden origin-left bg-gradient-to-r from-electric via-cyan to-white md:block" />
       </div>
 
-      <h3 id={`pkg-${pkg.id}`} className="relative mt-6 text-[22px] font-extrabold uppercase leading-tight tracking-[-0.01em] text-white md:mt-8 md:text-[26px]">
-        {pkg.name}
-      </h3>
-      <p className="relative mt-3 text-[14px] leading-relaxed text-mist/65">{pkg.summary}</p>
-
-      <p className="relative mt-6 flex items-baseline gap-2 md:mt-8">
-        <span className="text-[12px] font-medium uppercase tracking-[0.2em] text-mist/50">From</span>
-        <span className={`text-[40px] font-extrabold leading-none tracking-[-0.02em] md:text-[46px] ${featured ? 'text-gradient' : 'text-white'}`}>
-          {pkg.price}
-        </span>
-        <span className="text-[13px] font-semibold text-mist/60">THB</span>
-      </p>
-      {pkg.bestFor && (
-        <p className="relative mt-4 text-[12.5px] leading-relaxed text-mist/60">
-          <span className="mr-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan/85">Best for</span>
-          {pkg.bestFor.join(' • ')}
-        </p>
-      )}
-
-      <div className="relative my-6 h-px md:my-8 bg-gradient-to-r from-white/15 via-white/5 to-transparent" />
-
-      <ul className="relative flex-1 space-y-3 md:space-y-3.5">
-        {pkg.features.map((f) => (
-          <li key={f} className="flex items-start gap-3 text-[14px] text-mist/80">
-            <span className="mt-[1px] grid h-5 w-5 shrink-0 place-items-center rounded-full bg-cyan/10 text-cyan">
-              <Check width="12" height="12" />
+      <ol className="relative grid gap-7 md:grid-cols-3 md:gap-8">
+        {PILLARS.map((p, i) => (
+          <Reveal as="li" key={p.key} delay={i * 0.12} className="group relative pl-14 md:pl-0 md:pt-16">
+            <span className="absolute left-0 top-0 grid h-10 w-10 place-items-center rounded-full border border-cyan/40 bg-navy text-[11px] font-semibold text-cyan shadow-[0_0_24px_rgba(0,209,255,.25)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-expo)] group-hover:scale-110 group-hover:shadow-[0_0_34px_rgba(0,209,255,.55)]">
+              0{i + 1}
             </span>
-            {f}
-          </li>
+            <h3 className="text-[clamp(1.5rem,5vw,2.4rem)] font-extrabold uppercase tracking-[-0.01em] text-white md:text-[clamp(1.5rem,calc((100vw_-_144px)/26),2.4rem)]">{p.title}</h3>
+            <p className="mt-2 max-w-xs text-[15px] leading-relaxed text-mist/65 md:mt-3">{p.text}</p>
+          </Reveal>
+        ))}
+      </ol>
+    </div>
+  )
+}
+
+/** What we build — the studio's main service is new websites; redesign is offered too. */
+function Build() {
+  return (
+    <div className="surface-light surface-panel mt-14 rounded-[28px] p-6 sm:p-8 md:mt-20 md:rounded-[36px] md:p-12">
+      <ul className="grid gap-x-10 gap-y-7 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-9">
+        {BUILD.map((s, i) => (
+          <Reveal as="li" key={s.title} delay={(i % 3) * 0.06} className="group flex gap-4">
+            <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-cyan/10 text-cyan transition-[background-color,color,transform] duration-500 ease-[var(--ease-expo)] group-hover:scale-110 group-hover:bg-cyan group-hover:text-[#fff]" aria-hidden="true">
+              <Check width="13" height="13" />
+            </span>
+            <div>
+              <h3 className="text-[15px] font-extrabold uppercase tracking-[0.02em] text-white md:text-[16px]">{s.title}</h3>
+              <p className="mt-1.5 text-[14px] leading-relaxed text-mist/65">{s.text}</p>
+            </div>
+          </Reveal>
         ))}
       </ul>
-
-      {pkg.delivery && (
-        <p className="relative mt-7 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/[.07] pt-4 md:mt-8">
-          <span className="flex items-center gap-2 whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.2em] text-mist/60">
-            <Clock className="text-cyan/85" />
-            Estimated delivery
-          </span>
-          <span className="whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.08em] text-white/90">{pkg.delivery}</span>
-        </p>
-      )}
-
-      <a
-        href={whatsappLink(`Hi Motion Digital Studio! I'm interested in the ${pkg.name} package.`)}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`relative mt-5 inline-flex h-12 md:mt-6 items-center justify-center gap-2 rounded-full text-[12px] font-semibold uppercase tracking-[0.18em] transition-all duration-500 ${
-          featured
-            ? 'bg-gradient-to-r from-electric to-cyan text-white shadow-[0_10px_30px_-10px_rgba(0,209,255,.8)] hover:shadow-[0_14px_40px_-8px_rgba(0,209,255,.9)]'
-            : 'border border-white/15 text-white hover:border-cyan/60 hover:bg-cyan/10'
-        }`}
-      >
-        Start your project <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-      </a>
-    </m.article>
+      <Reveal className="mt-9 flex flex-col gap-2 border-t border-white/10 pt-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-10 md:mt-12 md:pt-8">
+        <a href="#pricing" className="inline-flex min-h-[44px] items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white">
+          Compare the packages <ArrowRight />
+        </a>
+        <a href="/website-redesign/" className="inline-flex min-h-[44px] items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-mist/70 transition-colors hover:text-white">
+          Already have a website? Website redesign <ArrowRight />
+        </a>
+      </Reveal>
+    </div>
   )
 }

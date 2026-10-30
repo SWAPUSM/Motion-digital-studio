@@ -8,16 +8,15 @@ const SOCIALS = [
   { label: 'TikTok', href: SITE.social.tiktok, Icon: TikTok },
 ].filter((s) => s.href)
 
-const heading = 'text-[10px] font-semibold uppercase tracking-[0.3em] text-mist/55'
+const heading = 'text-[10px] font-semibold uppercase tracking-[0.3em] text-mist/70'
 const link = 'text-[14px] font-medium text-mist/75 transition-colors duration-300 hover:text-cyan'
 
 /** `base`: '' on the homepage; '/' on other pages, so section links lead back to it. */
 export default function Footer({ base = '' }) {
   return (
-    <footer className="relative overflow-hidden pb-[max(env(safe-area-inset-bottom),28px)] pt-14 md:pt-20">
-      {/* glowing hairline + soft light, echoing the motion line */}
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan/50 to-transparent" />
-      <div aria-hidden="true" className="absolute left-1/2 top-0 h-56 w-[90%] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(closest-side,rgba(0,123,255,.16),transparent)]" />
+    <footer className="surface-light relative mx-2 mt-6 overflow-clip rounded-t-[32px] pb-[max(env(safe-area-inset-bottom),28px)] pt-14 md:mx-4 md:mt-10 md:rounded-t-[56px] md:pt-20">
+      {/* an ice-blue sheet closing the page, lit softly from the top */}
+      <div aria-hidden="true" className="surface-light-glow pointer-events-none absolute inset-0" />
 
       <div className="container-x relative">
         {/* Contact gets a column wide enough for the phone number and email on one line:
@@ -124,7 +123,7 @@ export default function Footer({ base = '' }) {
           )}
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/[.06] pt-6 text-[12px] text-mist/55 sm:flex-row sm:items-center sm:justify-between md:mt-16">
+        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-[12px] text-mist/70 sm:flex-row sm:items-center sm:justify-between md:mt-16">
           <p>
             © {new Date().getFullYear()} {SITE.name}. All rights reserved.
           </p>

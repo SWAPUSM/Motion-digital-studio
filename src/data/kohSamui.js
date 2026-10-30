@@ -1,5 +1,5 @@
-// Copy for /web-design-koh-samui/. Facts only: every service, price and delivery
-// time matches src/data/content.js, and projects are the real portfolio.
+// Copy for /web-design-koh-samui/. Facts only: every service and price
+// matches src/data/content.js, and projects are the real portfolio.
 
 export const KS_BUSINESSES = [
   { title: 'Villas', text: 'Show the rooms, the pool and the view — and make booking or enquiring easy.' },
@@ -73,9 +73,5 @@ export const KS_FAQS = [
   {
     q: 'Do I need to be located in Koh Samui?',
     a: 'No. The studio is based in Koh Samui, but we work with businesses across Thailand and worldwide.',
-  },
-  {
-    q: 'How long does a website take to build?',
-    a: 'It depends on the package: 3–5 business days for a One Page Website, 5–10 for a Multi Page Website and 7–14 for a Premium Website, once all required content and information have been received.',
   },
 ]

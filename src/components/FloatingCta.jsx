@@ -29,11 +29,11 @@ export default function FloatingCta() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Start your project on WhatsApp"
-          className="fixed bottom-[max(env(safe-area-inset-bottom),18px)] right-4 z-50 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-electric to-cyan text-white shadow-[0_12px_40px_-8px_rgba(0,123,255,.9)] md:hidden"
-          initial={{ scale: 0, opacity: 0 }}
+          className="fixed bottom-[calc(env(safe-area-inset-bottom)+16px)] right-4 z-50 grid h-[52px] w-[52px] place-items-center rounded-full bg-gradient-to-br from-electric to-cyan text-white shadow-[0_10px_24px_-10px_rgba(0,123,255,.8)] ring-1 ring-white/15 md:hidden"
+          initial={{ scale: 0.6, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0, opacity: 0 }}
-          transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+          exit={{ scale: 0.6, opacity: 0 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         >
           <WhatsApp width="24" height="24" />
         </m.a>

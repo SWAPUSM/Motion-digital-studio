@@ -47,7 +47,7 @@ export default function Faq({ items = FAQS, index = '08' }) {
         </div>
 
         <Reveal delay={0.1}>
-          <div className="ring-gradient overflow-hidden rounded-[24px] bg-white/[.03]">
+          <div className="surface-light surface-panel overflow-hidden rounded-[24px] md:rounded-[28px]">
             {items.map((f, i) => {
               const isOpen = open === i
               const qid = `${uid}-q${i}`

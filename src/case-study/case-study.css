@@ -1,0 +1,60 @@
+/* Case study pages only (imported by src/case-study/main.jsx).
+   Everything here works without JavaScript: the hero entrance and the scroll reveals
+   are pure CSS. The before/after rules live in before-after.css. */
+
+/* ── Chapters as anchor targets ───────────────────────────── */
+/* An in-page jump (the hero's "Explore the case study" link) is instant with reduced motion,
+   so the site's fixed header stays on screen; this keeps each chapter's label below it
+   (measured: header bottom 88 px on a 390 px phone, label at 80 px without the margin). */
+main section[id] {
+  scroll-margin-top: 28px;
+}
+
+/* ── Hero entrance: one short rise, CSS only ──────────────── */
+@keyframes cs-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.35em, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes cs-stage {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.cs-in {
+  animation: cs-rise 0.9s var(--ease-expo) both;
+  animation-delay: var(--d, 0s);
+}
+.cs-stage-in {
+  animation: cs-stage 1.2s var(--ease-expo) 0.25s both;
+}
+
+/* ── Scroll reveals: tablets and desktops only, where the browser drives them
+   from the scroll position (no JavaScript, nothing hidden where unsupported). ── */
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .cs-reveal {
+      animation: cs-stage linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+/* Reduced motion: no entrance at all (index.css already shortens every animation). */
+@media (prefers-reduced-motion: reduce) {
+  .cs-in,
+  .cs-stage-in {
+    animation: none;
+  }
+}

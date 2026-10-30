@@ -1,207 +1,188 @@
-import { useEffect, useRef } from 'react'
 import SectionHeading from '../components/SectionHeading.jsx'
-import { BrowserFrame, PhoneFrame } from '../components/Devices.jsx'
-import { ArrowUpRight } from '../components/Icons.jsx'
+import { useEffect, useRef } from 'react'
+import Reveal from '../components/Reveal.jsx'
+import { TabletFrame, PhoneFrame } from '../components/Devices.jsx'
+import WorkShot, { WORK_SHOT } from '../components/WorkShot.jsx'
+import { ArrowRight, ArrowUpRight } from '../components/Icons.jsx'
 import { PROJECTS } from '../data/content.js'
-import PLACEHOLDERS from '../data/placeholders.json'
-import { useAfterLoad } from '../hooks/useAfterLoad.js'
 
+/**
+ * Selected work — the only place the three projects appear on the homepage. Each one is
+ * staged in its own website's colours (project.theme), with its own composition:
+ *  showroom (Teddy Bike Samui) · cinema (Samui Property 360) · atelier (Valérie d'Art Don).
+ *
+ * The reel (CSS in index.css, "Selected work"): each project sticks and the next one slides
+ * over it while the previous recedes; inside each card the tablet unfolds and the phone rises.
+ * All of it runs on the browser's scroll timelines — no scroll listeners. Without support the
+ * cards still stack; with reduced motion they simply follow one another.
+ *
+ * The cards only become sticky while the reel is on screen (.is-live). iOS Safari tints its
+ * status bar and toolbar with the colour of sticky/fixed elements; with the light cards sticky
+ * from the start, it painted opaque cream bars over the hero instead of extending the hero's navy.
+ * Switching sticky on before a card reaches its sticking point changes nothing on screen.
+ */
 export default function Work() {
+  const reel = useRef(null)
+  useEffect(() => {
+    const el = reel.current
+    const io = new IntersectionObserver(([e]) => el.classList.toggle('is-live', e.isIntersecting))
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
   return (
-    <section id="work" className="relative pt-16 md:pt-28 lg:pt-[clamp(88px,7vw,120px)]" aria-labelledby="work-title">
+    <section id="work" className="relative pb-10 pt-12 md:pb-14 md:pt-28 lg:pb-16 lg:pt-[clamp(88px,7vw,120px)]" aria-labelledby="work-title">
       <div className="container-x">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end md:gap-6">
-          <SectionHeading id="work-title" index="03" label="Portfolio" lines={['Selected', 'work']} />
-          <p className="max-w-sm text-[15px] leading-relaxed text-mist/65">
-            Real businesses, real momentum — designed and built by Motion.
-          </p>
+          <SectionHeading id="work-title" index="01" label="Portfolio" lines={['Selected', 'work.']} />
+          <Reveal as="p" className="max-w-sm text-[15px] leading-relaxed text-mist/70">
+            Websites designed and developed from the ground up for real businesses — each one with its own identity.
+          </Reveal>
         </div>
-      </div>
-
-      {/* Stacked, sticky project stage — each project slides over the last.
-          Pure CSS (position: sticky): nothing is computed while scrolling. */}
-      <div className="relative mt-2 md:mt-6 lg:mt-4">
-        {PROJECTS.map((p, i) => (
-          <ProjectPanel key={p.id} project={p} index={i} total={PROJECTS.length} />
-        ))}
+        <ol ref={reel} className="work-reel mt-10 md:mt-16">
+          {PROJECTS.map((p, i) => (
+            <Project key={p.id} project={p} index={i} />
+          ))}
+        </ol>
       </div>
     </section>
   )
 }
 
-/*
- * Where each panel sticks. --h is the panel's height (plus its stack offset),
- * measured on load/resize only — never per scroll frame.
- *  - A panel taller than the screen sticks only once its bottom is in view
- *    (top = 100svh − h), so the whole card — "View project" included — is always
- *    reachable before the next one slides over it.
- *  - Phones: otherwise top 0, as before.
- *  - Tablet/desktop: otherwise vertically centred, (100svh − h) / 2.
- */
-const STICK =
-  'top-[min(0px,calc(100svh_-_var(--h,0px)))] md:top-[min(calc((100svh_-_var(--h,0px))/2),calc(100svh_-_var(--h,0px)))]'
-
-function ProjectPanel({ project, index, total }) {
+function Project({ project: p, index }) {
+  const t = p.theme
+  const reverse = t.layout === 'cinema'
+  // the slot's height, measured on load/resize only, sets where it sticks (see .work-slot)
   const ref = useRef(null)
   useEffect(() => {
     const el = ref.current
-    const measure = () => el.style.setProperty('--h', `${el.offsetHeight + index * 14}px`)
+    const measure = () => el.style.setProperty('--h', `${el.offsetHeight + index * 12}px`)
     measure()
     const ro = new ResizeObserver(measure)
     ro.observe(el)
     return () => ro.disconnect()
   }, [index])
-
   return (
-    <div
-      ref={ref}
-      className={`sticky ${STICK} flex min-h-[100svh] items-start pb-6 pt-[76px] md:min-h-0 md:items-center md:py-12 lg:min-h-[min(100svh,700px)] lg:py-8`}
-    >
+    <li ref={ref} className="work-slot pb-6 md:pb-10" data-i={index}>
       <article
-        style={{ top: index * 14 }}
-        className="container-x relative"
-        aria-labelledby={`proj-${project.id}`}
+        aria-labelledby={`proj-${p.id}`}
+        className="work-card group relative isolate overflow-clip rounded-[28px] shadow-[0_-24px_60px_-40px_rgba(0,0,0,.9)] md:rounded-[40px]"
+        // the card colour as a one-colour gradient, not a background-color: identical on screen, but
+        // iOS Safari 26 tints its bars with the background-color of sticky elements' painted content
+        style={{ backgroundImage: `linear-gradient(${t.bg}, ${t.bg})`, color: t.ink }}
       >
-        <div className="ring-gradient relative overflow-hidden rounded-[28px] bg-gradient-to-br from-navy-soft to-navy-deep p-4 shadow-[0_-20px_40px_-28px_rgba(0,0,0,.9)] sm:p-6 md:rounded-[36px] md:p-10">
-          {/* ambient glow in the project's own accent */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-40 -top-40 h-[28rem] w-[28rem] opacity-30"
-            style={{ background: `radial-gradient(closest-side, ${project.accent}, transparent)` }}
-          />
-          <div aria-hidden="true" className="pointer-events-none absolute -bottom-40 left-[10%] h-96 w-[90%] bg-[radial-gradient(closest-side,rgba(0,123,255,.2),transparent)]" />
-
-          <div className="relative grid items-center gap-6 md:gap-10 lg:grid-cols-[1.55fr_1fr]">
-            {/* Device stage */}
-            {project.desktop ? <BrowserStage project={project} /> : <PhoneStage project={project} />}
-
-            {/* Info */}
-            <div className="relative px-1 pb-2 pt-4 md:px-0 lg:pt-0">
-              <div className="flex items-center gap-4 text-[11px] font-semibold tracking-[0.25em] text-white/55">
-                <span className="text-cyan">0{index + 1}</span>
-                <span className="h-px flex-1 bg-white/10" />
-                <span>0{total}</span>
-              </div>
-              <p className="eyebrow mt-4 md:mt-8">{project.category}</p>
-              <h3
-                id={`proj-${project.id}`}
-                className="mt-3 text-[clamp(1.7rem,6.5vw,3rem)] font-extrabold uppercase leading-[1] tracking-[-0.02em] text-white"
-              >
-                {project.name}
-              </h3>
-              {/* on short phone screens the description gives way so the whole panel stays in view */}
-              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-mist/70 md:mt-4 md:text-[15px] max-lg:[@media(max-height:700px)]:hidden">{project.description}</p>
-              <p className="mt-4 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.16em] text-mist/75 md:mt-5 md:text-[12px]">
-                <span className="sr-only">Services: </span>
-                {project.services.join(' • ')}
-              </p>
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group/link mt-5 inline-flex md:mt-8 items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.22em] text-white"
-              >
-                <span className="relative">
-                  View project
-                  <span className="absolute -bottom-1.5 left-0 h-px w-full origin-left bg-gradient-to-r from-cyan to-electric transition-transform duration-500 group-hover/link:scale-x-0" />
-                </span>
-                <span className="grid h-11 w-11 place-items-center rounded-full border border-white/15 transition-all duration-500 group-hover/link:border-cyan group-hover/link:bg-cyan group-hover/link:text-navy">
-                  <ArrowUpRight />
-                </span>
-                <span className="sr-only"> — {project.domain} (opens in a new tab)</span>
-              </a>
-              <p className="mt-4 hidden text-[12px] text-mist/55 sm:block">{project.domain}</p>
-            </div>
+        <Backdrop project={p} />
+        <div className="relative grid items-center gap-8 p-5 pb-8 sm:p-8 md:gap-10 md:p-12 lg:grid-cols-12 lg:gap-12 lg:p-16">
+          <div className={`lg:col-span-7 ${reverse ? 'lg:order-2' : ''}`}>
+            <Stage project={p} />
+          </div>
+          <div className={`lg:col-span-5 ${reverse ? 'lg:order-1' : ''}`}>
+            <Info project={p} index={index} />
           </div>
         </div>
       </article>
+    </li>
+  )
+}
+
+/** Quiet, project-specific light: no blur filters, just gradients and one shape. */
+function Backdrop({ project: { theme: t } }) {
+  if (t.layout === 'showroom')
+    return (
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <div className="absolute inset-y-0 left-0 w-full lg:w-[62%]" style={{ background: `linear-gradient(160deg, #F2F5F1 0%, ${t.panel} 60%, #C6D0C8 130%)` }} />
+      </div>
+    )
+  if (t.layout === 'cinema')
+    return (
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <div className="absolute inset-0" style={{ background: `radial-gradient(70% 80% at 75% 40%, ${t.panel} 0%, ${t.bg} 70%)` }} />
+        <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${t.accent}66, transparent)` }} />
+      </div>
+    )
+  return (
+    <div aria-hidden="true" className="absolute inset-0 -z-10">
+      {/* the arch of the redesign's portrait, as a quiet shape behind the devices */}
+      <div className="absolute left-[33%] top-[9%] hidden aspect-[3/4] w-[22%] rounded-t-full lg:block" style={{ backgroundImage: `linear-gradient(${t.panel}, ${t.panel})` }} />
+      <div className="absolute left-[31.5%] top-[6%] hidden aspect-[3/4] w-[25%] rounded-t-full border lg:block" style={{ borderColor: `${t.accent}33` }} />
+      <div className="absolute inset-x-0 bottom-0 h-1/3 lg:hidden" style={{ background: `linear-gradient(180deg, transparent, ${t.panel}66)` }} />
     </div>
   )
 }
 
-/**
- * A portfolio screenshot: AVIF with WebP fallback at two widths, chosen by `sizes`.
- * Fetched as soon as the page has loaded (not when scrolled to), so it's ready long
- * before it comes into view; until then a 20px blurred preview + brand colour shows.
- */
-const SHOT = { desktop: { widths: [900, 1600], w: 1600, h: 913 }, mobile: { widths: [200, 390, 780], w: 780, h: 1691 } }
-
-function Shot({ slug, kind, alt, sizes }) {
-  const loaded = useAfterLoad()
-  const { widths, w, h } = SHOT[kind]
-  const set = (ext) => widths.map((x) => `/work/${slug}-${kind}-${x}.${ext} ${x}w`).join(', ')
-  const preview = { backgroundImage: `url(${PLACEHOLDERS[`${slug}-${kind}`]})` }
-  if (!loaded) return <div role="img" aria-label={alt} className="absolute inset-0 bg-navy-soft bg-cover bg-top" style={preview} />
+/** Tablet + phone captures of the live site, arranged per project. Hover lifts them a little on mouse devices. */
+function Stage({ project: p }) {
+  const t = p.theme
+  const link = p.caseStudy ? { href: p.caseStudy } : { href: p.url, target: '_blank', rel: 'noopener noreferrer' }
+  const phoneW = t.layout === 'atelier' ? 'w-[27%] max-w-[190px]' : 'w-[23%] max-w-[170px]'
   return (
-    <picture>
-      <source type="image/avif" srcSet={set('avif')} sizes={sizes} />
-      <img
-        src={`/work/${slug}-${kind}-${widths[widths.length - 1]}.webp`}
-        srcSet={set('webp')}
-        sizes={sizes}
-        alt={alt}
-        width={w}
-        height={h}
-        loading="eager"
-        fetchPriority="low"
-        decoding="async"
-        className="absolute inset-0 block h-full w-full bg-navy-soft bg-cover bg-top object-cover object-top"
-        style={preview}
-      />
-    </picture>
+    <figure>
+      <a {...link} tabIndex={-1} aria-hidden="true" className="work-stage relative block pb-10 pr-[9%] md:pb-14">
+        <div className="work-tablet"><div className="work-lift">
+          <TabletFrame screen={WORK_SHOT.tablet.screen}>
+            <WorkShot slug={p.slug} kind="tablet" alt="" sizes="(min-width: 1280px) 620px, (min-width: 1024px) 50vw, 84vw" />
+          </TabletFrame>
+        </div></div>
+        <div className={`work-phone absolute bottom-0 right-0 ${phoneW}`}><div className="work-lift-more">
+          <PhoneFrame screen={WORK_SHOT.mobile.screen}>
+            <WorkShot slug={p.slug} kind="mobile" alt="" sizes="(min-width: 1024px) 180px, 25vw" />
+          </PhoneFrame>
+        </div></div>
+      </a>
+      <figcaption className="mt-4 text-[10.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: t.ink, opacity: 0.6 }}>
+        {p.domain} <span aria-hidden="true">·</span> live site on tablet and phone
+      </figcaption>
+    </figure>
   )
 }
 
-/** Desktop capture in a browser frame, with the phone capture beside it. */
-function BrowserStage({ project }) {
+function Info({ project: p, index }) {
+  const t = p.theme
+  const muted = { color: t.ink, opacity: 0.72 }
   return (
-    <a
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      tabIndex={-1}
-      aria-hidden="true"
-      className="group relative block pb-5 md:pb-8"
-    >
-      <div className="transition-transform duration-700 ease-[var(--ease-expo)] lg:group-hover:-translate-y-1">
-        <BrowserFrame domain={project.domain} tone={project.tone} aspect="aspect-[7/4]">
-          <Shot slug={project.slug} kind="desktop" alt={`${project.name} website on desktop`} sizes="(min-width: 1024px) 58vw, 92vw" />
-        </BrowserFrame>
+    <div>
+      <div className="flex items-center gap-4 text-[11px] font-semibold tracking-[0.25em]" style={{ color: t.accent }}>
+        <span>0{index + 1}</span>
+        <span className="h-px flex-1" style={{ background: `${t.ink}26` }} />
+        <span className="uppercase" style={{ color: t.ink, opacity: 0.6 }}>{p.category}</span>
       </div>
-      <div className="absolute bottom-0 right-3 w-[22%] max-w-[180px] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1.5 sm:right-6 md:w-[18%]">
-        <PhoneFrame>
-          <Shot slug={project.slug} kind="mobile" alt={`${project.name} website on a phone`} sizes="(min-width: 1280px) 110px, (min-width: 1024px) 8.5vw, (min-width: 768px) 14vw, 17vw" />
-        </PhoneFrame>
+      <h3 id={`proj-${p.id}`} className="mt-5 text-[clamp(2rem,7vw,3.6rem)] leading-[0.95] tracking-[-0.03em] md:mt-7">
+        <span className="block font-light uppercase">{p.name.split(' ').slice(0, t.split).join(' ')}</span>
+        <span className="block font-extrabold uppercase">{p.name.split(' ').slice(t.split).join(' ')}</span>
+      </h3>
+      {p.caseStudy && (
+        <p className="mt-4 inline-flex rounded-full border px-3 py-1 text-[10.5px] font-semibold uppercase tracking-[0.2em]" style={{ borderColor: `${t.ink}40` }}>
+          Case study
+        </p>
+      )}
+      <p className="mt-5 max-w-md text-[15px] leading-relaxed md:text-[16px]" style={muted}>
+        {p.description}
+      </p>
+      <p className="mt-4 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.16em]" style={{ color: t.ink, opacity: 0.75 }}>
+        <span className="sr-only">Services: </span>
+        {p.services.join(' · ')}
+      </p>
+      <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3 md:mt-9">
+        {p.caseStudy && (
+          <a
+            href={p.caseStudy}
+            className="inline-flex min-h-[48px] items-center gap-3 rounded-full px-6 text-[12px] font-semibold uppercase tracking-[0.2em] transition-transform duration-500 ease-[var(--ease-expo)] hover:-translate-y-0.5"
+            style={{ background: t.ink, color: t.bg }}
+          >
+            View case study <ArrowRight />
+            <span className="sr-only"> — {p.name}</span>
+          </a>
+        )}
+        <a
+          href={p.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`group/live inline-flex min-h-[48px] items-center gap-2.5 text-[12px] font-semibold uppercase tracking-[0.2em] ${p.caseStudy ? '' : 'rounded-full border px-6'}`}
+          style={p.caseStudy ? { color: t.ink } : { color: t.ink, borderColor: `${t.ink}55` }}
+        >
+          Visit website <ArrowUpRight className="transition-transform duration-500 group-hover/live:-translate-y-0.5 group-hover/live:translate-x-0.5" />
+          <span className="sr-only"> — {p.domain} (opens in a new tab)</span>
+        </a>
       </div>
-    </a>
-  )
-}
-
-/** Only a mobile capture: the phone takes centre stage, lit in the project's accent. */
-function PhoneStage({ project }) {
-  return (
-    <a
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      tabIndex={-1}
-      aria-hidden="true"
-      className="group relative flex items-center justify-center py-3 sm:min-h-[440px] sm:py-8 lg:min-h-[600px]"
-    >
-      {/* stage lighting */}
-      <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_45%,rgba(0,123,255,.22),transparent_70%)]" />
-      <div
-        className="absolute left-1/2 top-1/2 aspect-square w-full max-w-[640px] -translate-x-1/2 -translate-y-1/2 opacity-35"
-        style={{ background: `radial-gradient(closest-side, ${project.accent}, transparent)` }}
-      />
-      <div className="absolute left-1/2 top-1/2 aspect-square w-[88%] max-w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[.06]" />
-
-      {/* sized by height as well as width, so the whole panel fits short phone screens */}
-      <div className="relative w-[min(40%,150px,17svh)] transition-transform duration-700 ease-[var(--ease-expo)] group-hover:-translate-y-1.5 sm:w-[40%] sm:max-w-[210px] lg:w-[250px] lg:max-w-none">
-        <PhoneFrame>
-          <Shot slug={project.slug} kind="mobile" alt={`${project.name} website on a phone`} sizes="(min-width: 1024px) 250px, 40vw" />
-        </PhoneFrame>
-      </div>
-    </a>
+    </div>
   )
 }

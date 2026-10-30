@@ -3,7 +3,7 @@ import { useFinePointer } from '../hooks/useMediaQuery.js'
 import { usePauseOffscreen } from '../hooks/usePauseOffscreen.js'
 import MagneticButton from '../components/MagneticButton.jsx'
 import Ribbon from '../components/Ribbon.jsx'
-import HeroShowcase from '../components/HeroShowcase.jsx'
+import HeroArchitecture from '../components/HeroArchitecture.jsx'
 import { ArrowRight, WhatsApp } from '../components/Icons.jsx'
 import { whatsappLink } from '../config.js'
 
@@ -12,7 +12,7 @@ const LINES = ['Websites that', 'move business', 'forward.']
 const RIBBON = 'M-80 640 C 180 660, 300 250, 560 300 S 820 700, 1040 460 S 1300 90, 1540 170'
 
 export default function Hero({ ready }) {
-  // decorative loops in the hero (stage sway, scroll cue) pause once it's off-screen
+  // decorative loops in the hero (the architecture's breathing layers, scroll cue) pause once it's off-screen
   const pauseRef = usePauseOffscreen()
   const reduce = useReducedMotion()
   const fine = useFinePointer()
@@ -22,8 +22,8 @@ export default function Hero({ ready }) {
   const px = useMotionValue(0)
   const py = useMotionValue(0)
   const spring = { stiffness: 90, damping: 18, mass: 0.6 }
-  const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [-20, -4]), spring)
-  const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [12, 2]), spring)
+  const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [-9, 9]), spring)
+  const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [6, -6]), spring)
 
   const onMove = (e) => {
     if (!tilt) return
@@ -40,7 +40,7 @@ export default function Hero({ ready }) {
       initial={{ scale: 1.06 }}
       animate={ready ? { scale: 1 } : {}}
       transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden pb-10 pt-24 md:pt-32 lg:pb-10"
+      className="hero-screen relative isolate flex flex-col overflow-hidden pb-10 pt-24 md:pt-32 lg:pb-10"
       aria-labelledby="hero-title"
     >
       {/* Atmosphere */}
@@ -48,10 +48,12 @@ export default function Hero({ ready }) {
         <div className="absolute inset-0 bg-[radial-gradient(90%_60%_at_75%_30%,rgba(0,123,255,.28),transparent_60%),radial-gradient(60%_50%_at_10%_90%,rgba(0,209,255,.12),transparent_60%)]" />
         <div className="absolute left-[70%] top-[40%] h-[60vmax] w-[60vmax] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,209,255,.16),transparent_60%)]" />
         <div className="grid-bg absolute inset-0 [mask-image:radial-gradient(70%_60%_at_60%_40%,#000,transparent)]" />
-        {ready && <Ribbon d={RIBBON} className="absolute inset-0 h-full w-full opacity-90" delay={0.3} animateIn={!reduce} />}
+        {ready && <Ribbon d={RIBBON} className="absolute inset-0 h-full w-full opacity-40" delay={0.3} animateIn={!reduce} />}
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-navy" />
       </div>
 
+      {/* phones and tablets: copy first, then the scene continues below the calls to action (the
+          hero is taller than the screen, as on the current site); large screens: two columns */}
       <div className="container-x grid flex-1 items-center gap-6 sm:gap-12 lg:grid-cols-[1.08fr_1fr] lg:gap-6">
         {/* Copy */}
         <div className="relative z-10">
@@ -120,21 +122,23 @@ export default function Hero({ ready }) {
               View our work <ArrowRight className="transition-transform duration-500 group-hover:translate-x-1" />
             </MagneticButton>
           </m.div>
+
         </div>
 
-        {/* device showcase: real work (Samui Property 360) on desktop + mobile */}
-        <HeroShowcase
+        {/* digital architecture: a website as an exploded stack of its layers (secondary to the headline) */}
+        <HeroArchitecture
           ready={ready}
           tilt={tilt}
           reduce={reduce}
           rotateX={rotateX}
           rotateY={rotateY}
+          className="mx-auto h-[min(calc((100vw-40px)*0.82),459px)] w-full max-w-[560px] md:h-[min(calc((100vw-80px)*0.82),508px)] md:max-w-[620px] lg:mx-0 lg:h-[min(640px,72svh)] lg:max-w-none"
         />
       </div>
 
       {/* scroll cue */}
       <m.a
-        href="#intro"
+        href="#work"
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-mist/50 transition-colors hover:text-white lg:flex"
         initial={{ opacity: 0 }}
         animate={ready ? { opacity: 1 } : {}}
