@@ -6,8 +6,12 @@ import { readFile, rm, writeFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { build } from 'vite'
 
-const PAGES = ['web-design-koh-samui', 'website-redesign']
-const SERVER_ENTRY = { 'web-design-koh-samui': 'src/koh-samui/entry-server.jsx', 'website-redesign': 'src/website-redesign/entry-server.jsx' }
+const PAGES = ['web-design-koh-samui', 'website-redesign', 'projects/teddy-bike-samui']
+const SERVER_ENTRY = {
+  'web-design-koh-samui': 'src/koh-samui/entry-server.jsx',
+  'website-redesign': 'src/website-redesign/entry-server.jsx',
+  'projects/teddy-bike-samui': 'src/case-study/entry-server.jsx',
+}
 
 const root = fileURLToPath(new URL('..', import.meta.url))
 const ssrOut = `${root}.ssr/`

@@ -2,3 +2,7 @@ node_modules
 dist
 .DS_Store
 .ssr
+
+# Original case-study captures and archives stay outside the repository
+*.zip
+*-portfolio-captures/

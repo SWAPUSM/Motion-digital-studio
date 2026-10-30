@@ -6,11 +6,11 @@ import SectionHeading from './SectionHeading.jsx'
 import Reveal from './Reveal.jsx'
 import MagneticButton from './MagneticButton.jsx'
 import Ribbon from './Ribbon.jsx'
-import { BrowserFrame, PhoneFrame } from './Devices.jsx'
+import { TabletFrame, PhoneFrame } from './Devices.jsx'
+import WorkShot, { WORK_SHOT } from './WorkShot.jsx'
 import { ArrowRight, ArrowUpRight, Check, WhatsApp } from './Icons.jsx'
 import Footer from '../sections/Footer.jsx'
 import { PROJECTS } from '../data/content.js'
-import PLACEHOLDERS from '../data/placeholders.json'
 import { whatsappLink } from '../config.js'
 
 // Shared building blocks for the service / location landing pages
@@ -158,15 +158,23 @@ export function ProjectCards({ index, intro, note }) {
                     <span className="sr-only">Services: </span>
                     {p.services.join(' • ')}
                   </p>
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-5 inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:text-cyan"
-                  >
-                    View project <ArrowUpRight />
-                    <span className="sr-only"> — {p.domain} (opens in a new tab)</span>
-                  </a>
+                  <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
+                    {p.caseStudy && (
+                      <a href={p.caseStudy} className="inline-flex min-h-[44px] items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan transition-colors hover:text-white">
+                        View case study <ArrowRight />
+                        <span className="sr-only"> — {p.name}</span>
+                      </a>
+                    )}
+                    <a
+                      href={p.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-[44px] items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-white transition-colors hover:text-cyan"
+                    >
+                      Visit website <ArrowUpRight />
+                      <span className="sr-only"> — {p.domain} (opens in a new tab)</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </Reveal>
@@ -183,34 +191,16 @@ export function ProjectCards({ index, intro, note }) {
   )
 }
 
-/** Browser + phone captures of a project (same image set as the homepage portfolio). */
+/** Tablet + phone captures of a project's live site (same image set as the homepage portfolio). */
 function ProjectStage({ project: p }) {
-  const set = (kind, widths, ext) => widths.map((w) => `/work/${p.slug}-${kind}-${w}.${ext} ${w}w`).join(', ')
-  const shot = (kind, widths, sizes, w, h, alt) => (
-    <picture>
-      <source type="image/avif" srcSet={set(kind, widths, 'avif')} sizes={sizes} />
-      <img
-        src={`/work/${p.slug}-${kind}-${widths[widths.length - 1]}.webp`}
-        srcSet={set(kind, widths, 'webp')}
-        sizes={sizes}
-        alt={alt}
-        width={w}
-        height={h}
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 block h-full w-full bg-navy-soft bg-cover bg-top object-cover object-top"
-        style={{ backgroundImage: `url(${PLACEHOLDERS[`${p.slug}-${kind}`]})` }}
-      />
-    </picture>
-  )
   return (
-    <div className="relative pb-5">
-      <BrowserFrame domain={p.domain} tone={p.tone} aspect="aspect-[7/4]">
-        {shot('desktop', [900, 1600], '(min-width: 1280px) 360px, (min-width: 1024px) 30vw, 90vw', 1600, 913, `${p.name} website on desktop`)}
-      </BrowserFrame>
-      <div className="absolute bottom-0 right-3 w-[22%] max-w-[120px] sm:right-6">
-        <PhoneFrame>
-          {shot('mobile', [200, 390, 780], '(min-width: 1280px) 80px, (min-width: 1024px) 7vw, 20vw', 780, 1691, `${p.name} website on a phone`)}
+    <div className="relative pb-5 pr-[8%]">
+      <TabletFrame screen={WORK_SHOT.tablet.screen}>
+        <WorkShot slug={p.slug} kind="tablet" alt={`${p.name} website on a tablet`} sizes="(min-width: 1280px) 340px, (min-width: 1024px) 28vw, 84vw" />
+      </TabletFrame>
+      <div className="absolute bottom-0 right-0 w-[22%] max-w-[110px]">
+        <PhoneFrame screen={WORK_SHOT.mobile.screen}>
+          <WorkShot slug={p.slug} kind="mobile" alt={`${p.name} website on a phone`} sizes="(min-width: 1280px) 80px, (min-width: 1024px) 7vw, 20vw" />
         </PhoneFrame>
       </div>
     </div>

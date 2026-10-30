@@ -1,5 +1,7 @@
 import { m, useReducedMotion } from 'motion/react'
 import SectionHeading from '../components/SectionHeading.jsx'
+import Reveal from '../components/Reveal.jsx'
+import IndustriesMarquee from './IndustriesMarquee.jsx'
 import { REASONS } from '../data/content.js'
 
 const ease = [0.16, 1, 0.3, 1]
@@ -37,7 +39,7 @@ export default function Why() {
   return (
     <section id="why" className="relative py-16 md:py-28 lg:py-[clamp(88px,7vw,120px)]" aria-labelledby="why-title">
       <div className="container-x">
-        <SectionHeading id="why-title" index="05" label="Why Motion" lines={['Designed to look good.', 'Built to move business forward.']} />
+        <SectionHeading id="why-title" index="04" label="Why Motion" lines={['Designed to look good.', 'Built to move business forward.']} />
 
         <div className="mt-9 grid gap-3 sm:grid-cols-2 sm:gap-4 md:mt-14 lg:grid-cols-4 lg:gap-5">
           {REASONS.map((r, i) => (
@@ -70,7 +72,23 @@ export default function Why() {
             </m.article>
           ))}
         </div>
+
+        {/* where we are — formerly the Global reach section (the projects themselves are in Selected work) */}
+        <Reveal className="mt-14 flex flex-col gap-5 border-t border-white/[.08] pt-10 md:mt-20 md:flex-row md:items-end md:justify-between md:gap-10 md:pt-14">
+          <h3 className="text-[clamp(1.5rem,4.6vw,2.6rem)] uppercase leading-[1] tracking-[-0.03em] text-white">
+            <span className="block font-light text-white/90">Based in Thailand.</span>
+            <span className="block font-extrabold text-gradient">Building worldwide.</span>
+          </h3>
+          <p className="max-w-md text-[15px] leading-relaxed text-mist/65 md:text-right md:text-[16px]">
+            Our studio is in{' '}
+            <a href="/web-design-koh-samui/" className="underline decoration-cyan/40 underline-offset-4 transition-colors hover:text-white hover:decoration-cyan">
+              Koh Samui
+            </a>
+            . Our clients are everywhere. Wherever your business is, we design for the customers you want to reach.
+          </p>
+        </Reveal>
       </div>
+      <IndustriesMarquee />
     </section>
   )
 }

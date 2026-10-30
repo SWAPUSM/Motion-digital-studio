@@ -37,8 +37,8 @@ export function mailtoLink(subject = 'New website project') {
 
 export const NAV_LINKS = [
   { label: 'Home', href: '#top' },
-  { label: 'Services', href: '#services' },
   { label: 'Work', href: '#work' },
+  { label: 'Services', href: '#services' },
   { label: 'Process', href: '#process' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#contact' },

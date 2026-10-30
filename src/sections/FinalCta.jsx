@@ -20,7 +20,7 @@ export default function FinalCta() {
 
         <div className="relative">
           <p className="eyebrow">Let’s talk</p>
-          <MaskedLines id="contact-title" lines={['Ready to move', 'your business forward?']} className="mx-auto mt-6 max-w-5xl text-[clamp(2rem,8.6vw,6rem)] font-extrabold uppercase leading-[0.98] tracking-[-0.03em] text-white" />
+          <MaskedLines id="contact-title" lines={['Ready to move', 'your business forward?']} editorial className="mx-auto mt-6 max-w-5xl text-[clamp(2rem,8.6vw,6rem)] uppercase leading-[0.98] tracking-[-0.03em] text-white" />
           <Reveal as="p" delay={0.2} className="mx-auto mt-6 max-w-md text-[16px] leading-relaxed text-mist/75 md:text-[19px]">
             Let’s build a website your customers will remember.
           </Reveal>

@@ -40,10 +40,14 @@ export function BrowserFrame({ domain, children, className = '', aspect = 'aspec
  * Dynamic Island, true 1179 × 2556 screen ratio and matching corner radii.
  * Everything is sized in `cqw` of the phone's own width, so the proportions hold
  * at any size. Straight, never tilted; only a modest static shadow (cheap to scroll).
+ *
+ * `screen`: the aspect of a real capture whose status bar and browser toolbar were cropped
+ * off (e.g. 'aspect-[1290/2323]'). The display then shows only the website, and the
+ * Dynamic Island sits in a black strip above it instead of covering the site's header.
  */
 const BUTTON = 'absolute w-[1.1cqw] bg-gradient-to-b from-[#8d9096] via-[#55585e] to-[#8d9096]'
 
-export function PhoneFrame({ children, className = '', ...rest }) {
+export function PhoneFrame({ children, className = '', screen, ...rest }) {
   return (
     <div {...rest} className={`@container relative ${className}`}>
       {/* side buttons: action + volume (left), side button (right) */}
@@ -55,13 +59,35 @@ export function PhoneFrame({ children, className = '', ...rest }) {
       {/* titanium band */}
       <div className="rounded-[16.9cqw] bg-[linear-gradient(150deg,#b4b7bc_0%,#62656b_18%,#34363b_45%,#5b5e64_75%,#aeb1b6_100%)] p-[0.9cqw] shadow-[0_18px_36px_-14px_rgba(0,0,0,.8)]">
         {/* black bezel */}
-        <div className="rounded-[16cqw] bg-black p-[3cqw] shadow-[inset_0_0_0_0.35cqw_rgba(255,255,255,.07)]">
+        <div className={`relative rounded-[16cqw] bg-black p-[3cqw] shadow-[inset_0_0_0_0.35cqw_rgba(255,255,255,.07)] ${screen ? 'pb-[6cqw] pt-[13cqw]' : ''}`}>
+          {screen && <div aria-hidden="true" className="absolute left-1/2 top-[3.2cqw] h-[7.6cqw] w-[30%] -translate-x-1/2 rounded-full bg-[#111]" />}
           {/* display */}
-          <div className="@container relative aspect-[1179/2556] overflow-hidden rounded-[13cqw] bg-navy">
+          <div className={`@container relative overflow-hidden bg-navy ${screen ? `${screen} rounded-b-[13cqw] rounded-t-[4cqw]` : 'aspect-[1179/2556] rounded-[13cqw]'}`}>
             {children}
-            <div aria-hidden="true" className="absolute left-1/2 top-[1.3%] h-[4.3%] w-[32%] -translate-x-1/2 rounded-full bg-black" />
+            {!screen && <div aria-hidden="true" className="absolute left-1/2 top-[1.3%] h-[4.3%] w-[32%] -translate-x-1/2 rounded-full bg-black" />}
             {/* faint glass reflection */}
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.07)_0%,transparent_32%)]" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Landscape tablet for the tablet captures of the live sites (browser bar cropped off):
+ * graphite frame, even bezel, front camera on the long edge. Sized in `cqw` like the phone.
+ * Deliberately not a desktop browser window: these captures come from a tablet.
+ */
+export function TabletFrame({ children, className = '', screen = 'aspect-[1536/876]' }) {
+  return (
+    <div className={`@container relative ${className}`}>
+      <div className="relative rounded-[4.2cqw] bg-[linear-gradient(150deg,#55585e_0%,#232427_30%,#17181a_60%,#3c3e43_100%)] p-[0.35cqw] shadow-[0_28px_56px_-30px_rgba(0,0,0,.75)]">
+        <div className="relative rounded-[3.9cqw] bg-[#0b0b0c] p-[2.1cqw] shadow-[inset_0_0_0_0.15cqw_rgba(255,255,255,.06)]">
+          <span aria-hidden="true" className="absolute left-1/2 top-[0.85cqw] h-[0.45cqw] w-[0.45cqw] -translate-x-1/2 rounded-full bg-[#1d2430] ring-[0.12cqw] ring-white/5" />
+          <div className={`@container relative overflow-hidden rounded-[1.8cqw] bg-navy ${screen}`}>
+            {children}
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,rgba(255,255,255,.06)_0%,transparent_30%)]" />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
-// Copy for /website-redesign/. Facts only: packages, prices, terms and delivery
-// times match src/data/content.js; the redesign rules (content, redirects,
+// Copy for /website-redesign/. Facts only: packages, prices and terms
+// match src/data/content.js; the redesign rules (content, redirects,
 // platforms, hosting) are the studio's confirmed commercial terms.
 
 export const RD_SIGNS = [
@@ -68,10 +68,6 @@ export const RD_FAQS = [
   {
     q: 'Will my website keep its Google rankings?',
     a: 'No one can guarantee that existing rankings are preserved. We keep your existing URLs when possible and set up 301 redirects when needed and technically feasible. Significant SEO migrations are quoted separately.',
-  },
-  {
-    q: 'How long does a redesign take?',
-    a: 'It depends on the package: 3–5 business days for a One Page Website, 5–10 for a Multi Page Website and 7–14 for a Premium Website, once all required content and information have been received.',
   },
   {
     q: 'Can you look after the website after launch?',

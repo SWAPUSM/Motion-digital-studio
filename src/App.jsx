@@ -4,13 +4,11 @@ import Nav from './components/Nav.jsx'
 import ScrollProgress from './components/ScrollProgress.jsx'
 import FloatingCta from './components/FloatingCta.jsx'
 import Hero from './sections/Hero.jsx'
-import Intro from './sections/Intro.jsx'
 import Services from './sections/Services.jsx'
+import Pricing from './sections/Pricing.jsx'
 import Work from './sections/Work.jsx'
-import Proof from './sections/Proof.jsx'
 import Why from './sections/Why.jsx'
 import Process from './sections/Process.jsx'
-import Global from './sections/Global.jsx'
 import Faq from './sections/Faq.jsx'
 import FinalCta from './sections/FinalCta.jsx'
 import Footer from './sections/Footer.jsx'
@@ -49,14 +47,18 @@ export default function App() {
   const sections = useMemo(
     () => (
       <>
-        <Intro />
-        <Services />
+        {/* Hero · 01 Selected work · 02 Services · 03 Pricing · 04 Why Motion ·
+            05 Process · 06 FAQ · Contact. The Teddy Bike Samui before/after lives in its case study. */}
         <Work />
-        <Proof />
-        <Why />
-        <Process />
-        <Global />
-        <Faq />
+        <Services />
+        <Pricing />
+        {/* a light chapter between the dark ones (see .surface-light) */}
+        <div className="surface-light relative isolate mx-2 overflow-clip rounded-[32px] md:mx-4 md:rounded-[56px]">
+          <div aria-hidden="true" className="surface-light-glow pointer-events-none absolute inset-0 -z-10" />
+          <Why />
+          <Process />
+        </div>
+        <Faq index="06" />
         <FinalCta />
       </>
     ),

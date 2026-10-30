@@ -127,11 +127,6 @@
 /* ── Keyframes ───────────────────────────────────────────────
    Only transform and opacity are animated (compositor-only, no repaint).
    Every loop is paused while its section is off-screen (.anim-paused). */
-/* Hero workspace: one slow, gentle sway of the whole 3D stage */
-@keyframes sway-soft {
-  0%, 100% { transform: rotateX(5deg) rotateY(-8deg); }
-  50% { transform: rotateX(2deg) rotateY(-3deg); }
-}
 @keyframes marquee {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
@@ -150,7 +145,6 @@
   to { transform: scaleX(1); }
 }
 
-.animate-sway-soft { animation: sway-soft 10s ease-in-out infinite; }
 .animate-marquee { animation: marquee 38s linear infinite; }
 .animate-scroll-cue { animation: scroll-cue 2.4s var(--ease-expo) infinite; }
 
@@ -172,6 +166,221 @@
 .anim-paused {
   animation-play-state: paused !important;
 }
+
+/* Services statement (sections/Services.jsx): words light up one after another as the
+   paragraph crosses the screen — a single view timeline, staggered ranges, opacity only. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .scroll-lit { view-timeline-name: --lit; }
+    .scroll-lit-word {
+      animation: lit-word linear both;
+      animation-timeline: --lit;
+      animation-range: cover calc(12% + var(--i) * 1.4%) cover calc(20% + var(--i) * 1.4%);
+    }
+  }
+}
+@keyframes lit-word { from { opacity: 0.5; } to { opacity: 1; } }
+
+/* A light chapter (Why Motion + Process, App.jsx): the same components, re-inked by
+   redefining the palette inside it — white becomes ink, mist a slate, cyan a deeper blue that
+   keeps contrast on paper. */
+.surface-light {
+  --color-white: #0a1a2f;
+  --color-mist: #13203a;
+  --color-cyan: #0071c2;
+  --color-electric: #0052d6;
+  --color-navy: #eef3f9;
+  color: var(--color-mist);
+  background: linear-gradient(180deg, #f6f8fb 0%, #edf2f8 55%, #e6eef7 100%);
+}
+.surface-light-glow {
+  background:
+    radial-gradient(60% 40% at 85% 0%, rgba(0, 123, 255, 0.12), transparent 70%),
+    radial-gradient(50% 35% at 0% 60%, rgba(0, 209, 255, 0.12), transparent 70%),
+    radial-gradient(40% 30% at 100% 100%, rgba(0, 82, 214, 0.1), transparent 70%);
+}
+.surface-light .text-gradient {
+  background: linear-gradient(100deg, #0a1a2f 0%, #0052d6 55%, #0091d9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.surface-light .grid-bg {
+  background-image: linear-gradient(rgb(10 26 47 / 0.05) 1px, transparent 1px), linear-gradient(90deg, rgb(10 26 47 / 0.05) 1px, transparent 1px);
+}
+.surface-light ::selection { color: #0a1a2f; }
+/* ice panels inside dark sections: a hairline of light and a deep, soft shadow */
+.surface-panel {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 30px 60px -36px rgba(0, 20, 60, 0.75);
+}
+
+/* Selected work (sections/Work.jsx): the project reel.
+   - Each slot sticks: vertically centred under the header when it fits the screen, else with
+     its bottom on the screen's bottom, so a whole card is always read before the next covers it.
+   - As the next slot enters, the card underneath recedes and dims; inside each card the tablet
+     unfolds and the phone rises. All driven by scroll timelines (no JavaScript per frame).
+   - Reduced motion: no stacking, no movement — the cards simply follow one another. */
+.work-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: #061424;
+  opacity: 0;
+}
+/* Cards stay fully opaque at every moment: the card underneath only scales back a little and
+   loses a touch of light (a navy veil of at most 14% — cheaper on phones than a filter). */
+@keyframes work-recede { to { transform: scale(0.94) translate3d(0, -1.5%, 0); } }
+@keyframes work-dim { to { opacity: 0.14; } }
+@keyframes work-unfold {
+  from { transform: translate3d(0, 40px, 0) rotateX(22deg) scale(0.92); }
+  to { transform: none; }
+}
+@keyframes work-phone-rise {
+  from { transform: translate3d(0, 70px, 0); }
+  to { transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .work-reel.is-live .work-slot {
+    position: sticky;
+    top: min(12px, calc(100svh - var(--h, 0px)));
+  }
+  @media (min-width: 1024px) {
+    .work-reel.is-live .work-slot { top: min(max(96px, calc((100svh - var(--h, 0px)) / 2)), calc(100svh - var(--h, 0px))); }
+  }
+  .work-stage { perspective: 1200px; }
+  .work-tablet { transform-origin: 50% 100%; }
+  @supports (animation-timeline: view()) {
+    .work-reel { timeline-scope: --work-2, --work-3; }
+    .work-slot[data-i='1'] { view-timeline-name: --work-2; }
+    .work-slot[data-i='2'] { view-timeline-name: --work-3; }
+    .work-slot[data-i='0'] .work-card,
+    .work-slot[data-i='1'] .work-card { transform-origin: 50% 0; animation: work-recede linear both; animation-range: entry 0% entry 100%; }
+    .work-slot[data-i='0'] .work-card::after,
+    .work-slot[data-i='1'] .work-card::after { animation: work-dim linear both; animation-range: entry 0% entry 100%; }
+    .work-slot[data-i='0'] .work-card,
+    .work-slot[data-i='0'] .work-card::after { animation-timeline: --work-2; }
+    .work-slot[data-i='1'] .work-card,
+    .work-slot[data-i='1'] .work-card::after { animation-timeline: --work-3; }
+    .work-tablet { animation: work-unfold linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; }
+    .work-phone { animation: work-phone-rise linear both; animation-timeline: view(); animation-range: entry 30% cover 42%; }
+  }
+}
+/* mouse devices: the devices lift a little on hover */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .work-lift,
+  .work-lift-more { transition: transform 0.9s var(--ease-expo); }
+  .work-card:hover .work-lift { transform: translate3d(0, -6px, 0); }
+  .work-card:hover .work-lift-more { transform: translate3d(0, -14px, 0); }
+}
+
+/* Hero visual (components/HeroArchitecture.jsx): an exploded website in isometric 3D.
+   Sized by its own box (container units); the layers fly apart once on load (--spread 0 → 1),
+   then breathe slowly. Transforms only; paused off-screen; still with reduced motion. */
+.arch-box { container-type: size; }
+.arch-stage {
+  --pw: min(74cqw, 96cqh);
+  --gap: calc(var(--pw) * 0.17);
+  --spread: 0;
+  position: relative;
+  width: var(--pw);
+  aspect-ratio: 3 / 2;
+  transform-style: preserve-3d;
+  transform: translate(calc(var(--pw) * -0.06), calc(var(--pw) * 0.12)) rotateX(58deg) rotateZ(-38deg);
+}
+.arch-stage.is-ready { --spread: 1; }
+.arch-layer {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--z) * var(--gap) * var(--spread)));
+  transition: transform 1.8s var(--ease-expo) calc(0.25s + var(--z) * 0.12s);
+}
+.arch-float {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: arch-breathe 9s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -1.2s);
+}
+@keyframes arch-breathe {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, 0, calc(var(--i) * var(--gap) * 0.14)); }
+}
+.arch-plane {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 2.6cqw;
+}
+.arch-structure {
+  background: linear-gradient(160deg, rgba(8, 36, 72, 0.7), rgba(3, 14, 30, 0.85));
+  border: 1px solid rgba(0, 209, 255, 0.28);
+  box-shadow: 0 0 8cqw rgba(0, 123, 255, 0.45);
+}
+.arch-grid {
+  background-image: linear-gradient(rgba(0, 209, 255, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 209, 255, 0.2) 1px, transparent 1px);
+  background-size: 8.333% 12.5%;
+}
+.arch-layout { border: 1px solid rgba(127, 220, 255, 0.3); background: rgba(0, 123, 255, 0.04); }
+.arch-design {
+  background: linear-gradient(160deg, rgba(30, 80, 150, 0.55), rgba(8, 26, 58, 0.7));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.arch-interaction { overflow: visible; }
+.arch-beam {
+  position: absolute;
+  width: 1px;
+  height: calc(var(--gap) * 3);
+  transform-origin: 50% 0;
+  transform: rotateX(90deg);
+  background: linear-gradient(180deg, rgba(0, 209, 255, 0.7), rgba(127, 233, 255, 0.15));
+  opacity: 0;
+  transition: opacity 1.2s ease 1.2s;
+}
+.arch-stage.is-ready .arch-beam { opacity: 1; }
+.arch-beam-tl { left: 0; top: 0; }
+.arch-beam-tr { right: 0; top: 0; }
+.arch-beam-bl { left: 0; bottom: 0; transform-origin: 50% 100%; transform: rotateX(-90deg); }
+.arch-beam-br { right: 0; bottom: 0; transform-origin: 50% 100%; transform: rotateX(-90deg); }
+.arch-cta { animation: arch-cta 3.2s ease-in-out infinite; }
+/* the phone stands upright on the structure layer, rising as the layers spread */
+.arch-phone {
+  position: absolute;
+  right: -15%;
+  bottom: 4%;
+  width: 15%;
+  aspect-ratio: 9 / 22;
+  transform-origin: 50% 100%;
+  transform: translateZ(calc(var(--gap) * 0.35 * var(--spread))) rotateZ(38deg) rotateX(-90deg);
+  transition: transform 1.8s var(--ease-expo) 0.7s;
+  border-radius: 16% / 6.5%;
+  padding: 3.5%;
+  background: linear-gradient(160deg, #3a3f48, #14171c 40%, #2c3038);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 5cqw rgba(0, 123, 255, 0.45);
+}
+.arch-phone-screen {
+  position: relative;
+  height: 100%;
+  border-radius: 11% / 5.2%;
+  overflow: hidden;
+  background: linear-gradient(170deg, #0b2a55, #061424);
+}
+@keyframes arch-cta {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+.arch-stage.is-still .arch-layer,
+.arch-stage.is-still .arch-phone { transition: none; }
+.arch-stage.is-still .arch-float,
+.arch-stage.is-still .arch-cta { animation: none; }
+
+/* Hero height: at least one screen (100svh, 100vh where svh is unsupported) and otherwise as
+   tall as its content. On phones and tablets the scene sits below the calls to action, so the
+   hero runs on past the first screen and its background shows through Safari's translucent
+   toolbar while the visitor is still in it. */
+.hero-screen { min-height: 100vh; min-height: 100svh; }
 
 /* Reduced motion: a calm, static site. No loops, no parallax or tilt, and
    entrances become simple fades (MotionConfig reducedMotion="user"). */

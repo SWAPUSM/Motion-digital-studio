@@ -1,0 +1,32 @@
+/* Before/after comparisons (BeforeAfter.jsx) — loaded wherever the component is used.
+   Without JavaScript the comparison shows side by side; html.js (set before the page
+   renders) switches it to the slider. */
+
+.cs-toggle,
+.cs-slider {
+  display: none;
+}
+html.js .cs-toggle {
+  display: flex;
+}
+html.js .cs-compare[data-mode='slider'] .cs-slider {
+  display: block;
+}
+html.js .cs-compare[data-mode='slider'] .cs-side {
+  display: none;
+}
+/* the native range input is invisible; its focus ring moves to the round handle */
+.cs-range:focus-visible + .cs-knob {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+}
+.cs-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 48px;
+  height: 64px;
+}
+.cs-range::-moz-range-thumb {
+  width: 48px;
+  height: 64px;
+  border: 0;
+}

@@ -1,0 +1,105 @@
+{
+  "slug": "teddy-bike-samui",
+  "note": "Masters are the founder's original captures (teddy-bike-portfolio-captures, 17 files). They are NOT stored in this repository: pass their folder to `npm run case-assets -- <folder>`. Every master is checked against its SHA-256 before anything is generated.",
+  "masters": {
+    "before-desktop-hero.png": "206a838067bc634cb08921cc08574364a915dce5ed68f7ce46adcb2e34c29ae4",
+    "after-desktop-hero.png": "e9f6ad2c680988825419213f03355613ce4b5f35f52fd96b95c71c4d9a0b0949",
+    "before-mobile-hero.png": "19dae25bb9b52144c7e57b7a84a1d9a71d448226ffd81098ec7a37bac5c5d6cc",
+    "after-mobile-hero.png": "9f0ab971531f614ba01b46425cb71e10b9e7f37d21d6474acf69c64f21716507",
+    "before-mobile-full.png": "658cc3f4d8b4e62c22ad7eb1306ad70948715b74488e56b9ab9c74a31230acdd",
+    "after-desktop-showroom.png": "3405894331b5111af5743b96fbd216ebaa3308fdf49a4ff2a0cb6c2949ebab96",
+    "after-mobile-showroom.png": "f192e86ab12bbb0002820ca05d112955d1f692882b07c8c944e27df79d0037f3",
+    "after-mobile-menu.png": "c01ba6fd0d00c5ed93aafb72898d9b3cf955af2fb9c92b289e25935f2a322511",
+    "after-desktop-booking.png": "8a4338fc2c6c6d97ed57b053e6f740df101ef64903ec3d1bbab3199e28c58507",
+    "after-desktop-full.png": "a5def4b9e0c261b742af7122d08de6f28d5e356c9771e3d516a31082488d56f1",
+    "after-desktop-contact.png": "8856b30e0e84c8a8b7cd7906e2c502c276f8205fcffc20f40347ded8077fef87",
+    "after-mobile-full.png": "f64d13d7b2c1eed95b55bebc82d7c3b3ece67d86dd0442798aef9eb41b2e6d48"
+  },
+  "images": [
+    { "name": "before-desktop-hero", "master": "before-desktop-hero.png", "widths": [800, 1280, 1920] },
+    { "name": "after-desktop-hero", "master": "after-desktop-hero.png", "widths": [800, 1280, 1920] },
+    { "name": "before-mobile-hero", "master": "before-mobile-hero.png", "widths": [390, 780] },
+    { "name": "after-mobile-hero", "master": "after-mobile-hero.png", "widths": [390, 780] },
+    {
+      "name": "before-mobile-choose-your-ride",
+      "master": "before-mobile-full.png",
+      "crop": { "left": 0, "top": 6000, "width": 1170, "height": 3678 },
+      "cropNote": "The complete 'Choose your ride' section on a phone, cut exactly at its own background edges (y 6000 to 9678). Nothing else changed.",
+      "widths": [390, 780]
+    },
+    { "name": "after-desktop-showroom", "master": "after-desktop-showroom.png", "widths": [800, 1280, 1920] },
+    { "name": "after-mobile-showroom", "master": "after-mobile-showroom.png", "widths": [390, 780] },
+    { "name": "after-mobile-menu", "master": "after-mobile-menu.png", "widths": [390, 780] },
+    { "name": "after-desktop-booking", "master": "after-desktop-booking.png", "widths": [800, 1600] },
+    { "name": "after-desktop-full", "master": "after-desktop-full.png", "widths": [800, 1280] },
+    { "name": "after-desktop-contact", "master": "after-desktop-contact.png", "widths": [800, 1600] },
+    {
+      "name": "detail-header-logo",
+      "master": "after-desktop-hero.png",
+      "crop": { "left": 0, "top": 0, "width": 600, "height": 136 },
+      "cropNote": "Header, left: menu button, logo and wordmark.",
+      "widths": [300, 600]
+    },
+    {
+      "name": "detail-header-controls",
+      "master": "after-desktop-hero.png",
+      "crop": { "left": 2420, "top": 12, "width": 440, "height": 112 },
+      "cropNote": "Header, right: EN/FR switch and Book now.",
+      "widths": [220, 440]
+    },
+    {
+      "name": "detail-whatsapp-button",
+      "master": "after-desktop-hero.png",
+      "crop": { "left": 390, "top": 716, "width": 470, "height": 140 },
+      "cropNote": "Hero: the Book on WhatsApp button.",
+      "widths": [235, 470]
+    },
+    {
+      "name": "detail-typography",
+      "master": "after-desktop-hero.png",
+      "crop": { "left": 380, "top": 260, "width": 980, "height": 430 },
+      "cropNote": "Hero: eyebrow, title, subtitle and introduction.",
+      "widths": [490, 980]
+    },
+    {
+      "name": "detail-vehicle-panel",
+      "master": "after-desktop-showroom.png",
+      "crop": { "left": 1806, "top": 740, "width": 404, "height": 590 },
+      "cropNote": "Showroom: the vehicle panel (brand, engine, position, model, price, deposit, dots, View & book, See our scooters).",
+      "widths": [202, 404]
+    },
+    {
+      "name": "mobile-home-rental",
+      "master": "after-mobile-full.png",
+      "crop": { "left": 0, "top": 5343, "width": 1170, "height": 1767 },
+      "cropNote": "'Rental without the hassle' on a phone: from the section's top edge to the gap after its second point (Free delivery, All included).",
+      "widths": [390, 780]
+    },
+    {
+      "name": "mobile-home-activities",
+      "master": "after-mobile-full.png",
+      "crop": { "left": 0, "top": 8244, "width": 1170, "height": 2360 },
+      "cropNote": "'Activities' on a phone: from the section's top edge to the gap after its first card (Shooting Range).",
+      "widths": [390, 780]
+    },
+    {
+      "name": "mobile-home-how-it-works",
+      "master": "after-mobile-full.png",
+      "crop": { "left": 0, "top": 15183, "width": 1170, "height": 2214 },
+      "cropNote": "'How it works' on a phone: from the section's top edge to the gap after step 2.",
+      "widths": [390, 780]
+    },
+    {
+      "name": "mobile-home-ride-waiting",
+      "master": "after-mobile-full.png",
+      "crop": { "left": 0, "top": 24825, "width": 1170, "height": 1296 },
+      "cropNote": "'Your ride is waiting' on a phone: the whole section, cut at its own edges.",
+      "widths": [390, 780]
+    }
+  ],
+  "og": {
+    "master": "after-desktop-hero.png",
+    "crop": { "left": 0, "top": 0, "width": 2880, "height": 1512 },
+    "size": [1200, 630]
+  }
+}

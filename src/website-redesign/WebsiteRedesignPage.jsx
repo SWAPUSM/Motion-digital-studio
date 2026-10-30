@@ -2,7 +2,7 @@ import SectionHeading from '../components/SectionHeading.jsx'
 import Reveal from '../components/Reveal.jsx'
 import { ArrowRight, Check } from '../components/Icons.jsx'
 import { LandingHero, PageShell, ProjectCards, card, lead, section, textLink } from '../components/Landing.jsx'
-import { PricingPlans } from '../sections/Services.jsx'
+import { PricingPlans } from '../sections/Pricing.jsx'
 import Faq from '../sections/Faq.jsx'
 import FinalCta from '../sections/FinalCta.jsx'
 import { RD_FAQS, RD_INCLUDES, RD_KEEP, RD_PROJECT_NOTES, RD_SIGNS, RD_STEPS } from '../data/redesign.js'
@@ -136,8 +136,7 @@ function Steps() {
 
         <Reveal className="mt-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <p className="text-[14px] leading-relaxed text-mist/60">
-            Payment: 50% to start, 50% before launch. Delivery times begin once all required content and information have been
-            received.
+            Payment: 50% to start, 50% before launch.
           </p>
           <a href="/#process" className={`${textLink} shrink-0`}>
             See our full process <ArrowRight />
