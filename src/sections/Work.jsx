@@ -16,10 +16,10 @@ import { PROJECTS } from '../data/content.js'
  * All of it runs on the browser's scroll timelines — no scroll listeners. Without support the
  * cards still stack; with reduced motion they simply follow one another.
  *
- * The cards only become sticky while the reel is on screen (.is-live). iOS Safari tints its
- * status bar and toolbar with the colour of sticky/fixed elements; with the light cards sticky
- * from the start, it painted opaque cream bars over the hero instead of extending the hero's navy.
- * Switching sticky on before a card reaches its sticking point changes nothing on screen.
+ * The cards only become sticky while the reel is on screen (.is-live): iOS Safari tints its bars
+ * from sticky/fixed elements at the screen edges, so outside the reel they play no part (see the
+ * card's background-color below). Switching sticky on before a card reaches its sticking point
+ * changes nothing on screen.
  */
 export default function Work() {
   const reel = useRef(null)
@@ -66,9 +66,12 @@ function Project({ project: p, index }) {
       <article
         aria-labelledby={`proj-${p.id}`}
         className="work-card group relative isolate overflow-clip rounded-[28px] shadow-[0_-24px_60px_-40px_rgba(0,0,0,.9)] md:rounded-[40px]"
-        // the card colour as a one-colour gradient, not a background-color: identical on screen, but
-        // iOS Safari 26 tints its bars with the background-color of sticky elements' painted content
-        style={{ backgroundImage: `linear-gradient(${t.bg}, ${t.bg})`, color: t.ink }}
+        // iOS Safari 26 colours its bottom toolbar from the sticky element at the bottom edge of the screen:
+        // that element's background-color or, without one, its painted pixels (the light cards turned the
+        // toolbar cream). So the card colour is painted as a one-colour gradient, and the background-color
+        // underneath is the page navy, almost transparent and fully hidden by the gradient: Safari blends it
+        // over the page background and the toolbar stays navy.
+        style={{ backgroundColor: 'rgb(6 20 36 / 0.01)', backgroundImage: `linear-gradient(${t.bg}, ${t.bg})`, color: t.ink }}
       >
         <Backdrop project={p} />
         <div className="relative grid items-center gap-8 p-5 pb-8 sm:p-8 md:gap-10 md:p-12 lg:grid-cols-12 lg:gap-12 lg:p-16">
