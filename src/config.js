@@ -27,6 +27,10 @@ export const HAS_EMAIL = Boolean(SITE.email)
 export const DEFAULT_WA_MESSAGE =
   "Hi Motion Digital Studio! I'd like to start a website project."
 
+// "Get a Free Mockup" buttons (homepage and service pages).
+export const MOCKUP_WA_MESSAGE =
+  "Hi Motion Digital Studio! I'd like a free homepage mockup for my business."
+
 export function whatsappLink(message = DEFAULT_WA_MESSAGE) {
   return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(message)}`
 }

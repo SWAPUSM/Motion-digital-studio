@@ -1,8 +1,8 @@
 import { m } from 'motion/react'
 import SectionHeading from '../components/SectionHeading.jsx'
 import Reveal from '../components/Reveal.jsx'
-import { ArrowUpRight, Check } from '../components/Icons.jsx'
-import { CUSTOM_WORK, PACKAGES } from '../data/content.js'
+import { ArrowUpRight, Check, Clock } from '../components/Icons.jsx'
+import { CUSTOM_WORK, DELIVERY_NOTE, PACKAGES } from '../data/content.js'
 import { whatsappLink } from '../config.js'
 
 /** Writes pointer position to CSS vars — no React re-render per mouse move. */
@@ -43,6 +43,11 @@ export function PricingPlans() {
           <PackageCard key={pkg.id} pkg={pkg} index={i} />
         ))}
       </div>
+
+      <p className="mt-5 flex items-start gap-2.5 px-1 text-[12px] leading-relaxed text-mist/60 md:mt-6 md:text-[12.5px]">
+        <Clock width="14" height="14" className="mt-0.5 shrink-0 text-cyan/80" aria-hidden="true" />
+        {DELIVERY_NOTE}
+      </p>
 
       <div className="mt-10 grid gap-4 md:mt-14 md:gap-5 lg:gap-6 xl:grid-cols-2">
         <Reveal>
@@ -155,6 +160,16 @@ function PackageCard({ pkg, index }) {
           </li>
         ))}
       </ul>
+
+      {pkg.delivery && (
+        <p className="relative mt-7 border-t border-white/[.07] pt-4 md:mt-8">
+          <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-mist/60">
+            <Clock className="text-cyan/85" />
+            Estimated delivery
+          </span>
+          <span className="mt-1.5 block text-[13px] font-semibold text-white/90">{pkg.delivery}</span>
+        </p>
+      )}
 
       <a
         href={whatsappLink(`Hi Motion Digital Studio! I'm interested in the ${pkg.name} package.`)}

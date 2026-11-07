@@ -71,6 +71,14 @@ export const KS_FAQS = [
     a: 'Yes. The Multi Page Website is designed for villas, restaurants and service businesses, and the Premium Website suits hotels, real estate and established brands.',
   },
   {
+    q: 'What is the free homepage mockup?',
+    a: 'We create a free preview concept for your homepage so you can see how your future website could look. After a quick discussion about your business and requirements, we’ll prepare a personalised design preview. No obligation to proceed.',
+  },
+  {
+    q: 'Can you help set up my Google Business Profile?',
+    a: 'Yes. If your business is eligible and doesn’t already have a profile, we’ll help you set one up at no additional charge. The profile remains under your ownership. Verification and approval are managed by Google and cannot be guaranteed.',
+  },
+  {
     q: 'Do I need to be located in Koh Samui?',
     a: 'No. The studio is based in Koh Samui, but we work with businesses across Thailand and worldwide.',
   },

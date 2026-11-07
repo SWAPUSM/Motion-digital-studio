@@ -4,8 +4,8 @@ import { usePauseOffscreen } from '../hooks/usePauseOffscreen.js'
 import MagneticButton from '../components/MagneticButton.jsx'
 import Ribbon from '../components/Ribbon.jsx'
 import HeroArchitecture from '../components/HeroArchitecture.jsx'
-import { ArrowRight, WhatsApp } from '../components/Icons.jsx'
-import { whatsappLink } from '../config.js'
+import { ArrowRight, ArrowUpRight, WhatsApp } from '../components/Icons.jsx'
+import { MOCKUP_WA_MESSAGE, whatsappLink } from '../config.js'
 
 const ease = [0.16, 1, 0.3, 1]
 const LINES = ['Websites that', 'move business', 'forward.']
@@ -110,7 +110,7 @@ export default function Hero({ ready }) {
           </m.p>
 
           <m.div
-            className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-4"
+            className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
             initial={{ opacity: 0.6, y: 10 }}
             animate={ready ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease, delay: 0.3 }}
@@ -120,6 +120,9 @@ export default function Hero({ ready }) {
             </MagneticButton>
             <MagneticButton href="#work" variant="ghost">
               View our work <ArrowRight className="transition-transform duration-500 group-hover:translate-x-1" />
+            </MagneticButton>
+            <MagneticButton href={whatsappLink(MOCKUP_WA_MESSAGE)} target="_blank" rel="noopener noreferrer" variant="ghost">
+              Get a Free Mockup <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </MagneticButton>
           </m.div>
 
