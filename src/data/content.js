@@ -18,6 +18,10 @@ export const PILLARS = [
   },
 ]
 
+// Estimated delivery (shown on each package card); the conditions below are shown with them.
+export const DELIVERY_NOTE =
+  'Estimated timelines begin once the project is confirmed, the deposit is received, and all required content and access details have been provided. Timelines may vary depending on project complexity, feedback and revisions.'
+
 export const PACKAGES = [
   {
     id: 'one-page',
@@ -25,12 +29,15 @@ export const PACKAGES = [
     price: '8,000',
     summary: 'Perfect for businesses that need a powerful, focused online presence.',
     bestFor: ['Landing pages', 'Small businesses', 'Simple online presence'],
+    delivery: 'Ready to launch in approximately 5 business days',
     features: [
       '1 complete page',
       'Responsive design',
       'Modern UI/UX',
       'Contact integration',
       'Basic SEO',
+      'Setup on your own hosting account',
+      'Free Google Business Profile setup assistance (if eligible)',
       '2 revision rounds',
     ],
   },
@@ -40,12 +47,15 @@ export const PACKAGES = [
     price: '15,000',
     summary: 'For businesses that need a complete professional website.',
     bestFor: ['Restaurants', 'Villas', 'Service businesses', 'Growing companies'],
+    delivery: 'Ready to launch in approximately 7 business days',
     features: [
       'Up to 5 pages',
       'Custom responsive design',
       'Modern animations',
       'Contact / WhatsApp integration',
       'Basic SEO',
+      'Setup on your own hosting account',
+      'Free Google Business Profile setup assistance (if eligible)',
       '2 revision rounds',
     ],
   },
@@ -56,6 +66,7 @@ export const PACKAGES = [
     summary: 'For brands that want a more advanced and immersive digital experience.',
     bestFor: ['Hotels', 'Real estate', 'Established brands', 'Advanced projects'],
     featured: true,
+    delivery: 'Ready to launch in approximately 10 business days',
     features: [
       'Up to approximately 8 pages',
       'Premium custom design',
@@ -64,6 +75,8 @@ export const PACKAGES = [
       'Possible bilingual website',
       'Integrations',
       'Enhanced basic SEO',
+      'Setup on your own hosting account',
+      'Free Google Business Profile setup assistance (if eligible)',
       '2 revision rounds',
     ],
   },
@@ -162,7 +175,7 @@ export const CUSTOM_WORK = ['E-commerce', 'Advanced booking systems', 'Membershi
 export const TERMS = [
   { label: 'Payment', value: '50% to start', detail: '50% before launch' },
   { label: 'Revisions', value: '2 rounds', detail: 'included in every package' },
-  { label: 'Timeline', value: 'Clear timelines', detail: 'No surprises' },
+  { label: 'Estimated delivery', value: '5–10 business days', detail: 'depending on the package' },
 ]
 
 // Verified client testimonials only — the proof section shows them when this list
@@ -171,12 +184,24 @@ export const TESTIMONIALS = []
 
 export const FAQS = [
   {
+    q: 'What is the free homepage mockup?',
+    a: 'We create a free preview concept for your homepage so you can see how your future website could look. After a quick discussion about your business and requirements, we’ll prepare a personalised design preview. No obligation to proceed.',
+  },
+  {
     q: 'Do I own my website?',
     a: 'Yes. Once the project has been fully paid, the final website deliverables are yours, subject to any third-party services, tools or licenses used by the website.',
   },
   {
     q: 'Who pays for the domain?',
     a: 'The domain is purchased and owned by the client. Motion Digital Studio can guide the client through setup and connect the domain to the website.',
+  },
+  {
+    q: 'Where is my website hosted?',
+    a: 'Your website is deployed to a Netlify account created in your name. We handle the setup, configuration and domain connection, while you retain ownership and control of your hosting account and domain. Any hosting plan charges and domain renewals are billed to you directly by those providers.',
+  },
+  {
+    q: 'Can you help set up my Google Business Profile?',
+    a: 'Yes. If your business is eligible and doesn’t already have a profile, we’ll help you set one up at no additional charge. The profile remains under your ownership. Verification and approval are managed by Google and cannot be guaranteed.',
   },
   {
     q: 'Can you update my website after launch?',

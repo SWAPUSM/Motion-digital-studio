@@ -22,7 +22,7 @@ export const RD_INCLUDES = [
 export const RD_KEEP = [
   {
     title: 'Your domain',
-    text: 'Your domain is purchased and owned by you, and we connect it to the new website. Hosting arrangements are agreed before the move.',
+    text: 'Your domain is purchased and owned by you, and we connect it to the new website. The new website is deployed to a Netlify account created in your name, which you own and control.',
   },
   {
     title: 'Your content',
@@ -50,6 +50,10 @@ export const RD_PROJECT_NOTES = {
 
 export const RD_FAQS = [
   {
+    q: 'What is the free homepage mockup?',
+    a: 'We create a free preview concept for your homepage so you can see how your future website could look. After a quick discussion about your business and requirements, we’ll prepare a personalised design preview. No obligation to proceed.',
+  },
+  {
     q: 'Is a redesign priced differently from a new website?',
     a: 'No. A redesign uses the same packages as a new website: One Page from 8,000 THB, Multi Page from 15,000 THB and Premium from 25,000 THB.',
   },
@@ -59,7 +63,11 @@ export const RD_FAQS = [
   },
   {
     q: 'Will I keep my domain?',
-    a: 'Yes. The domain is purchased and owned by you, and we connect it to the new website. Hosting arrangements are agreed before the migration.',
+    a: 'Yes. The domain is purchased and owned by you, and we connect it to the new website.',
+  },
+  {
+    q: 'Where will my new website be hosted?',
+    a: 'Your website is deployed to a Netlify account created in your name. We handle the setup, configuration and domain connection, while you retain ownership and control of your hosting account and domain. Any hosting plan charges and domain renewals are billed to you directly by those providers.',
   },
   {
     q: 'Can you reuse the content from my current website?',

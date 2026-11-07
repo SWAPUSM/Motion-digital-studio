@@ -11,7 +11,7 @@ import WorkShot, { WORK_SHOT } from './WorkShot.jsx'
 import { ArrowRight, ArrowUpRight, Check, WhatsApp } from './Icons.jsx'
 import Footer from '../sections/Footer.jsx'
 import { PROJECTS } from '../data/content.js'
-import { whatsappLink } from '../config.js'
+import { MOCKUP_WA_MESSAGE, whatsappLink } from '../config.js'
 
 // Shared building blocks for the service / location landing pages
 // (/web-design-koh-samui/, /website-redesign/), in the site's own visual language.
@@ -48,7 +48,7 @@ export function PageShell({ children }) {
 
 /**
  * Landing-page hero: eyebrow, two-line H1 (second line in the gradient), intro,
- * WhatsApp + "See our work" buttons and a row of short facts.
+ * WhatsApp + "See our work" + "Get a Free Mockup" buttons and a row of short facts.
  */
 export function LandingHero({ eyebrow, lines, intro, waMessage, facts }) {
   return (
@@ -98,7 +98,7 @@ export function LandingHero({ eyebrow, lines, intro, waMessage, facts }) {
         </m.p>
 
         <m.div
-          className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4"
+          className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
           initial={{ opacity: 0.6, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease, delay: 0.3 }}
@@ -108,6 +108,9 @@ export function LandingHero({ eyebrow, lines, intro, waMessage, facts }) {
           </MagneticButton>
           <MagneticButton href="#work" variant="ghost">
             See our work <ArrowRight className="transition-transform duration-500 group-hover:translate-x-1" />
+          </MagneticButton>
+          <MagneticButton href={whatsappLink(MOCKUP_WA_MESSAGE)} target="_blank" rel="noopener noreferrer" variant="ghost">
+            Get a Free Mockup <ArrowUpRight className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </MagneticButton>
         </m.div>
 
