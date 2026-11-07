@@ -175,7 +175,7 @@ export const CUSTOM_WORK = ['E-commerce', 'Advanced booking systems', 'Membershi
 export const TERMS = [
   { label: 'Payment', value: '50% to start', detail: '50% before launch' },
   { label: 'Revisions', value: '2 rounds', detail: 'included in every package' },
-  { label: 'Timeline', value: '5–10 business days', detail: 'estimated, depending on the package' },
+  { label: 'Estimated delivery', value: '5–10 business days', detail: 'depending on the package' },
 ]
 
 // Verified client testimonials only — the proof section shows them when this list
