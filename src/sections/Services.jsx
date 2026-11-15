@@ -112,7 +112,7 @@ function Pillars() {
       <ol className="relative grid gap-7 md:grid-cols-3 md:gap-8">
         {PILLARS.map((p, i) => (
           <Reveal as="li" key={p.key} delay={i * 0.12} className="group relative pl-14 md:pl-0 md:pt-16">
-            <span className="absolute left-0 top-0 grid h-10 w-10 place-items-center rounded-full border border-cyan/40 bg-navy text-[11px] font-semibold text-cyan shadow-[0_0_24px_rgba(0,209,255,.25)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-expo)] group-hover:scale-110 group-hover:shadow-[0_0_34px_rgba(0,209,255,.55)]">
+            <span className="absolute left-0 top-0 grid h-10 w-10 place-items-center rounded-full border border-cyan/40 bg-navy text-[12px] font-semibold text-cyan shadow-[0_0_24px_rgba(0,209,255,.25)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-expo)] group-hover:scale-110 group-hover:shadow-[0_0_34px_rgba(0,209,255,.55)]">
               0{i + 1}
             </span>
             <h3 className="text-[clamp(1.5rem,5vw,2.4rem)] font-extrabold uppercase tracking-[-0.01em] text-white md:text-[clamp(1.5rem,calc((100vw_-_144px)/26),2.4rem)]">{p.title}</h3>

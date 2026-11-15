@@ -107,7 +107,7 @@ function Reasons() {
         <ol className="mt-9 grid gap-3 sm:grid-cols-2 sm:gap-4 md:mt-14 lg:grid-cols-3 lg:gap-5">
           {KS_REASONS.map((r, i) => (
             <Reveal as="li" key={r.title} delay={(i % 3) * 0.06} className={`${card} p-5 sm:p-7`}>
-              <span className="text-[11px] font-semibold tracking-[0.25em] text-cyan" aria-hidden="true">
+              <span className="text-[12px] font-semibold tracking-[0.25em] text-cyan" aria-hidden="true">
                 0{i + 1}
               </span>
               <h3 className="mt-4 text-[15px] font-extrabold uppercase tracking-[0.02em] text-white sm:text-[17px]">{r.title}</h3>

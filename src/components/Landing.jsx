@@ -114,7 +114,7 @@ export function LandingHero({ eyebrow, lines, intro, waMessage, facts }) {
           </MagneticButton>
         </m.div>
 
-        <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-mist/70 md:mt-14">
+        <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-[12px] font-semibold uppercase tracking-[0.22em] text-mist/70 md:mt-14">
           {facts.map((fact) => (
             <li key={fact} className="flex items-center gap-2.5">
               <span className="grid h-5 w-5 place-items-center rounded-full bg-cyan/10 text-cyan" aria-hidden="true">
@@ -157,7 +157,7 @@ export function ProjectCards({ index, intro, note }) {
                     {p.name}
                   </h3>
                   <p className="mt-3 text-[14px] leading-relaxed text-mist/70">{note(p)}</p>
-                  <p className="mt-3 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.16em] text-mist/75">
+                  <p className="mt-3 text-[12px] font-semibold uppercase leading-relaxed tracking-[0.16em] text-mist/75">
                     <span className="sr-only">Services: </span>
                     {p.services.join(' • ')}
                   </p>

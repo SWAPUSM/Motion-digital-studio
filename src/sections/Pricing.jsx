@@ -120,19 +120,23 @@ function PackageCard({ pkg, index }) {
         <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 bg-[radial-gradient(closest-side,rgba(0,209,255,.2),transparent)]" />
       )}
 
+      {/* the badge's negative margins keep this row as tall as the number alone, so the
+          title and price sit at the same height in all three cards */}
       <div className="relative flex items-center justify-between">
-        <span className="text-[11px] font-semibold tracking-[0.25em] text-white/55">0{index + 1}</span>
+        <span className="text-[12px] font-semibold tracking-[0.25em] text-white/55">0{index + 1}</span>
         {featured && (
-          <span className="rounded-full border border-cyan/40 bg-cyan/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan">
+          <span className="-my-2 rounded-full border border-cyan/40 bg-cyan/10 px-3 py-1 text-[12px] font-semibold uppercase tracking-[0.2em] text-cyan">
             Most immersive
           </span>
         )}
       </div>
 
-      <h3 id={`pkg-${pkg.id}`} className="relative mt-6 text-[22px] font-extrabold uppercase leading-tight tracking-[-0.01em] text-white md:mt-8 md:text-[26px]">
+      {/* three columns below 1280px wrap titles and summaries unevenly: reserve the same
+          height in every card there, so the prices line up */}
+      <h3 id={`pkg-${pkg.id}`} className="relative mt-6 text-[22px] font-extrabold uppercase leading-tight tracking-[-0.01em] text-white md:mt-8 md:text-[26px] lg:max-xl:min-h-[2lh]">
         {pkg.name}
       </h3>
-      <p className="relative mt-3 text-[14px] leading-relaxed text-mist/65">{pkg.summary}</p>
+      <p className="relative mt-3 text-[14px] leading-relaxed text-mist/65 lg:max-xl:min-h-[3lh]">{pkg.summary}</p>
 
       <p className="relative mt-6 flex items-baseline gap-2 md:mt-8">
         <span className="text-[12px] font-medium uppercase tracking-[0.2em] text-mist/50">From</span>
@@ -143,7 +147,7 @@ function PackageCard({ pkg, index }) {
       </p>
       {pkg.bestFor && (
         <p className="relative mt-4 text-[12.5px] leading-relaxed text-mist/60">
-          <span className="mr-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan/85">Best for</span>
+          <span className="mr-2 text-[12px] font-semibold uppercase tracking-[0.22em] text-cyan/85">Best for</span>
           {pkg.bestFor.join(' • ')}
         </p>
       )}
@@ -163,7 +167,7 @@ function PackageCard({ pkg, index }) {
 
       {pkg.delivery && (
         <p className="relative mt-7 border-t border-white/[.07] pt-4 md:mt-8">
-          <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-mist/60">
+          <span className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-mist/60">
             <Clock className="text-cyan/85" />
             Estimated delivery
           </span>

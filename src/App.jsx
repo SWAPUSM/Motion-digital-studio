@@ -13,12 +13,15 @@ import Faq from './sections/Faq.jsx'
 import FinalCta from './sections/FinalCta.jsx'
 import Footer from './sections/Footer.jsx'
 
-export default function App() {
+export default function App({ prerendered = false }) {
   // The opening intro lives in index.html (painted before this bundle loads).
   // Tell it the app is mounted; it exits after its short reveal and signals back,
   // which starts the hero entrance while the intro fades — one continuous move.
-  const [ready, setReady] = useState(() => window.__mdsIntro === 'done')
-  const [rest, setRest] = useState(false)
+  // A pre-rendered page (scripts/prerender.mjs) starts not ready, like the static HTML,
+  // and turns ready in the effect below.
+  const [ready, setReady] = useState(() => !prerendered && window.__mdsIntro === 'done')
+  // The pre-rendered page already contains every section, so hydration renders them all at once.
+  const [rest, setRest] = useState(prerendered)
 
   useEffect(() => {
     if (ready) return

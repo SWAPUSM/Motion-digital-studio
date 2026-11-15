@@ -38,7 +38,7 @@ function Chapter({ id, index, label, light, bold, intro, onPaper = false, stacke
   return (
     <div className={`grid gap-6 ${stacked ? '' : 'lg:grid-cols-12 lg:gap-10'}`}>
       <p
-        className={`flex items-center gap-3 self-start text-[11px] font-semibold uppercase tracking-[0.32em] ${stacked ? '' : 'lg:col-span-3 lg:pt-5'} ${
+        className={`flex items-center gap-3 self-start text-[12px] font-semibold uppercase tracking-[0.32em] ${stacked ? '' : 'lg:col-span-3 lg:pt-5'} ${
           onPaper ? 'text-[#0057b8]' : 'text-cyan'
         }`}
       >
@@ -68,7 +68,7 @@ function Notes({ items, onPaper = false, cols = 'md:grid-cols-3', dense = false,
     <ol className={`grid ${dense ? 'grid-cols-2 gap-x-5 gap-y-7' : 'gap-x-8 gap-y-8 sm:grid-cols-2'} lg:gap-x-10 ${cols}`}>
       {items.map((it, i) => (
         <li key={it.title} className={`cs-reveal border-t pt-5 ${onPaper ? 'border-[#0b1a2c]/15' : 'border-white/12'}`}>
-          <span className={`text-[11px] font-semibold tracking-[0.25em] ${onPaper ? 'text-[#0057b8]' : 'text-cyan'}`} aria-hidden="true">
+          <span className={`text-[12px] font-semibold tracking-[0.25em] ${onPaper ? 'text-[#0057b8]' : 'text-cyan'}`} aria-hidden="true">
             {String(i + 1).padStart(2, '0')}
           </span>
           <h3 className={`mt-3 text-[15px] font-extrabold uppercase tracking-[0.02em] md:text-[16px] ${onPaper ? 'text-[#0b1a2c]' : 'text-white'}`}>{it.title}</h3>
@@ -81,7 +81,7 @@ function Notes({ items, onPaper = false, cols = 'md:grid-cols-3', dense = false,
 
 function Label({ tag, children, onPaper = false }) {
   return (
-    <p className={`mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[11px] font-semibold uppercase leading-snug tracking-[0.16em] md:tracking-[0.2em] ${onPaper ? 'text-[#0b1a2c]/70' : 'text-mist/65'}`}>
+    <p className={`mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[12px] font-semibold uppercase leading-snug tracking-[0.16em] md:tracking-[0.2em] ${onPaper ? 'text-[#0b1a2c]/70' : 'text-mist/65'}`}>
       <span className={onPaper ? 'text-[#0057b8]' : 'text-cyan'}>{tag}</span> {children}
     </p>
   )
@@ -114,7 +114,7 @@ function Hero({ study: s }) {
       </div>
 
       <div className="container-x">
-        <nav aria-label="Breadcrumb" className="cs-in text-[11px] font-medium uppercase tracking-[0.2em] text-mist/65">
+        <nav aria-label="Breadcrumb" className="cs-in text-[12px] font-medium uppercase tracking-[0.2em] text-mist/65">
           <ol className="flex flex-wrap items-center gap-2">
             <li>
               <a href="/" className="transition-colors hover:text-white">
@@ -134,7 +134,7 @@ function Hero({ study: s }) {
           </ol>
         </nav>
 
-        <p className="cs-in mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-cyan max-[389px]:tracking-[0.18em] md:mt-14" style={{ '--d': '.05s' }}>
+        <p className="cs-in mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12px] font-semibold uppercase tracking-[0.3em] text-cyan max-[389px]:tracking-[0.18em] md:mt-14" style={{ '--d': '.05s' }}>
           <span>Case study</span>
           <span className="h-px w-8 bg-gradient-to-r from-cyan to-transparent" aria-hidden="true" />
           <span className="text-white/80">{s.category}</span>
@@ -167,7 +167,7 @@ function Hero({ study: s }) {
             <dl className="mt-9 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-6">
               {s.facts.map((f) => (
                 <div key={f.label}>
-                  <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-mist/60">{f.label}</dt>
+                  <dt className="text-[12px] font-semibold uppercase tracking-[0.2em] text-mist/60">{f.label}</dt>
                   <dd className="mt-1.5 text-[14.5px] font-semibold leading-snug text-white">{f.value}</dd>
                 </div>
               ))}
@@ -235,12 +235,12 @@ function Vision({ study: s }) {
               {s.promise}
               <span className="text-[#0057b8]">”</span>
             </blockquote>
-            <figcaption className="mt-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#0b1a2c]/65">
+            <figcaption className="mt-5 text-[12px] font-semibold uppercase tracking-[0.24em] text-[#0b1a2c]/65">
               The website’s opening line
             </figcaption>
           </figure>
           <div className="lg:col-span-6 lg:col-start-7">
-            <p className="mb-7 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0b1a2c]/65">Designed to help visitors</p>
+            <p className="mb-7 text-[12px] font-semibold uppercase tracking-[0.28em] text-[#0b1a2c]/65">Designed to help visitors</p>
             <Notes items={s.vision} onPaper dense cols="md:grid-cols-2" />
           </div>
         </div>
@@ -271,7 +271,7 @@ function Design({ study: s }) {
             <li key={c.token} className="cs-reveal">
               <span className="block aspect-square rounded-[12px] border border-white/10 sm:aspect-[3/2] sm:rounded-[14px] lg:aspect-[4/5]" style={{ background: c.hex }} aria-hidden="true" />
               <p className="mt-3 font-mono text-[12px] text-white">{c.hex}</p>
-              <p className="mt-0.5 font-mono text-[11px] text-cyan/80">{c.token}</p>
+              <p className="mt-0.5 font-mono text-[12px] text-cyan/80">{c.token}</p>
               <p className="mt-1.5 text-[12.5px] leading-snug text-mist/65">{c.role}</p>
             </li>
           ))}
@@ -320,7 +320,7 @@ function Design({ study: s }) {
             <figcaption className="mt-3 text-[13px] text-mist/65">A vehicle panel in the showroom</figcaption>
           </figure>
           <div className="sm:col-span-2 lg:col-span-5 lg:pl-4">
-            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-mist/60">Layout principles</p>
+            <p className="mb-6 text-[12px] font-semibold uppercase tracking-[0.28em] text-mist/60">Layout principles</p>
             <Notes
               cols="sm:grid-cols-2 lg:grid-cols-1"
               dense
@@ -387,7 +387,7 @@ function Experience({ study: s }) {
             <ol className="space-y-10">
               {s.homeMobile.map((it, i) => (
                 <li key={it.title} className={`cs-reveal w-[88%] ${i % 2 ? 'ml-auto' : ''}`}>
-                  <p className="mb-3 flex items-baseline gap-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0b1a2c]/70">
+                  <p className="mb-3 flex items-baseline gap-2.5 text-[12px] font-semibold uppercase tracking-[0.16em] text-[#0b1a2c]/70">
                     <span className="text-[#0057b8]">{it.index}</span>
                     {it.title}
                   </p>
@@ -402,7 +402,7 @@ function Experience({ study: s }) {
             </figcaption>
           </figure>
           <div className="lg:col-span-4">
-            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0b1a2c]/65">Top to bottom</p>
+            <p className="mb-6 text-[12px] font-semibold uppercase tracking-[0.28em] text-[#0b1a2c]/65">Top to bottom</p>
             <Notes items={s.homepage} onPaper dense titlesOnPhones cols="md:grid-cols-3 lg:grid-cols-1" />
           </div>
         </div>
@@ -435,7 +435,7 @@ function Experience({ study: s }) {
 
         {/* under the hood */}
         <div className="mt-20 border-t border-[#0b1a2c]/12 pt-12 md:mt-28 md:pt-16">
-          <h3 className="mb-8 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#0b1a2c]/65 md:mb-10">Under the hood</h3>
+          <h3 className="mb-8 text-[12px] font-semibold uppercase tracking-[0.28em] text-[#0b1a2c]/65 md:mb-10">Under the hood</h3>
           <Notes items={s.craft} onPaper dense />
           <p className="mt-8 max-w-3xl text-[13px] leading-relaxed text-[#0b1a2c]/65">
             Implementation work documented in the website’s production package and test reports — not performance measurements.
@@ -466,13 +466,13 @@ function Mobile({ study: s }) {
             <PhoneFrame>
               <Shot slug={s.slug} image={img.afterMobileShowroom} sizes={phone} alt="The showroom on a phone: Honda Click 125, 250 baht a day, deposit 2,000 baht or passport, View & book." />
             </PhoneFrame>
-            <figcaption className="mt-4 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-mist/65">Showroom</figcaption>
+            <figcaption className="mt-4 text-center text-[12px] font-semibold uppercase tracking-[0.2em] text-mist/65">Showroom</figcaption>
           </figure>
           <figure className="cs-reveal mt-16 sm:mt-24">
             <PhoneFrame>
               <Shot slug={s.slug} image={img.afterMobileMenu} sizes={phone} alt="The menu on a phone: Home, Our scooters, Our cars, Documents & driving in Thailand, Activities, Good spots, FAQ, Contact us." />
             </PhoneFrame>
-            <figcaption className="mt-4 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-mist/65">Menu</figcaption>
+            <figcaption className="mt-4 text-center text-[12px] font-semibold uppercase tracking-[0.2em] text-mist/65">Menu</figcaption>
           </figure>
         </div>
       </div>
@@ -600,7 +600,7 @@ function Evolution({ study: s }) {
               ['After', img.afterMobileShowroom, 'Later showroom on a phone: one vehicle with its price, deposit and View & book.'],
             ].map(([tag, image, alt]) => (
               <div key={tag} className="w-[27%] max-w-[120px] shrink-0">
-                <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan">{tag}</p>
+                <p className="mb-2 text-[12px] font-semibold uppercase tracking-[0.18em] text-cyan">{tag}</p>
                 <div className="overflow-hidden rounded-[8px] border border-white/10">
                   <Shot slug={s.slug} image={image} fill={false} sizes="120px" alt={alt} />
                 </div>
@@ -628,7 +628,7 @@ function Explore({ study: s }) {
         <div className="absolute left-1/2 top-[-40%] h-[90%] w-[110%] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(0,123,255,.22),transparent)]" />
       </div>
       <div className="container-x">
-        <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-cyan">
+        <p className="flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.32em] text-cyan">
           <span className="text-white/60">08</span>
           <span className="h-px w-8 bg-gradient-to-r from-cyan to-transparent" aria-hidden="true" />
           Explore the website

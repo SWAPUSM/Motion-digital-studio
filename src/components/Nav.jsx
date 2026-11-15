@@ -208,7 +208,7 @@ export default function Nav({ ready, base = '' }) {
               <MagneticButton href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="w-full">
                 <WhatsApp /> Start your project
               </MagneticButton>
-              <p className="mt-6 text-center text-[11px] uppercase tracking-[0.3em] text-mist/50">Thailand • Worldwide</p>
+              <p className="mt-6 text-center text-[12px] uppercase tracking-[0.3em] text-mist/50">Thailand • Worldwide</p>
             </m.div>
           </m.div>
         )}

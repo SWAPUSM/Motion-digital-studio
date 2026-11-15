@@ -76,7 +76,7 @@ export default function Process() {
                   i > 0 ? 'border-t border-white/[.07] sm:border-l sm:border-t-0' : ''
                 }`}
               >
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.25em] text-cyan">{t.label}</dt>
+                <dt className="text-[12px] font-semibold uppercase tracking-[0.25em] text-cyan">{t.label}</dt>
                 <dd className="text-right sm:mt-3 sm:text-left">
                   <span className="block text-[15px] font-extrabold uppercase tracking-[0.02em] text-white sm:text-[19px]">{t.value}</span>
                   <span className="mt-0.5 block text-[12.5px] text-mist/75 sm:mt-1 sm:text-[13px]">{t.detail}</span>

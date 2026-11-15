@@ -131,7 +131,7 @@ function Stage({ project: p }) {
           </PhoneFrame>
         </div></div>
       </a>
-      <figcaption className="mt-4 text-[10.5px] font-semibold uppercase tracking-[0.2em]" style={{ color: t.ink, opacity: 0.6 }}>
+      <figcaption className="mt-4 text-[12px] font-semibold uppercase tracking-[0.2em]" style={{ color: t.ink, opacity: 0.6 }}>
         {p.domain} <span aria-hidden="true">·</span> live site on tablet and phone
       </figcaption>
     </figure>
@@ -143,7 +143,7 @@ function Info({ project: p, index }) {
   const muted = { color: t.ink, opacity: 0.72 }
   return (
     <div>
-      <div className="flex items-center gap-4 text-[11px] font-semibold tracking-[0.25em]" style={{ color: t.accent }}>
+      <div className="flex items-center gap-4 text-[12px] font-semibold tracking-[0.25em]" style={{ color: t.accent }}>
         <span>0{index + 1}</span>
         <span className="h-px flex-1" style={{ background: `${t.ink}26` }} />
         <span className="uppercase" style={{ color: t.ink, opacity: 0.6 }}>{p.category}</span>
@@ -153,14 +153,14 @@ function Info({ project: p, index }) {
         <span className="block font-extrabold uppercase">{p.name.split(' ').slice(t.split).join(' ')}</span>
       </h3>
       {p.caseStudy && (
-        <p className="mt-4 inline-flex rounded-full border px-3 py-1 text-[10.5px] font-semibold uppercase tracking-[0.2em]" style={{ borderColor: `${t.ink}40` }}>
+        <p className="mt-4 inline-flex rounded-full border px-3 py-1 text-[12px] font-semibold uppercase tracking-[0.2em]" style={{ borderColor: `${t.ink}40` }}>
           Case study
         </p>
       )}
       <p className="mt-5 max-w-md text-[15px] leading-relaxed md:text-[16px]" style={muted}>
         {p.description}
       </p>
-      <p className="mt-4 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.16em]" style={{ color: t.ink, opacity: 0.75 }}>
+      <p className="mt-4 text-[12px] font-semibold uppercase leading-relaxed tracking-[0.16em]" style={{ color: t.ink, opacity: 0.75 }}>
         <span className="sr-only">Services: </span>
         {p.services.join(' · ')}
       </p>
