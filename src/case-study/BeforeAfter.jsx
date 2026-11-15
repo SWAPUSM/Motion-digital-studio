@@ -28,12 +28,12 @@ export default function BeforeAfter({ slug, domain, frame = 'browser', before, a
   const id = useId()
   const phone = frame === 'phone'
 
-  const chip = 'pointer-events-none absolute z-[2] rounded-full bg-navy-deep/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white md:text-[11px]'
+  const chip = 'pointer-events-none absolute z-[2] rounded-full bg-navy-deep/80 px-2.5 py-1 text-[12px] font-semibold uppercase tracking-[0.18em] text-white'
 
   return (
     <figure className={`cs-compare ${className}`} data-mode={mode} aria-labelledby={`${id}-cap`}>
       <div className="cs-toggle mb-4 flex-wrap items-center justify-between gap-x-3 gap-y-2.5">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-mist/65">{label}</p>
+        <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-mist/65">{label}</p>
         <div role="group" aria-label={`${label}: view`} className="flex rounded-full border border-white/10 p-1">
           {[
             ['slider', 'Slider'],
@@ -44,7 +44,7 @@ export default function BeforeAfter({ slug, domain, frame = 'browser', before, a
               type="button"
               aria-pressed={mode === value}
               onClick={() => setMode(value)}
-              className={`min-h-[36px] whitespace-nowrap rounded-full px-3.5 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors md:px-4 ${
+              className={`min-h-[36px] whitespace-nowrap rounded-full px-3.5 text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors md:px-4 ${
                 mode === value ? 'bg-white text-navy' : 'text-mist/70 hover:text-white'
               }`}
             >
@@ -100,7 +100,7 @@ export default function BeforeAfter({ slug, domain, frame = 'browser', before, a
           ['After', 'Evolved website', after, afterAlt],
         ].map(([tag, text, image, alt]) => (
           <div key={tag}>
-            <p className="mb-2.5 flex flex-wrap items-baseline gap-x-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-mist/65 md:tracking-[0.2em]">
+            <p className="mb-2.5 flex flex-wrap items-baseline gap-x-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-mist/65 md:tracking-[0.2em]">
               <span className="text-cyan">{tag}</span> {text}
             </p>
             <Frame phone={phone} domain={domain}>

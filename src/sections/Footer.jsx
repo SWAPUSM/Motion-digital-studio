@@ -8,7 +8,7 @@ const SOCIALS = [
   { label: 'TikTok', href: SITE.social.tiktok, Icon: TikTok },
 ].filter((s) => s.href)
 
-const heading = 'text-[10px] font-semibold uppercase tracking-[0.3em] text-mist/70'
+const heading = 'text-[12px] font-semibold uppercase tracking-[0.3em] text-mist/70'
 const link = 'text-[14px] font-medium text-mist/75 transition-colors duration-300 hover:text-cyan'
 
 /** `base`: '' on the homepage; '/' on other pages, so section links lead back to it. */

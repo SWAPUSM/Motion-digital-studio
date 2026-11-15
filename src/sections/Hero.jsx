@@ -142,7 +142,7 @@ export default function Hero({ ready }) {
       {/* scroll cue */}
       <m.a
         href="#work"
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-mist/50 transition-colors hover:text-white lg:flex"
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.35em] text-mist/50 transition-colors hover:text-white lg:flex"
         initial={{ opacity: 0 }}
         animate={ready ? { opacity: 1 } : {}}
         transition={{ delay: 1.4, duration: 1 }}
